@@ -747,16 +747,36 @@
             <!-- TAB 1: Ancient Text Card (Clean Museum Typography) -->
             <div id="tab-content-script" class="px-5">
               <div class="relative rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 p-4 sm:p-5 shadow-xs overflow-hidden">
-                <div class="relative z-10 py-1.5">
+                <div class="relative z-10">
+                  <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-200/60 dark:border-zinc-700/60">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                      Transkripsi Aksara Kuno (Unicode)
+                    </span>
+                    <span class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      Otentik
+                    </span>
+                  </div>
                   <p id="result-ancient-text" class="font-ancient-script ancient-text-short text-slate-900 dark:text-white select-all">
                     ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ
                   </p>
-                  <p id="result-transliteration" class="font-serif-literary italic text-[13px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-600 dark:text-zinc-300 mt-2.5 tracking-wide whitespace-pre-line break-words text-center">
-                    "Sinuhun surya bumi"
-                  </p>
+
+                  <!-- Alih Aksara Latin (Fonetik) -->
+                  <div class="mt-3 pt-2.5 border-t border-slate-200/60 dark:border-zinc-700/60">
+                    <div class="flex items-center justify-between mb-1.5">
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+                        Alih Aksara Latin (Fonetik)
+                      </span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/80 dark:bg-zinc-900/70 border border-slate-200/80 dark:border-zinc-700/80">
+                      <p id="result-transliteration" class="transliteration-text text-slate-800 dark:text-zinc-200 whitespace-pre-line break-words text-left select-all">
+                        "Sinuhun surya bumi"
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="relative z-10 mt-3 pt-2.5 border-t border-slate-200 dark:border-zinc-700/70 flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400">
+                <div class="relative z-10 mt-3 pt-2 border-t border-slate-200 dark:border-zinc-700/70 flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400">
                   <span id="result-model-label">Gemini 3.5 Flash Multimodal Vision</span>
                   <span class="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -781,6 +801,28 @@
               </div>
             </div>
 
+            <!-- Indonesian Translation & Literary Section (Positioned FIRST on mobile) -->
+            <div class="px-5 mt-3.5">
+              <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs relative overflow-hidden">
+                <div class="flex items-center justify-between mb-2 pb-2 border-b border-slate-100 dark:border-zinc-700/50">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-800 dark:text-zinc-200">
+                      Terjemahan Bahasa Indonesia
+                    </span>
+                  </div>
+                  <button id="btn-copy-translation" type="button" class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Salin
+                  </button>
+                </div>
+
+                <p id="result-translated-text" class="translation-text font-serif-literary text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-900 dark:text-white font-medium whitespace-pre-line break-words">
+                  Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
+                </p>
+              </div>
+            </div>
+
             <!-- ── Interactive Epigraphic Decomposition (Bedah Glif Aksara) ── -->
             <div class="px-5 mt-3.5">
               <div class="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs">
@@ -801,7 +843,7 @@
 
                 <!-- Active Glyph Detail Callout -->
                 <div id="glyph-detail-box" class="mt-2.5 p-3 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 flex items-start gap-3 transition-all">
-                  <div id="glyph-detail-char" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center font-javanese text-slate-900 dark:text-white text-xl font-bold shrink-0">
+                  <div id="glyph-detail-char" class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center font-ancient-script text-slate-900 dark:text-white text-[22px] font-bold shrink-0 leading-none overflow-hidden select-none">
                     ꦱꦶ
                   </div>
                   <div class="flex-1 min-w-0">
@@ -814,25 +856,6 @@
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- Indonesian Translation & Literary Section -->
-            <div class="px-5 mt-3.5">
-              <div class="p-4 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs relative overflow-hidden">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
-                    Terjemahan Bahasa Indonesia
-                  </span>
-                  <button id="btn-copy-translation" type="button" class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    Salin
-                  </button>
-                </div>
-
-                <p id="result-translated-text" class="font-serif-literary text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-900 dark:text-white font-medium whitespace-pre-line break-words">
-                  Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
-                </p>
               </div>
             </div>
 

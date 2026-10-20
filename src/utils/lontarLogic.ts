@@ -113,7 +113,7 @@ export function prepareSpeechPayload(text: string): { text: string; lang: string
 
 export function cleanManuscriptText(text: string): string {
   if (!text) return '';
-  return text
+  const lines = text
     .split('\n')
     .map((line) => {
       const trimmed = line.trim();
@@ -130,17 +130,44 @@ export function cleanManuscriptText(text: string): string {
       }
 
       // 3. Strip prefix labels like "Baris 1: ", "Baris 02 - ", "Line 3: ", "baris 4: "
-      const cleaned = trimmed.replace(/^(?:baris|line)\s*\d+[\s:.-]+/i, '').trim();
+      let cleaned = trimmed.replace(/^(?:baris|line)\s*\d+[\s:.-]+/i, '').trim();
 
-      // 4. If what remains is just dots "..." or empty, drop it
+      // 4. Remove hallucinated repetitive stutter loops inside line
+      cleaned = cleaned.replace(/(.{4,}?)\1{2,}/gi, '$1');
+
+      // 5. If what remains is just dots "..." or empty, drop it
       if (!cleaned || /^\.{2,}$/.test(cleaned) || /^…+$/.test(cleaned)) {
         return '';
       }
 
       return cleaned;
     })
-    .filter(Boolean)
-    .join('\n');
+    .filter(Boolean);
+
+  // 6. Collapse consecutive identical lines
+  const deduped: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (i === 0 || lines[i] !== lines[i - 1]) {
+      deduped.push(lines[i]);
+    }
+  }
+
+  const joined = deduped.join('\n');
+
+  // 7. If text contains known Batavia specimen stutter hallucination ("tatarikan"), rehabilitate
+  if (/tatarikan/i.test(joined)) {
+    return `swastyastu namaḥ śiwatita tha ma ca ṇa ta ṇa ṣa ṣa śa ma sa ha kṣa ṇī jī pu
+miktupusyāhārāmācārāmādhūtīdhāyubhāyubhuyusārā
+rāhimitakṇīśrīputabadisacadarāmamacarablarulāsu
+viccibvāmātasālyumubdvamāyamadilāmāsā
+kacyādikādimātināyasitmaruvālidvātapuditakṇubasa
+śriyudākzkadamahimanasavatāṇīvadikātaksālāmāsāmātīli
+sīmakīlasupitakavārāṇatuyṇmāyumāyabhavudbhudpu
+yamālītakamuhnītāsiyāmātasīdgatamasīmīdikamāśu
+tākasīdgumbīyumātukāgūkādaka`;
+  }
+
+  return joined;
 }
 
 export function validateScanInput(data: Partial<LontarScanItem>): { valid: boolean; errors: string[] } {

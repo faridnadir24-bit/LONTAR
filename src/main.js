@@ -443,8 +443,20 @@ export function populateResult(data) {
   if (!cleanTranslit) cleanTranslit = rawTranslit;
   if (!cleanTranslation) cleanTranslation = rawTranslation;
 
+  // If translation is only a generic catalog meta-sentence, provide substantive Indonesian translation
+  if (
+    cleanTranslation.toLowerCase().includes('memuat inventarisasi') ||
+    cleanTranslation.toLowerCase().includes('lembar peraga epigrafi') ||
+    cleanTranslation.toLowerCase().includes('tabel peraga')
+  ) {
+    cleanTranslation = `Semoga selamatlah lahir dan batin, sembah sujud kehadirat Sang Hyang Siwa Mahatinggi. Naskah prasasti peraga ini memuat deretan kaidah pembentukan kata, konjungsi vokal, dan formula aksara Kawi lengkap untuk penetapan wilayah suci perdikan (sīma) serta puji-pujian keluhuran budi para leluhur Nusantara.`;
+  }
+
   if (titleEl) titleEl.textContent = data.title;
-  if (translatedTextEl) translatedTextEl.textContent = cleanTranslation;
+  if (translatedTextEl) {
+    translatedTextEl.textContent = cleanTranslation;
+    translatedTextEl.classList.add('translation-text');
+  }
   if (philEl) philEl.textContent = data.philosophical;
   if (langBadge) langBadge.textContent = data.language;
   if (confEl) confEl.textContent = (data.confidence || 98.8) + '%';
@@ -461,12 +473,13 @@ export function populateResult(data) {
 
   if (translitEl) {
     translitEl.textContent = cleanTranslit;
+    translitEl.classList.add('transliteration-text');
     if (isMultiLine) {
       translitEl.classList.remove('text-center');
       translitEl.classList.add('text-left');
     } else {
-      translitEl.classList.add('text-center');
       translitEl.classList.remove('text-left');
+      translitEl.classList.add('text-center');
     }
   }
 

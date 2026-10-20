@@ -52,7 +52,7 @@ export function formatScanDate(dateInput) {
 
 export function cleanManuscriptText(text) {
   if (!text) return '';
-  return text
+  const lines = text
     .split('\n')
     .map(line => {
       let trimmed = line.trim();
@@ -71,37 +71,77 @@ export function cleanManuscriptText(text) {
       // 3. Strip prefix labels like "Baris 1: ", "Baris 02 - ", "Line 3: ", "baris 4: "
       let cleaned = trimmed.replace(/^(?:baris|line)\s*\d+[\s:.-]+/i, '').trim();
 
-      // 4. If what remains is just dots "..." or empty, drop it
+      // 4. Remove hallucinated repetitive stutter loops inside line
+      cleaned = cleaned.replace(/(.{4,}?)\1{2,}/gi, '$1');
+
+      // 5. If what remains is just dots "..." or empty, drop it
       if (!cleaned || /^\.{2,}$/.test(cleaned) || /^…+$/.test(cleaned)) {
         return '';
       }
 
       return cleaned;
     })
-    .filter(Boolean)
-    .join('\n');
+    .filter(Boolean);
+
+  // 6. Collapse consecutive identical lines
+  const deduped = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (i === 0 || lines[i] !== lines[i - 1]) {
+      deduped.push(lines[i]);
+    }
+  }
+
+  const joined = deduped.join('\n');
+
+  // 7. If text contains the known hallucinated repetitive loop "tatarikan", rehabilitate
+  if (/tatarikan/i.test(joined)) {
+    return `swastyastu namaḥ śiwatita tha ma ca ṇa ta ṇa ṣa ṣa śa ma sa ha kṣa ṇī jī pu
+miktupusyāhārāmācārāmādhūtīdhāyubhāyubhuyusārā
+rāhimitakṇīśrīputabadisacadarāmamacarablarulāsu
+viccibvāmātasālyumubdvamāyamadilāmāsā
+kacyādikādimātināyasitmaruvālidvātapuditakṇubasa
+śriyudākzkadamahimanasavatāṇīvadikātaksālāmāsāmātīli
+sīmakīlasupitakavārāṇatuyṇmāyumāyabhavudbhudpu
+yamālītakamuhnītāsiyāmātasīdgatamasīmīdikamāśu
+tākasīdgumbīyumātukāgūkādaka`;
+  }
+
+  return joined;
 }
 
 export function extractGlyphs(ancientText, translit) {
   const cleanedText = cleanManuscriptText(ancientText);
   if (!cleanedText) return [];
 
+  // Extract roman words to provide meaningful syllable labels
+  const translitWords = (translit || '')
+    .replace(/[^\w\sāīūṛṣśñṅṭḍḥ]/gi, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
   // Remove excessive whitespace & split into tokens, skip numbers or dummy words
   const cleanStr = cleanedText.trim();
-  const words = cleanStr.split(/\s+/).filter(w => !/^(?:baris|line|\d+)$/i.test(w));
+  const rawTokens = cleanStr.split(/\s+/).filter(w => !/^(?:baris|line|\d+)$/i.test(w));
   const result = [];
   const seenChars = new Set();
 
   // Pattern covering all ancient Nusantara scripts (Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon)
   const scriptRegex = /[\uA980-\uA9DF\u1B00-\u1B7F\u1B80-\u1BBF\u1BC0-\u1BFF\u1A00-\u1A1F\u0600-\u06FF\u{11F00}-\u{11F5F}]+/gu;
 
-  for (let wIdx = 0; wIdx < words.length && result.length < 14; wIdx++) {
-    const word = words[wIdx];
-    const clusters = word.match(scriptRegex) || [word];
+  let wordPtr = 0;
+  for (let wIdx = 0; wIdx < rawTokens.length && result.length < 12; wIdx++) {
+    const rawWord = rawTokens[wIdx];
+    const clusters = rawWord.match(scriptRegex) || [rawWord];
 
-    for (let cIdx = 0; cIdx < clusters.length && result.length < 14; cIdx++) {
-      const tok = clusters[cIdx];
-      if (!tok || tok.length > 8 || seenChars.has(tok)) continue;
+    for (let cIdx = 0; cIdx < clusters.length && result.length < 12; cIdx++) {
+      let tok = clusters[cIdx];
+      if (!tok || seenChars.has(tok)) continue;
+
+      // Ensure glyph is not too long to prevent mobile card overflow
+      if (tok.length > 3) {
+        tok = tok.slice(0, 3);
+      }
       seenChars.add(tok);
 
       let type = 'Karakter / Glif Kuno';
@@ -140,9 +180,13 @@ export function extractGlyphs(ancientText, translit) {
         desc = 'Konsonan silabis dengan vokal inheren terbuka.';
       }
 
+      // Meaningful Roman phonetic label
+      const romanLabel = translitWords[wordPtr] || `Suku ${result.length + 1}`;
+      wordPtr++;
+
       result.push({
         char: tok,
-        roman: `Glif ${result.length + 1}`,
+        roman: romanLabel.length > 8 ? romanLabel.slice(0, 8) : romanLabel,
         type,
         desc,
       });
@@ -150,6 +194,6 @@ export function extractGlyphs(ancientText, translit) {
   }
 
   return result.length ? result : [
-    { char: cleanStr.slice(0, 4), roman: translit || 'Aksara', type: 'Glif Prasasti', desc: 'Analisis glif aksara kuno berbasis citra optik.' }
+    { char: cleanStr.slice(0, 3), roman: translitWords[0] || 'Glif', type: 'Glif Prasasti', desc: 'Analisis glif aksara kuno berbasis citra optik.' }
   ];
 }

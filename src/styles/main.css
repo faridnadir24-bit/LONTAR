@@ -35,19 +35,54 @@ body {
 
 /* Responsive Ancient Script Sizing (Mobile vs Desktop Optimization) */
 .ancient-text-long {
-  font-size: clamp(16px, 4.3vw, 23px) !important;
-  line-height: 2.15 !important;
+  font-size: clamp(15px, 4vw, 21px) !important;
+  line-height: 2.05 !important;
   text-align: left !important;
   word-break: break-word;
   white-space: pre-line;
 }
 
 .ancient-text-short {
-  font-size: clamp(21px, 6vw, 32px) !important;
-  line-height: 1.9 !important;
+  font-size: clamp(19px, 5.5vw, 28px) !important;
+  line-height: 1.85 !important;
   text-align: center;
   word-break: break-word;
   white-space: pre-line;
+}
+
+/* Highly Legible Latin Transliteration for Mobile */
+.transliteration-text {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  word-break: break-word;
+}
+@media (min-width: 640px) {
+  .transliteration-text {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+}
+
+/* High-Clarity Indonesian Translation for Mobile */
+.translation-text {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+  font-weight: 500;
+  word-break: break-word;
+}
+@media (min-width: 640px) {
+  .translation-text {
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+}
+
+/* Prevent Ancient Script Diacritics Overflow in Small Boxes */
+#glyph-detail-char {
+  line-height: 1 !important;
 }
 
 /* Screen Transitions */

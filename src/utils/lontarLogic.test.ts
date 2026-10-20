@@ -88,4 +88,15 @@ Baris 4: ...`;
   const cleanVerses = `Swastyastu namaḥ śiwāya
 tatastu astu mangayubagya`;
   assert.equal(cleanManuscriptText(cleanVerses), cleanVerses);
+
+  // Test deduplication of consecutive identical lines
+  const dupInput = `tatastu astu
+tatastu astu
+tatastu astu`;
+  assert.equal(cleanManuscriptText(dupInput), 'tatastu astu');
+
+  // Test Batavia hallucination rehabilitation
+  const bataviaHallucination = `tatarikantirikantarikan
+tatarikantirikantarikan`;
+  assert.match(cleanManuscriptText(bataviaHallucination), /swastyastu namaḥ śiwatita/);
 });

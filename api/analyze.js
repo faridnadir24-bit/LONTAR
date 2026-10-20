@@ -9,11 +9,12 @@ Tugasmu: Menganalisis citra naskah kuno dengan standar akademis filologi terting
 ATURAN FORMAT PENULISAN TEKS (SANGAT KRUSIAL - BACA TELITI):
 1. DILARANG KERAS MENULISKAN LABEL PENOMORAN SEPERTI "baris 1", "baris 2", "Baris 1:", "Baris 2:", "baris 3", ATAU SEJENISNYA! Pengguna sangat bingung jika melihat kata "baris 1", "baris 2", dll.
 2. DILARANG MENULISKAN KOMENTAR META SEPERTI "(tampak tertera pada naskah daun lontar/daluang)" ke dalam teks aksara! Teks harus murni berisi kata-kata naskah asli.
-3. Pada "ancientText": Tuliskan HANYA karakter aksara Unicode asli murni (misal aksara Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon) yang terbaca secara berurutan dan mengalir alami. Jika naskah terdiri dari beberapa baris fisik, pisahkan langsung dengan baris baru (\\n) TANPA awalan kata "baris".
-4. Pada "transliteration": Tuliskan alih aksara Latin filologis yang bersih, utuh, dan mengalir alami (seperti membaca prosa atau bait tembang/puisi), MURNI TANPA awalan "Baris 1:", "Baris 2:", atau nomor baris apapun!
-5. Pada "translation": Terjemahkan makna seluruh naskah secara utuh ke dalam Bahasa Indonesia yang kaya sastra dan mengalir alami, TANPA penomoran baris.
-6. Pada "philosophical": Ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
-7. Pada "lexicon": Array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
+3. DILARANG KERAS MENGHASILKAN KATA HALUSINASI BERULANG ATAU GAGAP SUKU KATA (seperti kata tanpa arti yang diulang-ulang 'tatarikantiri...'). Setiap kata Latin harus berupa kata filologi yang bermakna nyata dan dipisahkan dengan SPASI yang jelas, bukan digabung menjadi satu kata raksasa!
+4. Pada "ancientText": Tuliskan HANYA karakter aksara Unicode asli murni (misal aksara Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon) yang terbaca secara berurutan dan mengalir alami. Jika naskah terdiri dari beberapa baris fisik, pisahkan langsung dengan baris baru (\\n) TANPA awalan kata "baris".
+5. Pada "transliteration": Tuliskan alih aksara Latin filologis baku yang bersih, berjarak spasi antarkata yang wajar, dan enak dibaca (contoh: "swastyastu namaḥ śiwāya tatastu astu..."), MURNI TANPA awalan "Baris 1:", "Baris 2:", atau nomor baris apapun!
+6. Pada "translation": WAJIB MEMBERIKAN TERJEMAHAN ARTI / MAKNA KANDUNGAN NASKAH KE DALAM BAHASA INDONESIA YANG LENGKAP DAN JELAS! Terjemahkan arti kalimat atau doanya (misal: "Semoga selamat lahir dan batin, sembah sujud kepada Sang Hyang Siwa..."). DILARANG HANYA MENULIS DESKRIPSI LUAR seperti "lembar ini memuat inventarisasi bentuk dasar", pengguna membutuhkan ARTI NYATA dalam Bahasa Indonesia!
+7. Pada "philosophical": Ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
+8. Pada "lexicon": Array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
   [
     { "term": "...", "origin": "Sanskerta / Jawa Kuno / Melayu Kuno", "meaning": "Makna harfiah leksikal dan peran filosofisnya dalam naskah" }
   ]
