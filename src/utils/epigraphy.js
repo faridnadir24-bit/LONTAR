@@ -195,8 +195,8 @@ export function cleanManuscriptText(text) {
       // 3. Strip prefix labels like "Baris 1: ", "Baris 02 - ", "Line 3: ", "baris 4: "
       let cleaned = trimmed.replace(/^(?:baris|line)\s*\d+[\s:.-]+/i, '').trim();
 
-      // 4. Remove hallucinated repetitive stutter loops inside line
-      cleaned = cleaned.replace(/(.{4,}?)\1{2,}/gi, '$1');
+      // 4. Remove hallucinated repetitive stutter loops (only unspaced repetitions like abcdeabcdeabcde)
+      cleaned = cleaned.replace(/([a-zA-Z]{4,})\1{2,}/gi, '$1');
 
       // 5. If what remains is just dots "..." or empty, drop it
       if (!cleaned || /^\.{2,}$/.test(cleaned) || /^…+$/.test(cleaned)) {

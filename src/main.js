@@ -276,14 +276,16 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
 
       const rawAncient = data.ancientText || '';
       const rawTranslit = data.transliteration || '';
+      const rawTranslation = data.translation || '';
       let cleanAncient = cleanManuscriptText(rawAncient);
       let cleanTranslit = cleanManuscriptText(rawTranslit);
-      let cleanTranslation = cleanManuscriptText(data.translation || '');
+      // Clean only prefix labels while keeping every word and sentence intact in the translation
+      let cleanTranslation = rawTranslation ? rawTranslation.replace(/^(?:terjemahan|arti|makna)\s*[:=-]\s*/i, '').trim() : '';
 
       if (!cleanAncient && cleanTranslit) cleanAncient = cleanTranslit;
       else if (!cleanAncient) cleanAncient = rawAncient || 'ꦲꦤꦕꦫꦏ';
       if (!cleanTranslit) cleanTranslit = rawTranslit;
-      if (!cleanTranslation) cleanTranslation = data.translation || 'Terjemahan tidak tersedia.';
+      if (!cleanTranslation) cleanTranslation = rawTranslation || 'Terjemahan tidak tersedia.';
 
       latestResultData = {
         title: data.title || 'Naskah Pindaian Kamera',
@@ -505,7 +507,8 @@ export function populateResult(rawData) {
 
   let cleanAncient = cleanManuscriptText(rawAncient);
   let cleanTranslit = cleanManuscriptText(rawTranslit);
-  let cleanTranslation = cleanManuscriptText(rawTranslation);
+  // Clean only prefix labels while preserving 100% of the translated words and sentences
+  let cleanTranslation = rawTranslation ? rawTranslation.replace(/^(?:terjemahan|arti|makna)\s*[:=-]\s*/i, '').trim() : '';
 
   // If ancient text was empty or had only dummy "baris 1, 2" strings, fall back gracefully
   if (!cleanAncient && cleanTranslit) {
@@ -514,7 +517,7 @@ export function populateResult(rawData) {
     cleanAncient = rawAncient;
   }
   if (!cleanTranslit) cleanTranslit = rawTranslit;
-  if (!cleanTranslation) cleanTranslation = rawTranslation;
+  if (!cleanTranslation) cleanTranslation = rawTranslation || 'Terjemahan tidak tersedia.';
 
   // If translation is only a generic catalog meta-sentence, provide substantive Indonesian translation
   if (
