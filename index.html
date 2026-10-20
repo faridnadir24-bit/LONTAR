@@ -93,13 +93,14 @@
         box-sizing: border-box;
       }
 
-      html, body {
+      html {
         height: 100%;
-        margin: 0;
-        padding: 0;
       }
 
       body {
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
         font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -177,14 +178,16 @@
     </style>
   </head>
 
-  <body class="text-night-100 dark:text-night-100 bg-night-950 min-h-screen flex items-center justify-center selection:bg-gold-500/30 selection:text-gold-200">
+  <body class="text-night-100 dark:text-night-100 bg-night-950 min-h-screen w-full flex flex-col items-center justify-start sm:justify-center p-0 sm:p-3 md:p-4 overflow-x-hidden overflow-y-auto selection:bg-gold-500/30 selection:text-gold-200">
 
     <!-- ╔══════════════════════════════════════════════════════════════╗ -->
     <!-- ║   MAIN RESPONSIVE CANVAS (Mobile-First / Desktop Framing)   ║ -->
     <!-- ╚══════════════════════════════════════════════════════════════╝ -->
     <div class="
-      relative w-full max-w-[440px] min-h-screen sm:min-h-[920px] sm:max-h-[960px]
-      sm:my-6 sm:rounded-[36px] sm:border sm:border-night-800/80
+      relative w-full max-w-[450px]
+      h-screen h-dvh
+      sm:h-[min(880px,calc(100dvh-2rem))] sm:max-h-[880px] sm:min-h-[520px]
+      sm:my-auto sm:rounded-[36px] sm:border sm:border-night-800/80
       bg-parchment-50 dark:bg-night-900
       flex flex-col overflow-hidden
       shadow-[0_24px_80px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(197,155,63,0.12)]
