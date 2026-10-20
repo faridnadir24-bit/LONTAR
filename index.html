@@ -654,11 +654,13 @@
             <!-- Error Banner -->
             <div id="scan-error-msg" class="hidden absolute bottom-4 left-4 right-4 bg-red-950/90 backdrop-blur-md border border-red-500/50 text-white text-[12px] text-center py-2.5 px-4 rounded-2xl z-30 leading-snug"></div>
 
+            <!-- Shutter Flash Effect -->
+            <div id="camera-shutter-flash" class="hidden absolute inset-0 bg-white z-50 pointer-events-none opacity-0 transition-opacity duration-150"></div>
+
             <!-- ── Loading Overlay with 3-Phase Epigraphic Progress ── -->
             <div
               id="scan-loading-overlay"
               class="hidden absolute inset-0 z-40 bg-zinc-950/90 backdrop-blur-md flex-col items-center justify-center gap-4 px-6"
-              style="display: none;"
             >
               <div class="relative flex items-center justify-center">
                 <div class="w-14 h-14 rounded-full border-2 border-zinc-700 border-t-white animate-spin"></div>
@@ -675,7 +677,7 @@
             </div>
 
             <!-- ── Unclear Aksara Bottom Sheet Dialog ── -->
-            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-end p-3.5" style="display: none;">
+            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-end p-3.5">
               <div class="w-full bg-zinc-900 border border-zinc-700/80 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5">
                 <div class="flex items-start gap-3">
                   <div class="w-10 h-10 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 shrink-0 mt-0.5">
@@ -706,7 +708,7 @@
           </div>
 
           <!-- ── Scan Controls Bar ──────────────────────────────────────── -->
-          <div class="px-7 pb-5 pt-1 flex items-center justify-between">
+          <div class="relative z-30 px-7 pb-5 pt-1 flex items-center justify-between">
 
             <!-- Switch Sample Button -->
             <button
@@ -729,10 +731,10 @@
                 id="btn-capture"
                 type="button"
                 aria-label="Ambil foto naskah"
-                class="relative w-[72px] h-[72px] rounded-full p-1 border-3 border-white/80 hover:border-white active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+                class="relative w-[72px] h-[72px] rounded-full p-1 border-4 border-white/80 hover:border-white active:scale-95 transition-all cursor-pointer flex items-center justify-center select-none"
               >
-                <div class="w-full h-full rounded-full bg-white text-zinc-950 flex items-center justify-center shadow-md active:bg-zinc-200 transition-colors">
-                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="w-full h-full rounded-full bg-white text-zinc-950 flex items-center justify-center shadow-md active:bg-zinc-200 transition-colors pointer-events-none">
+                  <svg class="w-6 h-6 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                     <circle cx="12" cy="13" r="4"/>
                   </svg>
@@ -1068,7 +1070,7 @@
             <div id="history-list-container" class="flex flex-col gap-3"></div>
 
             <!-- Empty Archive State -->
-            <div id="history-empty-state" class="hidden flex-col items-center justify-center py-16 text-center" style="display: none;">
+            <div id="history-empty-state" class="hidden flex-col items-center justify-center py-16 text-center">
               <div class="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center mb-4 text-slate-400 dark:text-zinc-500">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
@@ -1136,7 +1138,7 @@
       </nav>
 
       <!-- ── Modal Piagam Paleografi Digital (Clean Modern Certificate) ── -->
-      <div id="modal-piagam" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4" style="display: none;">
+      <div id="modal-piagam" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4">
         <div class="relative w-full max-w-[390px] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-3xl p-6 shadow-2xl overflow-hidden flex flex-col gap-3.5">
           <!-- Certificate Header -->
           <div class="text-center pt-1 pb-1 border-b border-slate-200 dark:border-zinc-700/80">
@@ -1315,6 +1317,21 @@
         'screen-history': document.getElementById('screen-history'),
       };
 
+      // ── UI Visibility Helpers ──────────────────────────────
+      function showElement(el) {
+        if (!el) return;
+        el.classList.remove('hidden');
+        el.classList.add('flex');
+        el.style.removeProperty('display');
+      }
+
+      function hideElement(el) {
+        if (!el) return;
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+        el.style.display = 'none';
+      }
+
       // ── LocalStorage Engine ────────────────────────────────
       function getHistory() {
         try {
@@ -1409,13 +1426,13 @@
         const deniedNotice = document.getElementById('camera-denied-notice');
         const modeLabel = document.getElementById('scan-mode-label');
         const errorMsg = document.getElementById('scan-error-msg');
-        if (errorMsg) errorMsg.classList.add('hidden');
+        if (errorMsg) hideElement(errorMsg);
 
         stopCamera();
 
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
           console.warn('getUserMedia tidak didukung pada browser ini');
-          fallbackEl.classList.remove('hidden');
+          showElement(fallbackEl);
           videoEl.classList.add('hidden');
           liveBadge.classList.add('hidden');
           if (modeLabel) modeLabel.textContent = 'Simulasi Naskah (Kamera Tidak Tersedia)';
@@ -1423,28 +1440,44 @@
         }
 
         try {
-          cameraStream = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: { ideal: facingMode },
-              width: { ideal: 1280 },
-              height: { ideal: 720 },
-            },
-            audio: false,
-          });
+          try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: { ideal: facingMode },
+                width: { ideal: 1280 },
+                height: { ideal: 720 },
+              },
+              audio: false,
+            });
+          } catch (_) {
+            // Fallback for laptop webcams or restricted browsers where facingMode/res rejects
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+              video: true,
+              audio: false,
+            });
+          }
 
           videoEl.srcObject = cameraStream;
           videoEl.classList.remove('hidden');
           fallbackEl.classList.add('hidden');
           liveBadge.classList.remove('hidden');
+          liveBadge.classList.add('flex');
           deniedNotice.classList.add('hidden');
-          if (modeLabel) modeLabel.textContent = 'Kamera Aktif · Gemini 3.8 Vision';
+          if (modeLabel) modeLabel.textContent = 'Kamera Aktif · Gemini Vision';
+
+          // Play explicitly so videoWidth is available immediately
+          try {
+            await videoEl.play();
+          } catch (playErr) {
+            console.warn('video.play() warning:', playErr);
+          }
         } catch (err) {
           console.warn('Akses kamera ditolak atau gagal:', err);
-          fallbackEl.classList.remove('hidden');
+          showElement(fallbackEl);
           videoEl.classList.add('hidden');
           liveBadge.classList.add('hidden');
           if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-            deniedNotice.classList.remove('hidden');
+            showElement(deniedNotice);
           }
           if (modeLabel) modeLabel.textContent = 'Mode Uji Naskah Kurasi';
         }
@@ -1486,34 +1519,77 @@
         await startCamera();
       });
 
+      // ── Unified Camera Capture Action ─────────────────────
+      function triggerCapture() {
+        // Haptic feedback if supported
+        if (navigator.vibrate) navigator.vibrate(25);
+
+        // Instant shutter flash visual effect
+        const flashEl = document.getElementById('camera-shutter-flash');
+        if (flashEl) {
+          flashEl.classList.remove('hidden');
+          flashEl.style.opacity = '0.9';
+          setTimeout(() => {
+            flashEl.style.opacity = '0';
+            setTimeout(() => flashEl.classList.add('hidden'), 120);
+          }, 50);
+        }
+
+        // Dismiss unclear modal if active
+        hideElement(document.getElementById('scan-unclear-modal'));
+
+        const video = document.getElementById('camera-feed');
+        const canvas = document.getElementById('capture-canvas');
+
+        // Check if camera stream is active and has valid frame dimensions
+        if (cameraStream && video && (video.videoWidth > 0 || video.readyState >= 2)) {
+          try {
+            const w = video.videoWidth || 640;
+            const h = video.videoHeight || 480;
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+            const base64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
+            analyzeBase64Image(base64, 'image/jpeg');
+          } catch (e) {
+            console.warn('Direct canvas capture error, falling back to simulated scan:', e);
+            runSimulatedScan();
+          }
+        } else {
+          // Fallback demo simulation
+          runSimulatedScan();
+        }
+      }
+
       // ── AI Vision Multimodal Analysis Core ────────────────
       async function analyzeBase64Image(base64Data, mimeType = 'image/jpeg') {
         const loadingOverlay = document.getElementById('scan-loading-overlay');
         const progressBar = document.getElementById('scan-progress-bar');
         const stepText = document.getElementById('scan-step-text');
         const errorMsg = document.getElementById('scan-error-msg');
-        if (errorMsg) errorMsg.classList.add('hidden');
+        if (errorMsg) hideElement(errorMsg);
 
         // Store captured photo data URL for result tab
         currentCapturedImageDataUrl = `data:${mimeType};base64,${base64Data}`;
 
         // Phase 1: Capture & Upload
-        loadingOverlay.classList.remove('hidden');
-        loadingOverlay.classList.add('flex');
-        progressBar.style.width = '20%';
-        stepText.textContent = 'Mengunggah citra ke Gemini 3.8 Vision…';
+        showElement(loadingOverlay);
+        if (progressBar) progressBar.style.width = '20%';
+        if (stepText) stepText.textContent = 'Mengunggah citra ke Gemini Vision…';
 
         // Phase 2: Segmentation
         const t1 = setTimeout(() => {
-          progressBar.style.width = '55%';
-          stepText.textContent = 'Mendeteksi karakter & glif Ron Tal…';
-        }, 1100);
+          if (progressBar) progressBar.style.width = '55%';
+          if (stepText) stepText.textContent = 'Mendeteksi karakter & glif Ron Tal…';
+        }, 900);
 
         // Phase 3: Translation & Philology
         const t2 = setTimeout(() => {
-          progressBar.style.width = '85%';
-          stepText.textContent = 'Menerjemahkan & menafsirkan filosofi…';
-        }, 2200);
+          if (progressBar) progressBar.style.width = '85%';
+          if (stepText) stepText.textContent = 'Menerjemahkan & menafsirkan filosofi…';
+        }, 1800);
 
         try {
           const response = await fetch('/api/analyze', {
@@ -1531,12 +1607,11 @@
           }
 
           const data = await response.json();
-          progressBar.style.width = '100%';
+          if (progressBar) progressBar.style.width = '100%';
 
           // Check if AI detected ancient script or text
           if (data.hasScript === false) {
-            loadingOverlay.classList.add('hidden');
-            loadingOverlay.classList.remove('flex');
+            hideElement(loadingOverlay);
 
             const unclearModal = document.getElementById('scan-unclear-modal');
             const titleEl = document.getElementById('unclear-modal-title');
@@ -1551,10 +1626,7 @@
             if (sampleBtnLabel) sampleBtnLabel.textContent = 'Pelajari Contoh Naskah (Demo)';
             if (retryBtnLabel) retryBtnLabel.textContent = 'Arahkan Ulang Kamera & Coba Lagi';
 
-            if (unclearModal) {
-              unclearModal.classList.remove('hidden');
-              unclearModal.classList.add('flex');
-            }
+            showElement(unclearModal);
 
             latestResultData = data.suggestedSample || SAMPLES[currentSampleIdx];
             return;
@@ -1562,9 +1634,8 @@
 
           // Success: Populate and Navigate to Result Screen
           setTimeout(() => {
-            loadingOverlay.classList.add('hidden');
-            loadingOverlay.classList.remove('flex');
-            progressBar.style.width = '0%';
+            hideElement(loadingOverlay);
+            if (progressBar) progressBar.style.width = '0%';
 
             latestResultData = {
               title: data.title || 'Naskah Pindaian Kamera',
@@ -1586,9 +1657,8 @@
           clearTimeout(t2);
           console.error('AI Analysis failed:', err);
 
-          loadingOverlay.classList.add('hidden');
-          loadingOverlay.classList.remove('flex');
-          progressBar.style.width = '0%';
+          hideElement(loadingOverlay);
+          if (progressBar) progressBar.style.width = '0%';
 
           const isApiKeyIssue = (err.message && (err.message.includes('GEMINI_API_KEY') || err.message.includes('API key') || err.message.includes('500')));
 
@@ -1614,10 +1684,7 @@
             if (retryBtnLabel) retryBtnLabel.textContent = 'Coba Foto Ulang';
           }
 
-          if (unclearModal) {
-            unclearModal.classList.remove('hidden');
-            unclearModal.classList.add('flex');
-          }
+          showElement(unclearModal);
 
           latestResultData = SAMPLES[currentSampleIdx];
         }
@@ -1630,66 +1697,44 @@
         const progressBar = document.getElementById('scan-progress-bar');
         const stepText = document.getElementById('scan-step-text');
 
-        loadingOverlay.classList.remove('hidden');
-        loadingOverlay.classList.add('flex');
-        progressBar.style.width = '0%';
-        stepText.textContent = 'Mendeteksi glif aksara naskah…';
+        showElement(loadingOverlay);
+        if (progressBar) progressBar.style.width = '0%';
+        if (stepText) stepText.textContent = 'Mendeteksi glif aksara naskah…';
 
         setTimeout(() => {
-          progressBar.style.width = '55%';
-          stepText.textContent = 'Mengekstrak karakter Ron Tal…';
-        }, 700);
+          if (progressBar) progressBar.style.width = '55%';
+          if (stepText) stepText.textContent = 'Mengekstrak karakter Ron Tal…';
+        }, 600);
 
         setTimeout(() => {
-          progressBar.style.width = '100%';
-          stepText.textContent = 'Menafsirkan makna filosofis…';
-        }, 1400);
+          if (progressBar) progressBar.style.width = '100%';
+          if (stepText) stepText.textContent = 'Menafsirkan makna filosofis…';
+        }, 1200);
 
         setTimeout(() => {
-          loadingOverlay.classList.add('hidden');
-          loadingOverlay.classList.remove('flex');
-          progressBar.style.width = '0%';
+          hideElement(loadingOverlay);
+          if (progressBar) progressBar.style.width = '0%';
           latestResultData = SAMPLES[currentSampleIdx];
           populateResult(latestResultData);
           navigate('screen-result');
-        }, 1900);
+        }, 1600);
       }
 
       // Capture Shutter Button Action
       const captureBtn = document.getElementById('btn-capture');
-      captureBtn.addEventListener('click', function () {
-        // Haptic feedback if supported
-        if (navigator.vibrate) navigator.vibrate(25);
-
-        // Dismiss unclear modal if active
-        const unclearModal = document.getElementById('scan-unclear-modal');
-        if (unclearModal) {
-          unclearModal.classList.add('hidden');
-          unclearModal.classList.remove('flex');
-        }
-
-        const video = document.getElementById('camera-feed');
-        const canvas = document.getElementById('capture-canvas');
-
-        if (cameraStream && video && video.videoWidth > 0) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-          const base64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
-          analyzeBase64Image(base64, 'image/jpeg');
-        } else {
-          runSimulatedScan();
-        }
-      });
+      if (captureBtn) {
+        captureBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          triggerCapture();
+        });
+      }
 
       // Tap Viewfinder to Scan
       const viewfinderWrap = document.getElementById('viewfinder-wrap');
       if (viewfinderWrap) {
         viewfinderWrap.addEventListener('click', function (e) {
           if (e.target.closest('#scan-unclear-modal') || e.target.closest('#scan-loading-overlay')) return;
-          captureBtn.click();
+          triggerCapture();
         });
       }
 
@@ -1714,11 +1759,7 @@
 
       // Unclear Modal buttons
       document.getElementById('btn-unclear-use-sample').addEventListener('click', function () {
-        const unclearModal = document.getElementById('scan-unclear-modal');
-        if (unclearModal) {
-          unclearModal.classList.add('hidden');
-          unclearModal.classList.remove('flex');
-        }
+        hideElement(document.getElementById('scan-unclear-modal'));
         // User switched to sample manuscript: clear camera capture so the non-script photo isn't displayed as the manuscript
         currentCapturedImageDataUrl = null;
         if (!latestResultData) latestResultData = SAMPLES[currentSampleIdx];
@@ -1727,11 +1768,7 @@
       });
 
       document.getElementById('btn-unclear-retry').addEventListener('click', function () {
-        const unclearModal = document.getElementById('scan-unclear-modal');
-        if (unclearModal) {
-          unclearModal.classList.add('hidden');
-          unclearModal.classList.remove('flex');
-        }
+        hideElement(document.getElementById('scan-unclear-modal'));
       });
 
       // ── Epigraphic Glyph Decomposition Engine ─────────────
@@ -2043,13 +2080,11 @@
         document.getElementById('piagam-translation').textContent = `"${document.getElementById('result-translated-text').textContent.trim()}"`;
         document.getElementById('piagam-reg-num').textContent = `REG: LONTAR-AI/EPIG-2026/${Math.floor(100 + Math.random() * 900)}`;
 
-        modalPiagam.classList.remove('hidden');
-        modalPiagam.classList.add('flex');
+        showElement(modalPiagam);
       });
 
       btnPiagamClose.addEventListener('click', function () {
-        modalPiagam.classList.add('hidden');
-        modalPiagam.classList.remove('flex');
+        hideElement(modalPiagam);
       });
 
       btnPiagamCopy.addEventListener('click', function () {
@@ -2126,16 +2161,12 @@
 
         if (items.length === 0) {
           histContainer.classList.add('hidden');
-          emptyState.style.display = 'flex';
-          emptyState.classList.remove('hidden');
-          emptyState.classList.add('flex');
+          showElement(emptyState);
           return;
         }
 
         histContainer.classList.remove('hidden');
-        emptyState.style.display = 'none';
-        emptyState.classList.add('hidden');
-        emptyState.classList.remove('flex');
+        hideElement(emptyState);
 
         items.forEach(item => {
           const card = document.createElement('article');
@@ -2267,7 +2298,13 @@
 
       // ── Event Bindings ────────────────────────────────────
       document.getElementById('nav-home').addEventListener('click', () => navigate('screen-home'));
-      document.getElementById('nav-scan').addEventListener('click', () => navigate('screen-scan'));
+      document.getElementById('nav-scan').addEventListener('click', () => {
+        if (activeScreen === 'screen-scan') {
+          triggerCapture();
+        } else {
+          navigate('screen-scan');
+        }
+      });
       document.getElementById('nav-history').addEventListener('click', () => navigate('screen-history'));
 
       document.getElementById('btn-hero-scan').addEventListener('click', () => navigate('screen-scan'));
