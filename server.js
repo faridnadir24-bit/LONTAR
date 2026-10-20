@@ -115,52 +115,71 @@ app.post('/api/analyze', async (req, res) => {
     return res.status(413).json({ error: 'Gambar terlalu besar. Maksimum ~20 MB.' });
   }
 
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.5-flash',
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            { text: AKSARA_PROMPT },
-            { inlineData: { mimeType, data: imageBase64 } },
-          ],
-        },
-      ],
-    });
+  const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-3.5-flash-lite'];
+  let lastError = null;
 
-    const rawText = response.text?.trim() ?? '';
-
-    // Strip any accidental markdown fences
-    let cleaned = rawText
-      .replace(/^```(?:json)?\s*/i, '')
-      .replace(/\s*```$/i, '')
-      .trim();
-
-    // If still surrounded by text, extract the first JSON object
-    if (!cleaned.startsWith('{')) {
-      const match = cleaned.match(/\{[\s\S]*\}/);
-      if (match) cleaned = match[0];
-    }
-
-    let parsed;
+  for (const modelName of CANDIDATE_MODELS) {
     try {
-      parsed = JSON.parse(cleaned);
-    } catch (parseErr) {
-      console.error('JSON parse error. Raw text:', rawText);
-      return res.status(500).json({
-        error: 'Respons AI tidak valid. Coba lagi.',
-        raw: rawText,
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              { text: AKSARA_PROMPT },
+              { inlineData: { mimeType, data: imageBase64 } },
+            ],
+          },
+        ],
       });
-    }
 
-    return res.json(parsed);
-  } catch (err) {
-    console.error('Gemini API error:', err);
-    return res.status(500).json({
-      error: err.message || 'Terjadi kesalahan pada Gemini API.',
+      const rawText = response.text?.trim() ?? '';
+
+      // Strip any accidental markdown fences
+      let cleaned = rawText
+        .replace(/^```(?:json)?\s*/i, '')
+        .replace(/\s*```$/i, '')
+        .trim();
+
+      // If still surrounded by text, extract the first JSON object
+      if (!cleaned.startsWith('{')) {
+        const match = cleaned.match(/\{[\s\S]*\}/);
+        if (match) cleaned = match[0];
+      }
+
+      let parsed;
+      try {
+        parsed = JSON.parse(cleaned);
+      } catch (parseErr) {
+        console.error('JSON parse error. Raw text:', rawText);
+        return res.status(500).json({
+          error: 'Respons AI tidak valid. Coba lagi.',
+          raw: rawText,
+        });
+      }
+
+      return res.json(parsed);
+    } catch (err) {
+      lastError = err;
+      console.warn(`Local model ${modelName} encountered error:`, err.message);
+      const isQuota = err.message && (err.message.includes('429') || err.message.includes('Quota exceeded') || err.message.includes('RESOURCE_EXHAUSTED'));
+      if (!isQuota) break;
+    }
+  }
+
+  const errMsg = lastError?.message || '';
+  const isQuota = errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED');
+  if (isQuota) {
+    return res.status(429).json({
+      errorType: 'QUOTA_EXCEEDED',
+      error: 'Batas kuota harian Gemini API (Free Tier) telah tercapai pada akun Google ini. Kuota akan direset otomatis oleh Google.',
     });
   }
+
+  return res.status(500).json({
+    errorType: 'UNKNOWN_ERROR',
+    error: lastError?.message || 'Terjadi kesalahan pada Gemini API.',
+  });
 });
 
 // ── Health check ────────────────────────────────────────────────────────────

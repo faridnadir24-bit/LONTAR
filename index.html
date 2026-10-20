@@ -147,8 +147,21 @@
           </div>
         </div>
 
-        <!-- Controls: Theme switch (Hitam / Putih) -->
+        <!-- Controls: Theme switch (Hitam / Putih) & API Key Settings -->
         <div class="flex items-center gap-2">
+          <button
+            id="btn-open-api-key"
+            type="button"
+            title="Pengaturan Kunci API Gemini (Opsional)"
+            class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 flex items-center gap-1.5 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5 text-slate-700 dark:text-zinc-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 2l-2 2m-1.5 1.5L14 9l-3 3-4-4 3-3 3.5-3.5L21 2z"/>
+              <path d="M15.5 5.5l3 3"/>
+              <circle cx="7.5" cy="16.5" r="4.5"/>
+            </svg>
+            <span class="hidden sm:inline">API</span>
+          </button>
           <button
             id="theme-toggle"
             type="button"
@@ -571,6 +584,10 @@
                 </div>
 
                 <div class="flex flex-col gap-2 pt-1">
+                  <button id="btn-unclear-enter-key" type="button" class="hidden w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 2l-2 2m-1.5 1.5L14 9l-3 3-4-4 3-3 3.5-3.5L21 2z"/><path d="M15.5 5.5l3 3"/><circle cx="7.5" cy="16.5" r="4.5"/></svg>
+                    <span>Masukkan Kunci API Pribadi (Bypass Kuota)</span>
+                  </button>
                   <button id="btn-unclear-use-sample" type="button" class="w-full py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     <span id="btn-unclear-sample-label">Tampilkan Naskah Asli (Sutasoma)</span>
@@ -1061,6 +1078,70 @@
               Salin Piagam
             </button>
             <button id="btn-piagam-close" type="button" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-[12px] cursor-pointer transition-colors">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Modal Pengaturan Kunci API Gemini (Bypass Kuota Server) ── -->
+      <div id="modal-api-key" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4">
+        <div class="relative w-full max-w-[390px] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-3xl p-6 shadow-2xl overflow-hidden flex flex-col gap-4">
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-zinc-800">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-1.5 1.5L14 9l-3 3-4-4 3-3 3.5-3.5L21 2z"/><circle cx="7.5" cy="16.5" r="4.5"/></svg>
+              </div>
+              <div>
+                <h3 class="font-sans text-[15px] font-bold text-slate-900 dark:text-white leading-none">Kunci API Gemini</h3>
+                <span class="text-[10px] text-slate-500 dark:text-zinc-400">Google AI Studio (Opsional)</span>
+              </div>
+            </div>
+            <button id="btn-close-api-key-x" type="button" class="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-400 dark:text-zinc-400 flex items-center justify-center transition-colors cursor-pointer">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Description -->
+          <div class="text-[12px] text-slate-600 dark:text-zinc-350 leading-relaxed space-y-2">
+            <p>
+              Secara bawaan aplikasi menggunakan server API. Jika kuota gratis server harian tercapai (Rate Limit 429), Anda dapat memasukkan kunci API Google Gemini milik sendiri.
+            </p>
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800/70 border border-slate-200 dark:border-zinc-700/80 text-[11px] text-slate-600 dark:text-zinc-400">
+              💡 <strong>Gratis tanpa kartu kredit:</strong> Buat kunci dalam 30 detik di <a href="https://aistudio.google.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 underline font-semibold">aistudio.google.com</a>. Kunci disimpan aman hanya di browser perangkat ini.
+            </div>
+          </div>
+
+          <!-- Input -->
+          <div class="space-y-1.5">
+            <label for="input-custom-api-key" class="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 block">
+              Google Gemini API Key:
+            </label>
+            <input
+              id="input-custom-api-key"
+              type="password"
+              placeholder="AIzaSy..."
+              autocomplete="off"
+              spellcheck="false"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+            />
+            <p id="api-key-status-text" class="text-[10px] text-slate-500 dark:text-zinc-400 italic">
+              Status: Menggunakan kuota default server
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-col gap-2 pt-1">
+            <div class="flex gap-2">
+              <button id="btn-save-api-key" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
+                Simpan Kunci
+              </button>
+              <button id="btn-clear-api-key" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-[12px] cursor-pointer transition-colors" title="Hapus kunci tersimpan">
+                Hapus
+              </button>
+            </div>
+            <button id="btn-close-api-key" type="button" class="w-full py-2 rounded-xl text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-white font-medium text-[11px] cursor-pointer transition-colors text-center">
               Tutup
             </button>
           </div>

@@ -57,6 +57,8 @@ Jika benar-benar tidak ada teks/aksara:
   }
 }`;
 
+const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-3.5-flash-lite'];
+
 export default async function handler(req, res) {
   // Handle CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -64,7 +66,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, x-gemini-api-key'
   );
 
   if (req.method === 'OPTIONS') {
@@ -79,50 +81,85 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!GEMINI_API_KEY) {
+  const { imageBase64, mimeType = 'image/jpeg', customApiKey } = req.body || {};
+  const activeApiKey = customApiKey?.trim() || req.headers['x-gemini-api-key']?.trim() || GEMINI_API_KEY;
+
+  if (!activeApiKey) {
     return res.status(500).json({
-      error: 'GEMINI_API_KEY is not configured in environment variables.',
+      errorType: 'MISSING_API_KEY',
+      error: 'GEMINI_API_KEY belum dikonfigurasi di Vercel atau pengaturan aplikasi.',
     });
   }
-
-  const { imageBase64, mimeType = 'image/jpeg' } = req.body || {};
 
   if (!imageBase64) {
     return res.status(400).json({ error: 'imageBase64 diperlukan.' });
   }
 
-  try {
-    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.5-flash',
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            { text: AKSARA_PROMPT },
-            { inlineData: { mimeType, data: imageBase64 } },
-          ],
-        },
-      ],
-    });
+  let lastError = null;
+  const ai = new GoogleGenAI({ apiKey: activeApiKey });
 
-    const rawText = response.text?.trim() ?? '';
-    let cleaned = rawText
-      .replace(/^```(?:json)?\s*/i, '')
-      .replace(/\s*```$/i, '')
-      .trim();
+  // Try candidate models in order if one experiences rate-limit or error
+  for (const modelName of CANDIDATE_MODELS) {
+    try {
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              { text: AKSARA_PROMPT },
+              { inlineData: { mimeType, data: imageBase64 } },
+            ],
+          },
+        ],
+      });
 
-    if (!cleaned.startsWith('{')) {
-      const match = cleaned.match(/\{[\s\S]*\}/);
-      if (match) cleaned = match[0];
+      const rawText = response.text?.trim() ?? '';
+      let cleaned = rawText
+        .replace(/^```(?:json)?\s*/i, '')
+        .replace(/\s*```$/i, '')
+        .trim();
+
+      if (!cleaned.startsWith('{')) {
+        const match = cleaned.match(/\{[\s\S]*\}/);
+        if (match) cleaned = match[0];
+      }
+
+      const parsed = JSON.parse(cleaned);
+      return res.status(200).json(parsed);
+    } catch (err) {
+      lastError = err;
+      console.warn(`Model ${modelName} encountered error:`, err.message);
+      // If error is not a quota issue, break or keep trying
+      const isQuota = err.message && (err.message.includes('429') || err.message.includes('Quota exceeded') || err.message.includes('RESOURCE_EXHAUSTED'));
+      if (!isQuota) {
+        // If it's invalid key or bad request, don't waste time on next models
+        break;
+      }
     }
+  }
 
-    const parsed = JSON.parse(cleaned);
-    return res.status(200).json(parsed);
-  } catch (err) {
-    console.error('Gemini API error in Vercel function:', err);
-    return res.status(500).json({
-      error: err.message || 'Terjadi kesalahan saat memproses gambar.',
+  // If all models failed, parse and return human-friendly error
+  const errMsg = lastError?.message || '';
+  const isQuota = errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('exhausted');
+  const isInvalidKey = errMsg.includes('API_KEY_INVALID') || errMsg.includes('API key not valid') || errMsg.includes('403');
+
+  if (isQuota) {
+    return res.status(429).json({
+      errorType: 'QUOTA_EXCEEDED',
+      error: 'Batas kuota harian Gemini API (Free Tier) telah tercapai pada akun Google ini. Kuota akan direset otomatis oleh Google, atau Anda dapat memasukkan API Key pribadi dari Google AI Studio.',
     });
   }
+
+  if (isInvalidKey) {
+    return res.status(401).json({
+      errorType: 'INVALID_API_KEY',
+      error: 'Kunci API Gemini tidak valid atau izin akses ditolak oleh Google AI Studio.',
+    });
+  }
+
+  return res.status(500).json({
+    errorType: 'UNKNOWN_ERROR',
+    error: 'Terjadi kendala saat menganalisis citra dengan layanan AI. Silakan periksa koneksi atau coba naskah peraga.',
+  });
 }

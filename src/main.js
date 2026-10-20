@@ -27,7 +27,11 @@ import {
   renderHistory,
   setHistoryFilterTag,
 } from './services/history.js';
-import { requestManuscriptAnalysis } from './services/api.js';
+import {
+  requestManuscriptAnalysis,
+  getCustomApiKey,
+  setCustomApiKey,
+} from './services/api.js';
 
 // ── Application Runtime State ──────────────────────────────
 let currentSampleIdx = 0;
@@ -61,6 +65,16 @@ export function navigate(targetId) {
   });
 
   activeScreen = targetId;
+
+  // Hide bottom navigation on Camera HUD screen to prevent layout overlap
+  const bottomNav = document.getElementById('bottom-nav');
+  if (bottomNav) {
+    if (targetId === 'screen-scan') {
+      bottomNav.classList.add('hidden');
+    } else {
+      bottomNav.classList.remove('hidden');
+    }
+  }
 
   // Bottom Navigation Active Indicator
   const NAV_MAP = {
@@ -232,25 +246,75 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     hideElement(loadingOverlay);
     if (progressBar) progressBar.style.width = '0%';
 
-    const isApiKeyIssue = (err.message && (err.message.includes('GEMINI_API_KEY') || err.message.includes('API key') || err.message.includes('500')));
+    const errMsg = err.message || '';
+    const isQuotaIssue = (
+      err.status === 429 ||
+      err.errorType === 'QUOTA_EXCEEDED' ||
+      errMsg.includes('429') ||
+      errMsg.includes('Quota exceeded') ||
+      errMsg.includes('RESOURCE_EXHAUSTED') ||
+      errMsg.includes('Resource has been exhausted')
+    );
+    const isMissingKeyIssue = (
+      err.errorType === 'MISSING_API_KEY' ||
+      errMsg.includes('GEMINI_API_KEY') ||
+      errMsg.includes('is not configured')
+    );
+    const isInvalidKeyIssue = (
+      err.errorType === 'INVALID_API_KEY' ||
+      err.status === 401 ||
+      errMsg.includes('API_KEY_INVALID') ||
+      errMsg.includes('API key not valid')
+    );
 
     const unclearModal = document.getElementById('scan-unclear-modal');
     const titleEl = document.getElementById('unclear-modal-title');
     const descEl = document.getElementById('unclear-modal-desc');
     const sampleBtnLabel = document.getElementById('btn-unclear-sample-label');
     const retryBtnLabel = document.getElementById('btn-unclear-retry-label');
+    const enterKeyBtn = document.getElementById('btn-unclear-enter-key');
 
-    if (isApiKeyIssue) {
-      if (titleEl) titleEl.textContent = 'Kunci API Gemini Belum Dikonfigurasi di Vercel';
+    // Show custom API key button if it's a quota or key issue
+    if (enterKeyBtn) {
+      if (isQuotaIssue || isMissingKeyIssue || isInvalidKeyIssue) {
+        enterKeyBtn.classList.remove('hidden');
+        enterKeyBtn.classList.add('flex');
+      } else {
+        enterKeyBtn.classList.add('hidden');
+        enterKeyBtn.classList.remove('flex');
+      }
+    }
+
+    if (isQuotaIssue) {
+      if (titleEl) titleEl.textContent = 'Batas Kuota Harian AI Tercapai';
       if (descEl) {
-        descEl.innerHTML = 'Kamera tidak dapat memproses via AI karena <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 border border-slate-300 dark:border-zinc-700 font-mono text-[11px]">GEMINI_API_KEY</code> belum ditambahkan di dashboard Vercel (<strong>Project Settings &gt; Environment Variables</strong>).<br><br>Silakan tambahkan API key tersebut di Vercel agar pemindaian kamera aktif real-time, atau gunakan contoh naskah kurasi untuk pengujian fitur lomba.';
+        descEl.innerHTML = 'Kunci API Google Gemini (Free Tier) di server saat ini telah mencapai batas kuota harian dari Google.<br><br>💡 <strong>Solusi Cepat:</strong><br>• Klik tombol biru di bawah untuk <strong>memasukkan API Key Gemini pribadi</strong> (gratis di <em>aistudio.google.com</em>), atau<br>• Gunakan <strong>naskah peraga kurasi</strong> untuk demonstrasi pengujian.';
+      }
+      if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Demo)';
+      if (retryBtnLabel) retryBtnLabel.textContent = 'Tutup';
+    } else if (isMissingKeyIssue) {
+      if (titleEl) titleEl.textContent = 'Kunci API Gemini Belum Dikonfigurasi';
+      if (descEl) {
+        descEl.innerHTML = 'Kamera tidak dapat memproses via AI karena <code class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-200 border border-zinc-700 font-mono text-[11px]">GEMINI_API_KEY</code> belum ditambahkan di Vercel atau pengaturan aplikasi.';
       }
       if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Demo)';
       if (retryBtnLabel) retryBtnLabel.textContent = 'Tutup & Arahkan Kamera Lagi';
+    } else if (isInvalidKeyIssue) {
+      if (titleEl) titleEl.textContent = 'Kunci API Gemini Tidak Valid';
+      if (descEl) {
+        descEl.textContent = 'Kunci API yang dimasukkan ditolak oleh Google AI Studio. Pastikan kunci masih aktif dan periksa kembali pengetikannya.';
+      }
+      if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Demo)';
+      if (retryBtnLabel) retryBtnLabel.textContent = 'Coba Foto Ulang';
     } else {
       if (titleEl) titleEl.textContent = 'Gagal Menghubungi Layanan AI';
       if (descEl) {
-        descEl.textContent = `Terjadi kendala saat menganalisis citra: ${err.message || 'Koneksi terputus'}. Periksa jaringan internet atau gunakan naskah peraga.`;
+        // Strip raw JSON if present in error message
+        let userFriendlyMsg = errMsg;
+        if (userFriendlyMsg.includes('{') || userFriendlyMsg.includes('code')) {
+          userFriendlyMsg = 'Layanan AI Google sedang sibuk atau koneksi internet tidak stabil.';
+        }
+        descEl.textContent = `Terjadi kendala saat menganalisis citra: ${userFriendlyMsg}. Silakan coba lagi atau gunakan naskah peraga.`;
       }
       if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Demo)';
       if (retryBtnLabel) retryBtnLabel.textContent = 'Coba Foto Ulang';
@@ -708,6 +772,70 @@ document.addEventListener('DOMContentLoaded', () => {
         navigate('screen-result');
       });
       showToast('Arsip naskah telah dikosongkan');
+    });
+  }
+
+  // ── Custom Gemini API Key Management ──
+  const modalApiKey = document.getElementById('modal-api-key');
+  const btnOpenApiKey = document.getElementById('btn-open-api-key');
+  const btnCloseApiKey = document.getElementById('btn-close-api-key');
+  const btnCloseApiKeyX = document.getElementById('btn-close-api-key-x');
+  const btnSaveApiKey = document.getElementById('btn-save-api-key');
+  const btnClearApiKey = document.getElementById('btn-clear-api-key');
+  const inputCustomApiKey = document.getElementById('input-custom-api-key');
+  const apiKeyStatusText = document.getElementById('api-key-status-text');
+  const btnUnclearEnterKey = document.getElementById('btn-unclear-enter-key');
+
+  function openApiKeyModal() {
+    const currentKey = getCustomApiKey();
+    if (inputCustomApiKey) inputCustomApiKey.value = currentKey;
+    if (apiKeyStatusText) {
+      if (currentKey) {
+        apiKeyStatusText.textContent = 'Status: Menggunakan API Key pribadi tersimpan';
+        apiKeyStatusText.className = 'text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold';
+      } else {
+        apiKeyStatusText.textContent = 'Status: Menggunakan kuota default server';
+        apiKeyStatusText.className = 'text-[10px] text-slate-500 dark:text-zinc-400 italic';
+      }
+    }
+    showElement(modalApiKey);
+  }
+
+  if (btnOpenApiKey) btnOpenApiKey.addEventListener('click', openApiKeyModal);
+  if (btnUnclearEnterKey) {
+    btnUnclearEnterKey.addEventListener('click', () => {
+      const unclearModal = document.getElementById('scan-unclear-modal');
+      if (unclearModal) hideElement(unclearModal);
+      openApiKeyModal();
+    });
+  }
+
+  if (btnCloseApiKey) btnCloseApiKey.addEventListener('click', () => hideElement(modalApiKey));
+  if (btnCloseApiKeyX) btnCloseApiKeyX.addEventListener('click', () => hideElement(modalApiKey));
+
+  if (btnSaveApiKey) {
+    btnSaveApiKey.addEventListener('click', () => {
+      const val = inputCustomApiKey ? inputCustomApiKey.value.trim() : '';
+      if (!val) {
+        setCustomApiKey('');
+        showToast('Kunci dihapus. Menggunakan server default.');
+      } else {
+        setCustomApiKey(val);
+        showToast('Kunci API pribadi berhasil disimpan!');
+      }
+      hideElement(modalApiKey);
+    });
+  }
+
+  if (btnClearApiKey) {
+    btnClearApiKey.addEventListener('click', () => {
+      setCustomApiKey('');
+      if (inputCustomApiKey) inputCustomApiKey.value = '';
+      if (apiKeyStatusText) {
+        apiKeyStatusText.textContent = 'Status: Menggunakan kuota default server';
+        apiKeyStatusText.className = 'text-[10px] text-slate-500 dark:text-zinc-400 italic';
+      }
+      showToast('Kunci API dihapus');
     });
   }
 
