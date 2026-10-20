@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id" class="dark">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
@@ -8,13 +8,13 @@
     <meta property="og:title" content="LONTAR.AI — Pemindai & Analisis Filologi Naskah Nusantara" />
     <meta property="og:description" content="Platform AI paleografi untuk dekode dan transliterasi aksara kuno Nusantara." />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#0F0E0C" />
+    <meta name="theme-color" content="#FFFFFF" />
 
-    <!-- Google Fonts: Plus Jakarta Sans (UI), Marcellus (Display Epigraphy), Cinzel (Royal), Cormorant Garamond (Literary Philology), Noto Sans Javanese (Script) -->
+    <!-- Google Fonts: Plus Jakarta Sans (UI & Display), Newsreader (Literary), Noto Sans Javanese (Script) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600;1,700&family=Marcellus&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Noto+Sans+Javanese:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Noto+Sans+Javanese:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -26,67 +26,69 @@
         theme: {
           extend: {
             colors: {
-              // Suwarna — Royal Majapahit Imperial Gold
+              // Primary Slate & Charcoal monochrome scale (replaces old gold with clean high-contrast ink)
               gold: {
-                50: '#FCF9EE',
-                100: '#F6EFCF',
-                200: '#EEDAA0',
-                300: '#E4C26E',
-                400: '#D7AA3E',
-                500: '#BD8C23', // Royal Antique Gold
-                600: '#9B6E14',
-                700: '#77520B',
-                800: '#543806',
-                900: '#342102',
+                50: '#F8FAFC',
+                100: '#F1F5F9',
+                200: '#E2E8F0',
+                300: '#CBD5E1',
+                400: '#2563EB', // Sapphire accent
+                500: '#0F172A', // Deep Slate primary
+                600: '#020617',
+                700: '#1E293B',
+                800: '#334155',
+                900: '#475569',
               },
-              // Daluang — Sacred Bark & Palm Vellum (Light mode)
+              // Clean Paper & Vellum scale (pure crisp whites & neutrals)
               parchment: {
-                50: '#FBF8F1', // Soft luminous bark paper
-                100: '#F4EFE3',
-                200: '#EAE1CE',
-                300: '#DACDB6',
-                400: '#BBAA8E',
-                500: '#8E7C62',
-                800: '#302619',
-                900: '#1D160D',
+                50: '#FFFFFF',
+                100: '#F8FAFC',
+                200: '#F1F5F9',
+                300: '#E2E8F0',
+                400: '#94A3B8',
+                500: '#64748B',
+                600: '#475569',
+                700: '#334155',
+                800: '#1E293B',
+                900: '#0F172A',
               },
-              // Candramawa — Smoked Palm Leaf Charcoal Obsidian (Dark mode)
+              // Sleek Modern Monochrome Dark scale (Zinc/Slate)
               night: {
-                950: '#090806', // Obsidian ink base
-                900: '#120F0C', // Smoked lontar chest surface
-                850: '#181410', // Elevated velvet card
-                800: '#251F18', // Warm brass border
-                700: '#3C3227',
-                600: '#5A4B3B',
-                500: '#7F6C57',
-                400: '#A99680',
-                300: '#D0C2B2',
-                200: '#E9E3DA',
-                100: '#F7F4EE',
+                950: '#09090B',
+                900: '#18181B',
+                850: '#27272A',
+                800: '#27272A',
+                750: '#3F3F46',
+                700: '#52525B',
+                600: '#71717A',
+                500: '#A1A1AA',
+                400: '#A1A1AA',
+                300: '#D4D4D8',
+                200: '#E4E4E7',
+                100: '#FAFAFA',
               },
-              // Wilis Retna — Sacred Verdigris / Temple Emerald Jade
               patina: {
-                700: '#102F23',
-                600: '#174232',
-                500: '#225B46',
-                400: '#347C62',
-                300: '#5EAC91',
-                100: '#DCF3EA',
+                700: '#064E3B',
+                600: '#047857',
+                500: '#059669',
+                400: '#10B981',
+                300: '#34D399',
+                100: '#D1FAE5',
               },
             },
             fontFamily: {
               sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-              display: ['"Marcellus"', '"Cinzel"', 'Georgia', 'serif'],
-              royal: ['"Cinzel"', 'Georgia', 'serif'],
-              literary: ['"Cormorant Garamond"', '"Newsreader"', 'Georgia', 'serif'],
+              display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              royal: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              literary: ['"Newsreader"', '"Cormorant Garamond"', 'Georgia', 'serif'],
               javanese: ['"Noto Sans Javanese"', 'serif'],
             },
             boxShadow: {
-              'gold-glow': '0 0 32px -4px rgba(215, 170, 62, 0.45)',
-              'gold-sm': '0 0 16px -2px rgba(215, 170, 62, 0.3)',
-              'lontar-card': '0 20px 48px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(215, 170, 62, 0.22)',
-              'lontar-elevated': '0 28px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(215, 170, 62, 0.3)',
-              'patina-sm': '0 0 16px -2px rgba(52, 124, 98, 0.35)',
+              'gold-glow': '0 4px 14px 0 rgba(15, 23, 42, 0.15)',
+              'gold-sm': '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+              'lontar-card': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+              'lontar-elevated': '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
+              'patina-sm': '0 1px 3px 0 rgba(16, 185, 129, 0.2)',
             },
           },
         },
@@ -97,6 +99,10 @@
       *, *::before, *::after {
         -webkit-tap-highlight-color: transparent;
         box-sizing: border-box;
+      }
+
+      .hidden {
+        display: none !important;
       }
 
       html {
@@ -110,12 +116,11 @@
         font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background-color: #090806;
       }
 
-      .font-display { font-family: 'Marcellus', 'Cinzel', Georgia, serif; letter-spacing: 0.015em; }
-      .font-royal { font-family: 'Cinzel', Georgia, serif; }
-      .font-serif-literary { font-family: 'Cormorant Garamond', 'Newsreader', Georgia, serif; }
+      .font-display { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 700; }
+      .font-royal { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 700; }
+      .font-serif-literary { font-family: 'Newsreader', 'Cormorant Garamond', Georgia, serif; }
       .font-javanese {
         font-family: 'Noto Sans Javanese', serif;
         letter-spacing: normal !important;
@@ -217,7 +222,7 @@
     </style>
   </head>
 
-  <body class="text-night-100 dark:text-night-100 bg-night-950 min-h-screen w-full flex flex-col items-center justify-start sm:justify-center p-0 sm:p-3 md:p-4 overflow-x-hidden overflow-y-auto selection:bg-gold-500/30 selection:text-gold-200">
+  <body class="text-slate-900 dark:text-zinc-100 bg-slate-100 dark:bg-zinc-950 min-h-screen w-full flex flex-col items-center justify-start sm:justify-center p-0 sm:p-3 md:p-4 overflow-x-hidden overflow-y-auto selection:bg-slate-900 selection:text-white dark:selection:bg-white dark:selection:text-zinc-950">
 
     <!-- ╔══════════════════════════════════════════════════════════════╗ -->
     <!-- ║   MAIN RESPONSIVE CANVAS (Mobile-First / Desktop Framing)   ║ -->
@@ -226,72 +231,70 @@
       relative w-full max-w-[450px]
       h-screen h-dvh
       sm:h-[min(880px,calc(100dvh-2rem))] sm:max-h-[880px] sm:min-h-[520px]
-      sm:my-auto sm:rounded-[36px] sm:border sm:border-night-800/80
-      bg-parchment-50 dark:bg-night-900
+      sm:my-auto sm:rounded-[36px] sm:border sm:border-slate-200/80 dark:sm:border-zinc-800
+      bg-white dark:bg-zinc-900
       flex flex-col overflow-hidden
-      shadow-[0_24px_80px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(197,155,63,0.12)]
-      transition-colors duration-300
+      shadow-xl shadow-slate-200/60 dark:shadow-2xl dark:shadow-black/50
+      transition-colors duration-200
     ">
 
-      <!-- ── Atmospheric ambient background glow on desktop ── -->
-      <div class="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-gold-500/10 blur-3xl z-0"></div>
-      <div class="pointer-events-none absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-patina-500/10 blur-3xl z-0"></div>
-
-      <!-- ── Regal App Header ──────────────────────────────────────── -->
+      <!-- ── Clean App Header ──────────────────────────────────────── -->
       <header class="
         relative z-40 shrink-0
-        bg-parchment-50/95 dark:bg-night-900/95 backdrop-blur-md
-        border-b border-parchment-200 dark:border-night-800
+        bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md
+        border-b border-slate-200/80 dark:border-zinc-800
         px-5 py-3.5 flex items-center justify-between
-        transition-colors duration-300
+        transition-colors duration-200
       ">
         <div class="flex items-center gap-3">
-          <!-- Logo Medallion -->
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 p-0.5 shadow-gold-sm flex items-center justify-center shrink-0">
-            <div class="w-full h-full bg-night-950 rounded-[10px] flex items-center justify-center text-gold-300">
-              <svg class="w-5 h-5 text-gold-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <!-- Stylized lontar leaf & lens icon -->
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                <circle cx="12" cy="10" r="3" stroke-width="1.8"/>
-              </svg>
-            </div>
+          <!-- Clean Logo Icon -->
+          <div class="w-9 h-9 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center shrink-0 shadow-sm">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
           </div>
           <div>
             <div class="flex items-center gap-1.5 leading-none">
-              <span class="font-display text-[17px] font-bold tracking-wider text-night-900 dark:text-night-100">
-                LONTAR<span class="text-gold-500 font-serif italic font-normal text-sm lowercase">.ai</span>
+              <span class="font-sans text-[17px] font-extrabold tracking-tight text-slate-900 dark:text-white">
+                LONTAR<span class="text-blue-600 dark:text-blue-400 font-semibold text-sm">.ai</span>
               </span>
-              <span class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-gold-500/15 border border-gold-500/35 text-gold-600 dark:text-gold-400 flex items-center gap-1 shadow-sm">
-                <span class="w-1.5 h-1.5 rounded-full bg-patina-400 animate-pulse"></span>
-                EDISI FILOLOGI
+              <span class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                v2.4
               </span>
             </div>
-            <p class="text-[10px] text-parchment-500 dark:text-night-400 mt-0.5 font-medium tracking-tight">
-              Preservasi Epigrafi Nusantara · Gemini 3.8 Vision
+            <p class="text-[10px] text-slate-500 dark:text-zinc-400 mt-1 font-medium tracking-normal">
+              Epigrafi Nusantara · Gemini Vision
             </p>
           </div>
         </div>
 
-        <!-- Controls: Camera indicator & Theme switch -->
+        <!-- Controls: Theme switch (Hitam / Putih) -->
         <div class="flex items-center gap-2">
-          <!-- Theme toggle -->
           <button
             id="theme-toggle"
             type="button"
-            aria-label="Alihkan tema naskah"
-            class="w-9 h-9 rounded-xl bg-parchment-100 dark:bg-night-850 border border-parchment-300/80 dark:border-night-800 flex items-center justify-center text-parchment-800 dark:text-night-300 hover:text-gold-500 dark:hover:text-gold-400 transition-colors cursor-pointer"
+            title="Beralih Mode Bersih / Hitam-Putih"
+            class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 flex items-center gap-1.5 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors cursor-pointer"
           >
-            <svg id="icon-moon" class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Moon icon (visible in light mode to switch to dark) -->
+            <svg id="icon-moon" class="w-4 h-4 block dark:hidden text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </svg>
-            <svg id="icon-sun" class="w-4 h-4 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Sun icon (visible in dark mode to switch to light) -->
+            <svg id="icon-sun" class="w-4 h-4 hidden dark:block text-zinc-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="5"/>
-              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
             </svg>
+            <span id="theme-label" class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 hidden sm:inline">Gelap</span>
           </button>
         </div>
       </header>
@@ -305,94 +308,78 @@
         <section id="screen-home" class="screen-view screen-visible flex-col flex-1 pb-6">
 
           <!-- Hero Section -->
-          <div class="px-5 pt-6 pb-6 bg-gradient-to-b from-parchment-100 to-parchment-50 dark:from-night-850 dark:to-night-900 border-b border-parchment-200 dark:border-night-800 relative overflow-hidden">
+          <div class="px-5 pt-6 pb-6 bg-white dark:bg-zinc-900 border-b border-slate-200/80 dark:border-zinc-800 relative overflow-hidden">
             <div class="relative z-10 flex flex-col gap-4">
 
               <!-- Epigraphic Badge -->
               <div class="flex items-center gap-2">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-600 dark:text-gold-400 text-[11px] font-semibold tracking-wide">
-                  <span class="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse"></span>
-                  Gemini 3.8 Multimodal Vision
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 text-[11px] font-semibold tracking-wide">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                  Gemini 3.5 Multimodal Vision
                 </span>
-                <span class="text-[11px] font-medium text-parchment-500 dark:text-night-400">Epigrafi Nusantara</span>
+                <span class="text-[11px] font-medium text-slate-500 dark:text-zinc-400">Epigrafi Nusantara</span>
               </div>
 
               <!-- Grand Title -->
               <div>
-                <h2 class="font-display text-[26px] sm:text-[28px] font-bold leading-snug text-night-900 dark:text-night-100">
-                  Jembatan Aksara Kuno<br/>
-                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 dark:from-gold-200 dark:via-gold-400 dark:to-gold-500">
-                    Menuju Era Modern
+                <h2 class="font-sans text-[26px] sm:text-[28px] font-extrabold tracking-tight leading-snug text-slate-900 dark:text-white">
+                  Dekripsi Aksara Kuno<br/>
+                  <span class="text-slate-600 dark:text-zinc-400 font-semibold">
+                    Dalam Sekejap Kamera
                   </span>
                 </h2>
-                <p class="text-[13px] text-parchment-800/80 dark:text-night-300 font-normal leading-relaxed mt-2">
-                  Pindai manuskrip lontar kuno Nusantara melalui kamera, transkripsikan glif aksara asli, terjemahkan, dan telusuri nilai filosofis luhur leluhur.
+                <p class="text-[13px] text-slate-600 dark:text-zinc-400 font-normal leading-relaxed mt-2">
+                  Arahkan kamera ke aksara Jawa atau naskah lontar untuk transkripsi Unicode instan, transliterasi Latin, dan pemaknaan filosofis.
                 </p>
               </div>
 
               <!-- Interactive Lontar Palm Leaf Showcase Card -->
               <div
                 id="hero-lontar-preview"
-                class="relative mt-2 p-4 rounded-2xl bg-gradient-to-r from-[#2A2118] via-[#362B20] to-[#2A2118] border border-gold-500/35 shadow-lontar-card cursor-pointer group hover:border-gold-400/60 transition-all duration-300"
-                title="Ketuk untuk memindai naskah ini"
+                class="relative mt-2 p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 shadow-xs cursor-pointer group hover:border-slate-300 dark:hover:border-zinc-600 transition-all duration-200"
+                title="Ketuk untuk menelaah naskah ini"
               >
-                <!-- Antique brass corner filigree -->
-                <div class="absolute top-2 left-2 w-3 h-3 border-t border-l border-gold-400/40 pointer-events-none"></div>
-                <div class="absolute top-2 right-2 w-3 h-3 border-t border-r border-gold-400/40 pointer-events-none"></div>
-                <div class="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-gold-400/40 pointer-events-none"></div>
-                <div class="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-gold-400/40 pointer-events-none"></div>
-
-                <!-- Lontar rib texture overlay -->
-                <div class="absolute inset-0 rounded-2xl bg-lontar-ribs pointer-events-none opacity-60"></div>
-                <!-- Binding cord holes (rong lontar) with red silk cord accent -->
-                <div class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#120D08] border border-gold-500/50 flex items-center justify-center shadow-inner">
-                  <span class="w-1.5 h-1.5 rounded-full bg-gold-400/40"></span>
-                </div>
-                <div class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#120D08] border border-gold-500/50 flex items-center justify-center shadow-inner">
-                  <span class="w-1.5 h-1.5 rounded-full bg-gold-400/40"></span>
-                </div>
-
-                <div class="relative z-10 pl-6 pr-6 text-center">
-                  <div class="flex items-center justify-between text-[10px] text-gold-400/80 uppercase tracking-widest font-semibold mb-2">
+                <div class="relative z-10 px-2 text-center">
+                  <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400 uppercase tracking-wider font-semibold mb-2">
                     <span>Lontar Surya Kencana</span>
                     <span>Abad XVI M</span>
                   </div>
-                  <!-- Golden Aksara Jawa (Properly spaced without tracking-wider to keep diacritics intact) -->
-                  <div class="font-javanese text-[26px] sm:text-[28px] text-transparent bg-clip-text bg-gradient-to-b from-gold-100 via-gold-300 to-gold-500 drop-shadow-sm select-none py-1">
+                  <!-- Clean Aksara Jawa -->
+                  <div class="font-javanese text-[28px] sm:text-[30px] text-slate-900 dark:text-zinc-100 font-medium py-1 select-none">
                     ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
                   </div>
-                  <p class="font-serif-literary italic text-[13px] text-gold-200/90 mt-1">
+                  <p class="font-serif-literary italic text-[14px] text-slate-600 dark:text-zinc-400 mt-1">
                     "Sinuhun surya bumi"
                   </p>
-                  <div class="mt-3 pt-2.5 border-t border-gold-500/20 flex items-center justify-between text-[11px] text-gold-400 font-medium">
+                  <div class="mt-3 pt-2.5 border-t border-slate-200 dark:border-zinc-700/70 flex items-center justify-between text-[11px] text-slate-600 dark:text-zinc-400 font-medium">
                     <span class="flex items-center gap-1.5">
-                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
-                      Ketuk untuk telaah kajian lengkap
+                      <svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                      Buka telaah filologi lengkap
                     </span>
-                    <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-slate-800 dark:group-hover:text-white transition-all">→</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Primary Shutter Action CTA (High-Craft Glint Button) -->
+              <!-- Primary Shutter Action CTA -->
               <button
                 id="btn-hero-scan"
                 type="button"
-                class="hover-gold-glint relative w-full mt-2 py-4 px-6 rounded-2xl bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 hover:from-gold-500 hover:to-gold-300 text-night-950 font-bold text-[14px] sm:text-[15px] tracking-wide flex items-center justify-between shadow-gold-glow active:scale-[0.98] transition-all cursor-pointer border border-gold-300/40"
+                class="relative w-full mt-2 py-4 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[14px] sm:text-[15px] tracking-wide flex items-center justify-between shadow-sm active:scale-[0.98] transition-all cursor-pointer"
               >
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-xl bg-night-950/20 flex items-center justify-center shrink-0">
-                    <svg class="w-4.5 h-4.5 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <div class="w-9 h-9 rounded-xl bg-white/10 dark:bg-zinc-900/10 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-white dark:text-zinc-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                       <circle cx="12" cy="13" r="4"/>
                     </svg>
                   </div>
                   <div class="text-left">
-                    <span class="block leading-none text-night-950 font-bold">Mulai Pindai Aksara Lontar</span>
-                    <span class="text-[10px] font-semibold text-night-950/75 block mt-0.5 uppercase tracking-wider">Kamera Optik Epigrafi AI</span>
+                    <span class="block leading-none text-white dark:text-zinc-950 font-bold">Mulai Pindai Aksara</span>
+                    <span class="text-[10px] font-semibold text-white/70 dark:text-zinc-950/70 block mt-1 uppercase tracking-wider">Kamera Optik Real-Time</span>
                   </div>
                 </div>
-                <span class="text-xl font-bold text-night-950/80">→</span>
+                <span class="text-lg font-bold text-white/80 dark:text-zinc-950/80">→</span>
               </button>
 
             </div>
@@ -403,49 +390,49 @@
 
             <!-- Stats strip -->
             <div class="grid grid-cols-3 gap-2.5">
-              <div class="p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 text-center">
-                <span id="stat-scans-count" class="font-display text-2xl font-bold text-night-900 dark:text-night-100 block">14+</span>
-                <span class="text-[10px] font-semibold text-parchment-500 dark:text-night-400 uppercase tracking-tight block mt-0.5">Naskah</span>
+              <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 text-center">
+                <span id="stat-scans-count" class="font-sans text-2xl font-extrabold text-slate-900 dark:text-white block">14+</span>
+                <span class="text-[10px] font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-tight block mt-0.5">Naskah</span>
               </div>
-              <div class="p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 text-center">
-                <span class="font-display text-2xl font-bold text-night-900 dark:text-night-100 block">5</span>
-                <span class="text-[10px] font-semibold text-parchment-500 dark:text-night-400 uppercase tracking-tight block mt-0.5">Tradisi Aksara</span>
+              <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 text-center">
+                <span class="font-sans text-2xl font-extrabold text-slate-900 dark:text-white block">5</span>
+                <span class="text-[10px] font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-tight block mt-0.5">Tradisi Aksara</span>
               </div>
-              <div class="p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 text-center">
-                <span class="font-display text-2xl font-bold text-gold-600 dark:text-gold-400 block">99.2%</span>
-                <span class="text-[10px] font-semibold text-parchment-500 dark:text-night-400 uppercase tracking-tight block mt-0.5">Akurasi AI</span>
+              <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 text-center">
+                <span class="font-sans text-2xl font-extrabold text-blue-600 dark:text-blue-400 block">99.2%</span>
+                <span class="text-[10px] font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-tight block mt-0.5">Akurasi AI</span>
               </div>
             </div>
 
             <!-- Quick Access Historical Manuscripts -->
             <div>
               <div class="flex items-center justify-between mb-3">
-                <h3 class="font-display text-[14px] font-bold text-night-900 dark:text-night-100 uppercase tracking-wider">
+                <h3 class="font-sans text-[13px] font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   Naskah Kurasi Terpilih
                 </h3>
-                <span class="text-[11px] text-gold-600 dark:text-gold-400 font-medium">Siap Ditelusuri</span>
+                <span class="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">Siap Ditelusuri</span>
               </div>
 
               <div class="flex flex-col gap-2.5">
                 <!-- Sample 1: Sutasoma -->
                 <div
                   data-sample-idx="1"
-                  class="sample-preset-card p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/50 cursor-pointer transition-all flex items-center justify-between group shadow-sm"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 hover:border-slate-300 dark:hover:border-zinc-600 cursor-pointer transition-all flex items-center justify-between group shadow-xs"
                 >
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/25 flex items-center justify-center text-gold-500 shrink-0 font-javanese text-xl font-bold">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-700/60 border border-slate-200 dark:border-zinc-600 flex items-center justify-center text-slate-800 dark:text-zinc-200 shrink-0 font-javanese text-xl font-bold">
                       ꦨ
                     </div>
                     <div>
-                      <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 group-hover:text-gold-500 transition-colors">
+                      <h4 class="text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         Kakawin Sutasoma
                       </h4>
-                      <p class="text-[11px] text-parchment-500 dark:text-night-400 font-serif-literary italic">
+                      <p class="text-[11px] text-slate-500 dark:text-zinc-400 font-serif-literary italic">
                         Mpu Tantular · Abad XIV Majapahit
                       </p>
                     </div>
                   </div>
-                  <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1">
                     Buka
                     <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                   </span>
@@ -454,22 +441,22 @@
                 <!-- Sample 2: Sukamerta -->
                 <div
                   data-sample-idx="2"
-                  class="sample-preset-card p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/50 cursor-pointer transition-all flex items-center justify-between group shadow-sm"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 hover:border-slate-300 dark:hover:border-zinc-600 cursor-pointer transition-all flex items-center justify-between group shadow-xs"
                 >
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/25 flex items-center justify-center text-gold-500 shrink-0 font-javanese text-xl font-bold">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-700/60 border border-slate-200 dark:border-zinc-600 flex items-center justify-center text-slate-800 dark:text-zinc-200 shrink-0 font-javanese text-xl font-bold">
                       ꦱ
                     </div>
                     <div>
-                      <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 group-hover:text-gold-500 transition-colors">
+                      <h4 class="text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         Prasasti Sukamerta
                       </h4>
-                      <p class="text-[11px] text-parchment-500 dark:text-night-400 font-serif-literary italic">
+                      <p class="text-[11px] text-slate-500 dark:text-zinc-400 font-serif-literary italic">
                         Raden Wijaya · Piagam 1296 M
                       </p>
                     </div>
                   </div>
-                  <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1">
                     Buka
                     <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                   </span>
@@ -478,22 +465,22 @@
                 <!-- Sample 3: Babad Tanah Jawi -->
                 <div
                   data-sample-idx="0"
-                  class="sample-preset-card p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/50 cursor-pointer transition-all flex items-center justify-between group shadow-sm"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 hover:border-slate-300 dark:hover:border-zinc-600 cursor-pointer transition-all flex items-center justify-between group shadow-xs"
                 >
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/25 flex items-center justify-center text-gold-500 shrink-0 font-javanese text-xl font-bold">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-700/60 border border-slate-200 dark:border-zinc-600 flex items-center justify-center text-slate-800 dark:text-zinc-200 shrink-0 font-javanese text-xl font-bold">
                       ꦱꦸ
                     </div>
                     <div>
-                      <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 group-hover:text-gold-500 transition-colors">
+                      <h4 class="text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         Lontar Surya Kencana
                       </h4>
-                      <p class="text-[11px] text-parchment-500 dark:text-night-400 font-serif-literary italic">
+                      <p class="text-[11px] text-slate-500 dark:text-zinc-400 font-serif-literary italic">
                         Koleksi Ron Tal Mataram Islam · Abad XVI
                       </p>
                     </div>
                   </div>
-                  <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1">
                     Buka
                     <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                   </span>
@@ -502,30 +489,30 @@
             </div>
 
             <!-- Philology Triad Pillars -->
-            <div class="p-4 rounded-2xl bg-parchment-100/70 dark:bg-night-850/70 border border-parchment-200 dark:border-night-800">
-              <span class="text-[10px] font-bold tracking-widest text-gold-600 dark:text-gold-400 uppercase block mb-3">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-850/60 border border-slate-200/80 dark:border-zinc-700/80">
+              <span class="text-[10px] font-bold tracking-widest text-slate-500 dark:text-zinc-400 uppercase block mb-3">
                 Keunggulan Epigrafi Digital
               </span>
               <div class="space-y-3">
                 <div class="flex items-start gap-2.5">
-                  <div class="w-5 h-5 rounded-full bg-gold-500/15 text-gold-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</div>
+                  <div class="w-5 h-5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</div>
                   <div>
-                    <h5 class="text-[12px] font-semibold text-night-900 dark:text-night-100">Transkripsi Glif Aksara Presisi</h5>
-                    <p class="text-[11px] text-parchment-500 dark:text-night-400 leading-snug">Deteksi karakter Unicode asli (Jawa, Kawi, Bali) langsung dari foto naskah fisik.</p>
+                    <h5 class="text-[12px] font-semibold text-slate-900 dark:text-white">Transkripsi Glif Aksara Presisi</h5>
+                    <p class="text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">Deteksi karakter Unicode asli (Jawa, Kawi, Bali) langsung dari foto naskah fisik.</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-2.5">
-                  <div class="w-5 h-5 rounded-full bg-gold-500/15 text-gold-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">2</div>
+                  <div class="w-5 h-5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">2</div>
                   <div>
-                    <h5 class="text-[12px] font-semibold text-night-900 dark:text-night-100">Transliterasi Fonetis & Terjemahan</h5>
-                    <p class="text-[11px] text-parchment-500 dark:text-night-400 leading-snug">Menyajikan alihaksara Latin filologis dan terjemahan bahasa Indonesia mengalir.</p>
+                    <h5 class="text-[12px] font-semibold text-slate-900 dark:text-white">Transliterasi Fonetis & Terjemahan</h5>
+                    <p class="text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">Menyajikan alihaksara Latin filologis dan terjemahan bahasa Indonesia mengalir.</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-2.5">
-                  <div class="w-5 h-5 rounded-full bg-gold-500/15 text-gold-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">3</div>
+                  <div class="w-5 h-5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">3</div>
                   <div>
-                    <h5 class="text-[12px] font-semibold text-night-900 dark:text-night-100">Interpretasi Filosofis & Resitasi Audio</h5>
-                    <p class="text-[11px] text-parchment-500 dark:text-night-400 leading-snug">Penjelasan nilai adiluhung naskah serta fitur pembacaan suara natural.</p>
+                    <h5 class="text-[12px] font-semibold text-slate-900 dark:text-white">Interpretasi Filosofis & Resitasi Audio</h5>
+                    <p class="text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">Penjelasan nilai adiluhung naskah serta fitur pembacaan suara natural.</p>
                   </div>
                 </div>
               </div>
@@ -538,7 +525,7 @@
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
         <!-- SCREEN 2 — PINDAI (HIGH-PRECISION CAMERA HUD)     -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-scan" class="screen-view screen-hidden flex-col flex-1 bg-night-950">
+        <section id="screen-scan" class="screen-view screen-hidden flex-col flex-1 bg-zinc-950">
 
           <!-- Scan Screen Top HUD Bar -->
           <div class="flex items-center justify-between px-5 pt-4 pb-3 z-30">
@@ -546,7 +533,7 @@
               id="btn-scan-back"
               type="button"
               aria-label="Kembali ke beranda"
-              class="w-9 h-9 rounded-xl bg-night-900/90 border border-night-800 text-night-200 flex items-center justify-center hover:bg-night-850 active:scale-95 transition-all cursor-pointer"
+              class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center hover:bg-zinc-800 hover:text-white active:scale-95 transition-all cursor-pointer"
             >
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"/>
@@ -555,8 +542,8 @@
 
             <!-- Mode Title -->
             <div class="text-center">
-              <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-400">Pindai Aksara</span>
-              <p id="scan-mode-label" class="text-[10px] text-night-400 mt-0.5">Kamera Optik Epigrafi</p>
+              <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-white">Pindai Aksara</span>
+              <p id="scan-mode-label" class="text-[10px] text-zinc-400 mt-0.5">Kamera Optik Real-Time</p>
             </div>
 
             <!-- Controls: Flash & Camera Flip -->
@@ -565,7 +552,7 @@
                 id="btn-flash-toggle"
                 type="button"
                 aria-label="Lampu sorot"
-                class="w-9 h-9 rounded-xl bg-night-900/90 border border-night-800 text-night-300 flex items-center justify-center hover:bg-night-850 active:scale-95 transition-all cursor-pointer"
+                class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center hover:bg-zinc-800 hover:text-white active:scale-95 transition-all cursor-pointer"
               >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -575,7 +562,7 @@
                 id="btn-camera-switch"
                 type="button"
                 aria-label="Ganti kamera depan/belakang"
-                class="w-9 h-9 rounded-xl bg-night-900/90 border border-night-800 text-night-300 flex items-center justify-center hover:bg-night-850 active:scale-95 transition-all cursor-pointer"
+                class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center hover:bg-zinc-800 hover:text-white active:scale-95 transition-all cursor-pointer"
               >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
@@ -587,7 +574,7 @@
           <!-- Viewfinder Frame -->
           <div
             id="viewfinder-wrap"
-            class="flex-1 relative mx-4 mb-3 rounded-3xl overflow-hidden bg-[#120F0C] border border-gold-500/30 cursor-pointer shadow-inner"
+            class="flex-1 relative mx-4 mb-3 rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 cursor-pointer shadow-inner"
             title="Arahkan kamera lalu ketuk untuk memindai"
           >
             <!-- ── Live Camera Feed ── -->
@@ -605,31 +592,27 @@
             <!-- ── Optical Rule-of-Thirds Grid Overlay ── -->
             <div class="absolute inset-0 pointer-events-none opacity-20">
               <div class="w-full h-full grid grid-cols-3 grid-rows-3">
-                <div class="border-r border-b border-gold-400"></div>
-                <div class="border-r border-b border-gold-400"></div>
-                <div class="border-b border-gold-400"></div>
-                <div class="border-r border-b border-gold-400"></div>
-                <div class="border-r border-b border-gold-400 flex items-center justify-center">
-                  <div class="w-2.5 h-2.5 rounded-full border border-gold-400 opacity-60"></div>
+                <div class="border-r border-b border-white"></div>
+                <div class="border-r border-b border-white"></div>
+                <div class="border-b border-white"></div>
+                <div class="border-r border-b border-white"></div>
+                <div class="border-r border-b border-white flex items-center justify-center">
+                  <div class="w-2.5 h-2.5 rounded-full border border-white opacity-60"></div>
                 </div>
-                <div class="border-b border-gold-400"></div>
-                <div class="border-r border-gold-400"></div>
-                <div class="border-r border-gold-400"></div>
+                <div class="border-b border-white"></div>
+                <div class="border-r border-white"></div>
+                <div class="border-r border-white"></div>
                 <div></div>
               </div>
             </div>
 
-            <!-- ── Fallback Lontar Leaf (Displayed if camera is unpermitted or unavailable) ── -->
+            <!-- ── Fallback Lontar Leaf ── -->
             <div id="camera-fallback" class="absolute inset-0 flex items-center justify-center p-6">
-              <div class="w-full max-w-[290px] bg-gradient-to-r from-[#291F16] via-[#382B1E] to-[#291F16] rounded-xl border-y-2 border-gold-600/60 shadow-2xl relative px-6 py-6 flex flex-col gap-3">
-                <div class="absolute inset-0 rounded-xl bg-lontar-ribs opacity-40 pointer-events-none"></div>
-                <div class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#120D08] border border-gold-500/50"></div>
-                <div class="absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#120D08] border border-gold-500/50"></div>
-
-                <span class="text-[9px] text-center text-gold-400/80 font-bold tracking-widest uppercase">Naskah Uji Coba Lontar</span>
-                <div class="font-javanese text-center text-[22px] tracking-wider text-gold-200">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</div>
-                <div class="font-javanese text-center text-[15px] tracking-wider text-gold-400/80">ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ</div>
-                <div class="font-javanese text-center text-[13px] tracking-wider text-gold-500/60">ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ</div>
+              <div class="w-full max-w-[290px] bg-zinc-900 rounded-2xl border border-zinc-800 shadow-xl relative px-6 py-6 flex flex-col gap-3">
+                <span class="text-[10px] text-center text-zinc-400 font-bold tracking-widest uppercase">Naskah Uji Coba Lontar</span>
+                <div class="font-javanese text-center text-[24px] text-white">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</div>
+                <div class="font-javanese text-center text-[15px] text-zinc-300">ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ</div>
+                <div class="font-javanese text-center text-[13px] text-zinc-400">ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ</div>
               </div>
 
               <!-- Permission denied callout -->
@@ -640,31 +623,31 @@
             </div>
 
             <!-- Real-time Camera Live Badge -->
-            <div id="camera-live-badge" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-night-950/80 backdrop-blur-md border border-patina-400/50 text-[10px] font-semibold text-patina-300">
-              <span class="w-1.5 h-1.5 rounded-full bg-patina-400 animate-pulse"></span>
+            <div id="camera-live-badge" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-20 items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 backdrop-blur-md border border-emerald-500/40 text-[10px] font-semibold text-emerald-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <span>KAMERA OPTIK AKTIF</span>
             </div>
 
-            <!-- Brass Corner Brackets -->
-            <div class="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-gold-400/80 z-20 pointer-events-none"></div>
-            <div class="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-gold-400/80 z-20 pointer-events-none"></div>
-            <div class="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-gold-400/80 z-20 pointer-events-none"></div>
-            <div class="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-gold-400/80 z-20 pointer-events-none"></div>
+            <!-- Clean Corner Brackets -->
+            <div class="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-white/80 z-20 pointer-events-none"></div>
+            <div class="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-white/80 z-20 pointer-events-none"></div>
+            <div class="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-white/80 z-20 pointer-events-none"></div>
+            <div class="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-white/80 z-20 pointer-events-none"></div>
 
             <!-- Optical Center Reticle Cross -->
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
               <div class="w-6 h-6 flex items-center justify-center">
-                <div class="absolute w-4 h-0.5 bg-gold-400"></div>
-                <div class="absolute h-4 w-0.5 bg-gold-400"></div>
+                <div class="absolute w-4 h-0.5 bg-white"></div>
+                <div class="absolute h-4 w-0.5 bg-white"></div>
               </div>
             </div>
 
             <!-- Scan Beam Laser -->
-            <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent shadow-[0_0_15px_3px_rgba(220,185,95,0.7)] animate-scan-line pointer-events-none z-20"></div>
+            <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_2px_rgba(34,211,238,0.6)] animate-scan-line pointer-events-none z-20"></div>
 
             <!-- Interactive Viewfinder Tap Pill Hint -->
-            <div class="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-night-950/80 backdrop-blur-md border border-gold-500/40 rounded-full px-3.5 py-1 text-[11px] text-gold-300 pointer-events-none select-none">
-              <span class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-ping"></span>
+            <div class="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-zinc-900/90 backdrop-blur-md border border-zinc-700/80 rounded-full px-3.5 py-1 text-[11px] text-zinc-300 pointer-events-none select-none">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
               <span>Ketuk layar atau tombol shutter</span>
             </div>
 
@@ -674,45 +657,46 @@
             <!-- ── Loading Overlay with 3-Phase Epigraphic Progress ── -->
             <div
               id="scan-loading-overlay"
-              class="hidden absolute inset-0 z-40 bg-night-950/90 backdrop-blur-md flex flex-col items-center justify-center gap-4 px-6"
+              class="hidden absolute inset-0 z-40 bg-zinc-950/90 backdrop-blur-md flex-col items-center justify-center gap-4 px-6"
+              style="display: none;"
             >
               <div class="relative flex items-center justify-center">
-                <div class="w-14 h-14 rounded-full border-2 border-gold-500/20 border-t-gold-400 animate-spin"></div>
-                <div class="absolute font-javanese text-gold-400 text-lg font-bold">ꦭ</div>
+                <div class="w-14 h-14 rounded-full border-2 border-zinc-700 border-t-white animate-spin"></div>
+                <div class="absolute font-javanese text-white text-lg font-bold">ꦭ</div>
               </div>
               <div class="text-center">
-                <p class="font-display text-[15px] font-bold text-night-100">Menganalisis Naskah Kuno…</p>
-                <p id="scan-step-text" class="text-[12px] text-gold-300/80 mt-1">Mengambil citra & memindai glif…</p>
+                <p class="font-sans text-[15px] font-bold text-white">Menganalisis Naskah Kuno…</p>
+                <p id="scan-step-text" class="text-[12px] text-zinc-400 mt-1">Mengambil citra & memindai glif…</p>
               </div>
               <!-- Progress bar -->
-              <div class="w-48 h-1.5 bg-night-800 rounded-full overflow-hidden">
-                <div id="scan-progress-bar" class="h-full bg-gradient-to-r from-gold-600 via-gold-400 to-gold-500 rounded-full w-0 transition-all duration-500 ease-out"></div>
+              <div class="w-48 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                <div id="scan-progress-bar" class="h-full bg-white rounded-full w-0 transition-all duration-500 ease-out"></div>
               </div>
             </div>
 
             <!-- ── Unclear Aksara Bottom Sheet Dialog ── -->
-            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-50 bg-night-950/85 backdrop-blur-md flex items-end p-3.5">
-              <div class="w-full bg-night-900 border border-gold-500/40 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5">
+            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-end p-3.5" style="display: none;">
+              <div class="w-full bg-zinc-900 border border-zinc-700/80 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5">
                 <div class="flex items-start gap-3">
-                  <div class="w-10 h-10 rounded-2xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0 mt-0.5">
+                  <div class="w-10 h-10 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 shrink-0 mt-0.5">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                     </svg>
                   </div>
                   <div class="flex-1">
-                    <h4 id="unclear-modal-title" class="font-display text-[14px] font-bold text-night-100">Aksara Belum Terdeteksi Jelas</h4>
-                    <p id="unclear-modal-desc" class="text-[12px] text-night-300 leading-relaxed mt-0.5">
+                    <h4 id="unclear-modal-title" class="font-sans text-[14px] font-bold text-white">Aksara Belum Terdeteksi Jelas</h4>
+                    <p id="unclear-modal-desc" class="text-[12px] text-zinc-300 leading-relaxed mt-0.5">
                       Kamera menangkap objek yang belum menampilkan aksara kuno. Anda dapat mencoba sampel naskah asli atau memfoto ulang.
                     </p>
                   </div>
                 </div>
 
                 <div class="flex flex-col gap-2 pt-1">
-                  <button id="btn-unclear-use-sample" type="button" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-night-950 font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer shadow-gold-sm transition-all">
+                  <button id="btn-unclear-use-sample" type="button" class="w-full py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     <span id="btn-unclear-sample-label">Tampilkan Naskah Asli (Sutasoma)</span>
                   </button>
-                  <button id="btn-unclear-retry" type="button" class="w-full py-2.5 rounded-xl bg-night-800 hover:bg-night-750 text-night-200 border border-night-700 font-medium text-[12px] cursor-pointer transition-colors">
+                  <button id="btn-unclear-retry" type="button" class="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-750 text-zinc-200 border border-zinc-700 font-medium text-[12px] cursor-pointer transition-colors">
                     <span id="btn-unclear-retry-label">Arahkan Ulang Kamera & Coba Lagi</span>
                   </button>
                 </div>
@@ -728,10 +712,10 @@
             <button
               id="btn-sample-switch"
               type="button"
-              class="flex flex-col items-center gap-1.5 text-night-400 hover:text-gold-400 transition-colors cursor-pointer group"
+              class="flex flex-col items-center gap-1.5 text-zinc-400 hover:text-white transition-colors cursor-pointer group"
               title="Ganti contoh naskah"
             >
-              <div class="w-11 h-11 rounded-2xl bg-night-900 border border-night-800 group-hover:border-gold-500/40 flex items-center justify-center text-night-300 group-hover:text-gold-400 transition-colors">
+              <div class="w-11 h-11 rounded-2xl bg-zinc-900 border border-zinc-800 group-hover:border-zinc-700 flex items-center justify-center text-zinc-300 group-hover:text-white transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
                 </svg>
@@ -739,17 +723,16 @@
               <span class="text-[11px] font-medium">Contoh</span>
             </button>
 
-            <!-- Regal Shutter Button -->
+            <!-- Clean Modern Camera Shutter Button -->
             <div class="relative flex items-center justify-center">
-              <span class="absolute w-[86px] h-[86px] rounded-full border border-gold-500/40 animate-shutter-halo pointer-events-none"></span>
               <button
                 id="btn-capture"
                 type="button"
                 aria-label="Ambil foto naskah"
-                class="relative w-[72px] h-[72px] rounded-full p-1 bg-gradient-to-b from-gold-400 via-gold-500 to-gold-700 shadow-gold-glow active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+                class="relative w-[72px] h-[72px] rounded-full p-1 border-3 border-white/80 hover:border-white active:scale-95 transition-all cursor-pointer flex items-center justify-center"
               >
-                <div class="w-full h-full rounded-full border-2 border-night-950/30 flex items-center justify-center bg-gradient-to-tr from-gold-500 to-gold-400">
-                  <svg class="w-7 h-7 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <div class="w-full h-full rounded-full bg-white text-zinc-950 flex items-center justify-center shadow-md active:bg-zinc-200 transition-colors">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                     <circle cx="12" cy="13" r="4"/>
                   </svg>
@@ -760,10 +743,10 @@
             <!-- Gallery Upload Button -->
             <label
               for="file-upload"
-              class="flex flex-col items-center gap-1.5 text-night-400 hover:text-gold-400 transition-colors cursor-pointer group"
+              class="flex flex-col items-center gap-1.5 text-zinc-400 hover:text-white transition-colors cursor-pointer group"
               title="Unggah dari galeri"
             >
-              <div class="w-11 h-11 rounded-2xl bg-night-900 border border-night-800 group-hover:border-gold-500/40 flex items-center justify-center text-night-300 group-hover:text-gold-400 transition-colors">
+              <div class="w-11 h-11 rounded-2xl bg-zinc-900 border border-zinc-800 group-hover:border-zinc-700 flex items-center justify-center text-zinc-300 group-hover:text-white transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                   <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -781,22 +764,22 @@
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
         <!-- SCREEN 3 — HASIL (PHILOLOGY STUDY & TRANSLATE)    -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-result" class="screen-view screen-hidden flex-col flex-1 bg-parchment-50 dark:bg-night-950 pb-8">
+        <section id="screen-result" class="screen-view screen-hidden flex-col flex-1 bg-white dark:bg-zinc-900 pb-8">
 
           <!-- Result Header -->
-          <div class="flex items-center justify-between px-5 py-3.5 border-b border-parchment-200 dark:border-night-800 bg-parchment-100/60 dark:bg-night-900/60 backdrop-blur-sm shrink-0">
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-200/80 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm shrink-0">
             <button
               id="btn-result-back"
               type="button"
-              class="flex items-center gap-1.5 text-parchment-800 dark:text-night-300 hover:text-gold-500 dark:hover:text-gold-400 text-[13px] font-semibold cursor-pointer transition-colors"
+              class="flex items-center gap-1.5 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white text-[13px] font-semibold cursor-pointer transition-colors"
             >
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
               Pindai Ulang
             </button>
-            <span class="font-display text-[12px] font-bold tracking-widest uppercase text-night-900 dark:text-night-100">
+            <span class="font-sans text-[12px] font-bold tracking-wider uppercase text-slate-900 dark:text-white">
               Kajian Filologi
             </span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-patina-400">
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
               Terverifikasi
             </span>
@@ -808,63 +791,55 @@
             <!-- Manuscript Metadata Banner -->
             <div class="px-5 pt-4 pb-2 flex items-center justify-between">
               <div>
-                <span id="result-language-badge" class="px-2.5 py-0.5 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-600 dark:text-gold-400 text-[10px] font-bold uppercase tracking-wider">
+                <span id="result-language-badge" class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 text-[10px] font-bold uppercase tracking-wider">
                   Aksara Jawa Kuno
                 </span>
-                <h3 id="result-title" class="font-display text-[18px] font-bold text-night-900 dark:text-night-100 mt-1">
+                <h3 id="result-title" class="font-sans text-[18px] font-extrabold text-slate-900 dark:text-white mt-1">
                   Lontar Surya Kencana
                 </h3>
               </div>
               <div class="text-right">
-                <span class="text-[10px] text-parchment-500 dark:text-night-400 block font-medium">Tingkat Keyakinan</span>
-                <span id="result-confidence" class="font-display text-[18px] font-bold text-gold-500">99.2%</span>
+                <span class="text-[10px] text-slate-500 dark:text-zinc-400 block font-medium">Tingkat Keyakinan</span>
+                <span id="result-confidence" class="font-sans text-[20px] font-extrabold text-blue-600 dark:text-blue-400">99.2%</span>
               </div>
             </div>
 
             <!-- Tab Switcher: [Aksara Transkripsi] vs [Foto Citra Asli] -->
             <div class="px-5 mt-2 mb-3">
-              <div class="flex rounded-xl bg-parchment-200/80 dark:bg-night-850 p-1 border border-parchment-300/60 dark:border-night-800">
+              <div class="flex rounded-xl bg-slate-100 dark:bg-zinc-800 p-1 border border-slate-200/80 dark:border-zinc-700/80">
                 <button
                   id="tab-btn-script"
                   type="button"
-                  class="flex-1 py-1.5 rounded-lg text-[12px] font-bold bg-white dark:bg-night-700 text-night-950 dark:text-night-100 shadow-sm transition-all cursor-pointer"
+                  class="flex-1 py-1.5 rounded-lg text-[12px] font-semibold bg-white dark:bg-zinc-700 text-slate-900 dark:text-white shadow-xs transition-all cursor-pointer"
                 >
                   Aksara Asli (Unicode)
                 </button>
                 <button
                   id="tab-btn-image"
                   type="button"
-                  class="flex-1 py-1.5 rounded-lg text-[12px] font-medium text-parchment-600 dark:text-night-400 hover:text-night-900 dark:hover:text-night-100 transition-all cursor-pointer"
+                  class="flex-1 py-1.5 rounded-lg text-[12px] font-medium text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
                 >
                   Tangkapan Citra Asli
                 </button>
               </div>
             </div>
 
-            <!-- TAB 1: Ancient Text Card (Dark Smoked Lontar Surface) -->
+            <!-- TAB 1: Ancient Text Card (Clean Museum Typography) -->
             <div id="tab-content-script" class="px-5">
-              <div class="relative rounded-2xl bg-gradient-to-r from-[#211A13] via-[#2A2118] to-[#211A13] border border-gold-500/35 p-5 shadow-lontar-card overflow-hidden">
-                <!-- Antique brass corner filigree -->
-                <div class="absolute top-2 left-2 w-3 h-3 border-t border-l border-gold-400/40 pointer-events-none"></div>
-                <div class="absolute top-2 right-2 w-3 h-3 border-t border-r border-gold-400/40 pointer-events-none"></div>
-                <div class="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-gold-400/40 pointer-events-none"></div>
-                <div class="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-gold-400/40 pointer-events-none"></div>
-
-                <div class="absolute inset-0 bg-lontar-ribs opacity-40 pointer-events-none"></div>
-
+              <div class="relative rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 p-5 shadow-xs overflow-hidden">
                 <div class="relative z-10 text-center py-2">
-                  <p id="result-ancient-text" class="font-javanese text-[28px] sm:text-[30px] leading-[1.85] text-transparent bg-clip-text bg-gradient-to-b from-gold-100 via-gold-300 to-gold-400 select-all">
+                  <p id="result-ancient-text" class="font-javanese text-[28px] sm:text-[32px] leading-[1.85] text-slate-900 dark:text-white select-all">
                     ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
                   </p>
-                  <p id="result-transliteration" class="font-serif-literary italic text-[15px] text-gold-200/95 mt-2.5 tracking-wide">
+                  <p id="result-transliteration" class="font-serif-literary italic text-[16px] text-slate-600 dark:text-zinc-300 mt-2.5 tracking-wide">
                     "Sinuhun surya bumi"
                   </p>
                 </div>
 
-                <div class="relative z-10 mt-3 pt-2.5 border-t border-gold-500/20 flex items-center justify-between text-[10px] text-gold-400/80">
+                <div class="relative z-10 mt-3 pt-2.5 border-t border-slate-200 dark:border-zinc-700/70 flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400">
                   <span id="result-model-label">Gemini 3.5 Flash Multimodal Vision</span>
-                  <span class="flex items-center gap-1 font-semibold text-patina-400">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span class="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                     Transkripsi Baku Filologi
                   </span>
                 </div>
@@ -873,14 +848,14 @@
 
             <!-- TAB 2: Captured Photo Canvas View (Hidden by default) -->
             <div id="tab-content-image" class="hidden px-5">
-              <div class="relative rounded-2xl bg-night-900 border border-gold-500/30 overflow-hidden p-2 text-center">
+              <div class="relative rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 overflow-hidden p-2 text-center">
                 <img
                   id="result-captured-image"
                   src=""
                   alt="Tangkapan Citra Naskah"
-                  class="w-full h-52 object-cover rounded-xl border border-night-800"
+                  class="w-full h-52 object-cover rounded-xl border border-slate-200 dark:border-zinc-700"
                 />
-                <p id="result-image-notice" class="text-[11px] text-night-400 mt-2 font-medium">
+                <p id="result-image-notice" class="text-[11px] text-slate-500 dark:text-zinc-400 mt-2 font-medium">
                   Citra optik yang diproses oleh model kecerdasan artifisial
                 </p>
               </div>
@@ -888,15 +863,15 @@
 
             <!-- ── Interactive Epigraphic Decomposition (Bedah Glif Aksara) ── -->
             <div class="px-5 mt-3.5">
-              <div class="p-3.5 rounded-2xl bg-white dark:bg-night-850 border border-parchment-200 dark:border-night-800 shadow-sm">
-                <div class="flex items-center justify-between mb-2">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs">
+                <div class="flex items-center justify-between mb-2.5">
                   <div class="flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-gold-500"></span>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-night-900 dark:text-night-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
                       Bedah Glif & Sandhangan
                     </span>
                   </div>
-                  <span class="text-[10px] text-parchment-500 dark:text-night-400 font-medium">Ketuk suku kata</span>
+                  <span class="text-[10px] text-slate-500 dark:text-zinc-400 font-medium">Ketuk suku kata</span>
                 </div>
 
                 <!-- Interactive Syllable Chips -->
@@ -905,16 +880,16 @@
                 </div>
 
                 <!-- Active Glyph Detail Callout -->
-                <div id="glyph-detail-box" class="mt-2.5 p-2.5 rounded-xl bg-parchment-100/80 dark:bg-night-900 border border-gold-500/25 flex items-start gap-2.5 transition-all">
-                  <div id="glyph-detail-char" class="w-10 h-10 rounded-xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center font-javanese text-gold-400 text-xl font-bold shrink-0">
+                <div id="glyph-detail-box" class="mt-2.5 p-3 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 flex items-start gap-3 transition-all">
+                  <div id="glyph-detail-char" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center font-javanese text-slate-900 dark:text-white text-xl font-bold shrink-0">
                     ꦱꦶ
                   </div>
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between">
-                      <span id="glyph-detail-title" class="text-[11px] font-bold text-night-900 dark:text-night-100">Suku Kata: Si</span>
-                      <span id="glyph-detail-type" class="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-gold-500/15 text-gold-600 dark:text-gold-400 border border-gold-500/20">Sandhangan Swara</span>
+                      <span id="glyph-detail-title" class="text-[12px] font-bold text-slate-900 dark:text-white">Suku Kata: Si</span>
+                      <span id="glyph-detail-type" class="text-[9px] font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">Sandhangan Swara</span>
                     </div>
-                    <p id="glyph-detail-desc" class="text-[11px] text-parchment-600 dark:text-night-300 mt-0.5 leading-snug">
+                    <p id="glyph-detail-desc" class="text-[11px] text-slate-600 dark:text-zinc-400 mt-0.5 leading-snug">
                       Aksara Nglegena "Sa" (ꦱ) dipasangi sandhangan swara "Wulu" (ꦶ) yang mengubah vokal inheren /a/ menjadi vokal /i/.
                     </p>
                   </div>
@@ -924,19 +899,18 @@
 
             <!-- Indonesian Translation & Literary Section -->
             <div class="px-5 mt-3.5">
-              <div class="p-4 rounded-2xl bg-white dark:bg-night-850 border border-parchment-200 dark:border-night-800 shadow-sm relative overflow-hidden">
-                <span class="absolute -bottom-4 -right-1 font-serif text-6xl text-gold-500/10 select-none pointer-events-none">”</span>
+              <div class="p-4 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs relative overflow-hidden">
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-parchment-500 dark:text-night-400">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                     Terjemahan Bahasa Indonesia
                   </span>
-                  <button id="btn-copy-translation" type="button" class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 hover:underline flex items-center gap-1 cursor-pointer">
+                  <button id="btn-copy-translation" type="button" class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     Salin
                   </button>
                 </div>
 
-                <p id="result-translated-text" class="font-serif-literary text-[17px] leading-relaxed text-night-900 dark:text-night-100 font-medium">
+                <p id="result-translated-text" class="font-serif-literary text-[17px] leading-relaxed text-slate-900 dark:text-white font-medium">
                   Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
                 </p>
               </div>
@@ -944,14 +918,14 @@
 
             <!-- Philosophical & Historical Context -->
             <div class="px-5 mt-3">
-              <div class="p-4 rounded-2xl bg-gold-500/10 border border-gold-500/25 relative overflow-hidden">
+              <div class="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 relative overflow-hidden">
                 <div class="flex items-center gap-2 mb-2">
-                  <span class="w-2 h-2 rounded-full bg-gold-500"></span>
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-gold-700 dark:text-gold-400">
+                  <span class="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-blue-800 dark:text-blue-300">
                     Konteks Filosofis & Nilai Luhur
                   </span>
                 </div>
-                <p id="result-philosophical" class="text-[13px] text-night-900 dark:text-night-200 leading-relaxed font-normal">
+                <p id="result-philosophical" class="text-[13px] text-slate-800 dark:text-zinc-200 leading-relaxed font-normal">
                   Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi, ibarat surya yang menyinari jagad raya.
                 </p>
               </div>
@@ -961,16 +935,16 @@
             <div class="px-5 mt-4 flex flex-col gap-2.5">
 
               <!-- Studio Resitasi Suara -->
-              <div class="p-3 rounded-2xl bg-white dark:bg-night-850 border border-parchment-200 dark:border-night-800 shadow-sm flex flex-col gap-2">
+              <div class="p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs flex flex-col gap-2">
                 <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-parchment-500 dark:text-night-400">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                     Studio Resitasi Suara
                   </span>
                   <!-- Voice Tempo Selector -->
                   <button
                     id="btn-voice-speed"
                     type="button"
-                    class="px-2.5 py-0.5 rounded-lg bg-parchment-100 dark:bg-night-900 border border-parchment-300 dark:border-night-800 text-[10px] font-semibold text-gold-600 dark:text-gold-400 hover:border-gold-500/40 transition-colors cursor-pointer"
+                    class="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-[10px] font-semibold text-slate-700 dark:text-zinc-300 hover:border-slate-300 dark:hover:border-zinc-600 transition-colors cursor-pointer"
                     title="Ubah tempo pembacaan"
                   >
                     Tempo: <span id="voice-speed-val">0.9x Khidmat</span>
@@ -980,32 +954,32 @@
                 <button
                   id="btn-play-audio"
                   type="button"
-                  class="w-full py-2.5 px-3.5 rounded-xl bg-parchment-100/80 dark:bg-night-900 hover:border-gold-500/40 border border-parchment-200 dark:border-night-800 text-night-900 dark:text-night-100 font-semibold text-[13px] flex items-center justify-between transition-all active:scale-[0.98] cursor-pointer"
+                  class="w-full py-2.5 px-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white font-semibold text-[13px] flex items-center justify-between transition-all active:scale-[0.98] cursor-pointer"
                 >
                   <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-gold-500 shrink-0">
-                      <svg id="audio-icon-speaker" class="w-4 h-4 text-gold-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="w-8 h-8 rounded-lg bg-slate-200 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 flex items-center justify-center text-slate-800 dark:text-white shrink-0">
+                      <svg id="audio-icon-speaker" class="w-4 h-4 text-slate-800 dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
                       </svg>
-                      <svg id="audio-icon-stop" class="w-4 h-4 text-gold-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <svg id="audio-icon-stop" class="w-4 h-4 text-slate-800 dark:text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
                       </svg>
                     </div>
                     <div class="text-left">
                       <span id="audio-btn-label" class="block text-[12px] font-bold leading-tight">Putar Resitasi Suara</span>
-                      <span class="text-[10px] text-parchment-500 dark:text-night-400 block font-normal">Sintesis Vokal Filologi Bahasa Indonesia</span>
+                      <span class="text-[10px] text-slate-500 dark:text-zinc-400 block font-normal">Sintesis Vokal Filologi Bahasa Indonesia</span>
                     </div>
                   </div>
 
                   <!-- 6-bar dynamic equalizer -->
                   <div id="audio-wave-container" class="hidden items-center gap-1 h-5 pr-1">
-                    <span class="w-1 bg-gold-500 rounded-full eq-bar-1 inline-block"></span>
-                    <span class="w-1 bg-gold-500 rounded-full eq-bar-2 inline-block"></span>
-                    <span class="w-1 bg-gold-500 rounded-full eq-bar-3 inline-block"></span>
-                    <span class="w-1 bg-gold-500 rounded-full eq-bar-4 inline-block"></span>
-                    <span class="w-1 bg-gold-500 rounded-full eq-bar-5 inline-block"></span>
-                    <span class="w-1 bg-gold-500 rounded-full eq-bar-6 inline-block"></span>
+                    <span class="w-1 bg-blue-600 dark:bg-blue-400 rounded-full eq-bar-1 inline-block"></span>
+                    <span class="w-1 bg-blue-600 dark:bg-blue-400 rounded-full eq-bar-2 inline-block"></span>
+                    <span class="w-1 bg-blue-600 dark:bg-blue-400 rounded-full eq-bar-3 inline-block"></span>
+                    <span class="w-1 bg-blue-600 dark:bg-blue-400 rounded-full eq-bar-4 inline-block"></span>
+                    <span class="w-1 bg-blue-600 dark:bg-blue-400 rounded-full eq-bar-5 inline-block"></span>
+                    <span class="w-1 bg-blue-600 dark:bg-blue-400 rounded-full eq-bar-6 inline-block"></span>
                   </div>
                 </button>
               </div>
@@ -1014,9 +988,9 @@
               <button
                 id="btn-save-history"
                 type="button"
-                class="hover-gold-glint w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-night-950 font-bold text-[13px] flex items-center justify-center gap-2 shadow-gold-sm transition-all active:scale-[0.98] cursor-pointer border border-gold-300/30"
+                class="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[13px] flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98] cursor-pointer"
               >
-                <svg id="save-icon" class="w-4 h-4 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg id="save-icon" class="w-4 h-4 text-white dark:text-zinc-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
                 </svg>
                 <span id="save-btn-label">Simpan ke Arsip Digital</span>
@@ -1026,9 +1000,9 @@
               <button
                 id="btn-share-result"
                 type="button"
-                class="w-full py-2.5 rounded-xl bg-transparent text-parchment-700 dark:text-night-400 hover:text-gold-500 text-[12px] font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                class="w-full py-2.5 rounded-xl bg-transparent text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
               >
-                <svg class="w-3.5 h-3.5 text-gold-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                <svg class="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                 Buka Piagam Kajian Filologi
               </button>
 
@@ -1039,7 +1013,7 @@
           <!-- Toast Notification -->
           <div
             id="result-toast"
-            class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 py-3 px-5 rounded-2xl bg-night-950/95 text-white border border-gold-500/40 text-[12px] font-semibold text-center shadow-2xl backdrop-blur-md transition-all duration-300"
+            class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 py-3 px-5 rounded-2xl bg-slate-900/95 dark:bg-zinc-800/95 text-white border border-slate-700 dark:border-zinc-700 text-[12px] font-semibold text-center shadow-xl backdrop-blur-md transition-all duration-300"
           ></div>
         </section>
 
@@ -1047,19 +1021,19 @@
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
         <!-- SCREEN 4 — ARSIP (DIGITAL HERITAGE COLLECTION)    -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-history" class="screen-view screen-hidden flex-col flex-1 bg-parchment-50 dark:bg-night-950 pb-8">
+        <section id="screen-history" class="screen-view screen-hidden flex-col flex-1 bg-white dark:bg-zinc-900 pb-8">
 
           <!-- Archive Header -->
           <div class="px-5 pt-5 pb-3 shrink-0">
             <div class="flex items-center justify-between mb-1">
               <div>
-                <h2 class="font-display text-[22px] font-bold text-night-900 dark:text-night-100">Arsip Koleksi</h2>
-                <p class="text-[12px] text-parchment-500 dark:text-night-400 mt-0.5">Dokumentasi hasil pindaian naskah Nusantara</p>
+                <h2 class="font-sans text-[22px] font-extrabold text-slate-900 dark:text-white">Arsip Koleksi</h2>
+                <p class="text-[12px] text-slate-500 dark:text-zinc-400 mt-0.5">Dokumentasi hasil pindaian naskah Nusantara</p>
               </div>
               <button
                 id="btn-clear-history"
                 type="button"
-                class="text-[11px] font-semibold text-red-500 hover:text-red-400 transition-colors cursor-pointer"
+                class="text-[11px] font-semibold text-red-600 dark:text-red-400 hover:underline transition-colors cursor-pointer"
               >
                 Hapus Semua
               </button>
@@ -1069,23 +1043,23 @@
           <!-- Search & Filter Bar -->
           <div class="px-5 mb-3 shrink-0">
             <div class="relative">
-              <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-parchment-500 dark:text-night-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <input
                 id="history-search"
                 type="text"
                 placeholder="Cari naskah, aksara, atau terjemahan…"
-                class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-night-850 border border-parchment-300 dark:border-night-800 text-[13px] text-night-900 dark:text-night-100 placeholder-parchment-400 dark:placeholder-night-500 focus:outline-none focus:border-gold-500 transition-colors"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-zinc-500 transition-colors"
               />
             </div>
 
             <!-- Filter Tags -->
             <div class="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-1">
-              <button type="button" data-filter="" class="history-tag active-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-gold-500 text-night-950 transition-colors cursor-pointer whitespace-nowrap">Semua</button>
-              <button type="button" data-filter="jawa" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-parchment-200 dark:bg-night-850 text-parchment-700 dark:text-night-300 hover:text-gold-500 transition-colors cursor-pointer whitespace-nowrap">Aksara Jawa</button>
-              <button type="button" data-filter="kawi" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-parchment-200 dark:bg-night-850 text-parchment-700 dark:text-night-300 hover:text-gold-500 transition-colors cursor-pointer whitespace-nowrap">Kawi</button>
-              <button type="button" data-filter="bali" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-parchment-200 dark:bg-night-850 text-parchment-700 dark:text-night-300 hover:text-gold-500 transition-colors cursor-pointer whitespace-nowrap">Bali</button>
+              <button type="button" data-filter="" class="history-tag active-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-900 dark:bg-white text-white dark:text-zinc-950 transition-colors cursor-pointer whitespace-nowrap">Semua</button>
+              <button type="button" data-filter="jawa" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer whitespace-nowrap">Aksara Jawa</button>
+              <button type="button" data-filter="kawi" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer whitespace-nowrap">Kawi</button>
+              <button type="button" data-filter="bali" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer whitespace-nowrap">Bali</button>
             </div>
           </div>
 
@@ -1094,20 +1068,20 @@
             <div id="history-list-container" class="flex flex-col gap-3"></div>
 
             <!-- Empty Archive State -->
-            <div id="history-empty-state" class="hidden flex-col items-center justify-center py-16 text-center">
-              <div class="w-14 h-14 rounded-2xl bg-parchment-200 dark:bg-night-850 border border-parchment-300 dark:border-night-800 flex items-center justify-center mb-4 text-parchment-500 dark:text-night-400">
+            <div id="history-empty-state" class="hidden flex-col items-center justify-center py-16 text-center" style="display: none;">
+              <div class="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center mb-4 text-slate-400 dark:text-zinc-500">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
                 </svg>
               </div>
-              <h3 class="font-display text-[16px] font-bold text-night-900 dark:text-night-100 mb-1">Belum Ada Naskah Tersimpan</h3>
-              <p class="text-[12px] text-parchment-500 dark:text-night-400 max-w-[220px] leading-relaxed mb-5">
+              <h3 class="font-sans text-[16px] font-bold text-slate-900 dark:text-white mb-1">Belum Ada Naskah Tersimpan</h3>
+              <p class="text-[12px] text-slate-500 dark:text-zinc-400 max-w-[220px] leading-relaxed mb-5">
                 Mulai pindai lontar pertamamu untuk melestarikan warisan peradaban Nusantara.
               </p>
               <button
                 id="btn-empty-scan"
                 type="button"
-                class="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-night-950 font-bold text-[13px] shadow-gold-sm transition-all cursor-pointer"
+                class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[13px] shadow-sm transition-all cursor-pointer"
               >
                 Pindai Sekarang
               </button>
@@ -1118,94 +1092,84 @@
 
       </main>
 
-      <!-- ── Bottom Navigation Bar (Elevated Floating Center Orb) ──────── -->
+      <!-- ── Bottom Navigation Bar ──────────────────────────────────── -->
       <nav id="bottom-nav" class="
         shrink-0 sticky bottom-0 z-40
-        bg-parchment-50/95 dark:bg-night-900/95 backdrop-blur-md
-        border-t border-parchment-200 dark:border-night-800
+        bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md
+        border-t border-slate-200/80 dark:border-zinc-800
         px-6 pt-2 pb-3.5 flex items-center justify-around
-        transition-colors duration-300
+        transition-colors duration-200
       ">
         <!-- Beranda -->
         <button id="nav-home" type="button" class="nav-item flex-1 flex flex-col items-center gap-1 cursor-pointer py-1 group">
-          <div class="nav-bar w-5 h-0.5 bg-gold-500 rounded-full scale-x-0 transition-transform mb-0.5"></div>
-          <div class="nav-icon w-8 h-8 flex items-center justify-center text-parchment-500 dark:text-night-400 group-hover:text-gold-400 transition-colors">
+          <div class="nav-bar w-5 h-0.5 bg-slate-900 dark:bg-white rounded-full scale-x-0 transition-transform mb-0.5"></div>
+          <div class="nav-icon w-8 h-8 flex items-center justify-center text-slate-400 dark:text-zinc-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
           </div>
-          <span class="nav-label text-[11px] font-semibold text-parchment-500 dark:text-night-400 group-hover:text-gold-400 transition-colors">Beranda</span>
+          <span class="nav-label text-[11px] font-semibold text-slate-500 dark:text-zinc-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Beranda</span>
         </button>
 
-        <!-- Center Floating Shutter Medallion -->
+        <!-- Center Floating Shutter Button -->
         <button id="nav-scan" type="button" class="nav-item relative -mt-6 flex flex-col items-center cursor-pointer group" title="Pindai Naskah">
           <div class="nav-bar hidden"></div>
-          <div class="relative w-14 h-14 rounded-2xl p-0.5 bg-gradient-to-tr from-gold-600 via-gold-400 to-gold-200 shadow-gold-glow active:scale-95 group-hover:shadow-[0_0_30px_rgba(215,170,62,0.65)] transition-all flex items-center justify-center">
-            <div class="w-full h-full rounded-[14px] bg-gradient-to-b from-gold-500 to-gold-600 flex items-center justify-center text-night-950 shadow-inner">
-              <svg class="w-6 h-6 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                <circle cx="12" cy="13" r="4"/>
-              </svg>
-            </div>
-            <!-- Concentric Pulse Ring -->
-            <span class="absolute -inset-1 rounded-2xl border border-gold-400/40 pointer-events-none animate-ping opacity-30"></span>
+          <div class="relative w-14 h-14 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-zinc-950 shadow-md active:scale-95 group-hover:bg-slate-800 transition-all flex items-center justify-center">
+            <svg class="w-6 h-6 text-white dark:text-zinc-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
           </div>
-          <span class="nav-label text-[10px] font-bold text-gold-600 dark:text-gold-400 mt-1 uppercase tracking-wider">Pindai</span>
+          <span class="nav-label text-[10px] font-bold text-slate-900 dark:text-white mt-1 uppercase tracking-wider">Pindai</span>
         </button>
 
         <!-- Arsip -->
         <button id="nav-history" type="button" class="nav-item flex-1 flex flex-col items-center gap-1 cursor-pointer py-1 group">
-          <div class="nav-bar w-5 h-0.5 bg-gold-500 rounded-full scale-x-0 transition-transform mb-0.5"></div>
-          <div class="nav-icon w-8 h-8 flex items-center justify-center text-parchment-500 dark:text-night-400 group-hover:text-gold-400 transition-colors">
+          <div class="nav-bar w-5 h-0.5 bg-slate-900 dark:bg-white rounded-full scale-x-0 transition-transform mb-0.5"></div>
+          <div class="nav-icon w-8 h-8 flex items-center justify-center text-slate-400 dark:text-zinc-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
             </svg>
           </div>
-          <span class="nav-label text-[11px] font-semibold text-parchment-500 dark:text-night-400 group-hover:text-gold-400 transition-colors">Arsip</span>
+          <span class="nav-label text-[11px] font-semibold text-slate-500 dark:text-zinc-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Arsip</span>
         </button>
       </nav>
 
-      <!-- ── Modal Piagam Paleografi Digital (Digital Heritage Certificate) ── -->
-      <div id="modal-piagam" class="hidden absolute inset-0 z-50 bg-night-950/85 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="relative w-full max-w-[390px] bg-gradient-to-b from-[#1E1711] via-[#14100C] to-[#1E1711] border-2 border-gold-500/50 rounded-3xl p-5 shadow-2xl overflow-hidden flex flex-col gap-3.5">
-          <!-- Antique brass corner brackets -->
-          <div class="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-gold-400 pointer-events-none"></div>
-          <div class="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-gold-400 pointer-events-none"></div>
-          <div class="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-gold-400 pointer-events-none"></div>
-          <div class="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-gold-400 pointer-events-none"></div>
-
+      <!-- ── Modal Piagam Paleografi Digital (Clean Modern Certificate) ── -->
+      <div id="modal-piagam" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4" style="display: none;">
+        <div class="relative w-full max-w-[390px] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-3xl p-6 shadow-2xl overflow-hidden flex flex-col gap-3.5">
           <!-- Certificate Header -->
-          <div class="text-center pt-1.5 pb-1 border-b border-gold-500/25">
-            <span class="text-[9px] font-bold tracking-[0.25em] text-gold-400 uppercase block">KONSORSIUM DIGITALISASI EPIGRAFI</span>
-            <h3 class="font-display text-[17px] font-bold text-night-100 tracking-wider mt-0.5">Piagam Filologi Nusantara</h3>
-            <p id="piagam-reg-num" class="text-[9px] text-parchment-400 font-mono mt-0.5">REG: LONTAR-AI/EPIG-2026/098</p>
+          <div class="text-center pt-1 pb-1 border-b border-slate-200 dark:border-zinc-700/80">
+            <span class="text-[10px] font-bold tracking-[0.2em] text-blue-600 dark:text-blue-400 uppercase block">KONSORSIUM DIGITALISASI EPIGRAFI</span>
+            <h3 class="font-sans text-[18px] font-extrabold text-slate-900 dark:text-white tracking-tight mt-0.5">Piagam Filologi Nusantara</h3>
+            <p id="piagam-reg-num" class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono mt-0.5">REG: LONTAR-AI/EPIG-2026/098</p>
           </div>
 
           <!-- Certificate Body -->
           <div class="flex flex-col gap-2.5 text-center px-1">
-            <span id="piagam-title" class="font-display text-[15px] font-bold text-gold-300">Lontar Surya Kencana</span>
+            <span id="piagam-title" class="font-sans text-[15px] font-bold text-slate-900 dark:text-white">Lontar Surya Kencana</span>
 
-            <div class="py-2.5 px-3 rounded-xl bg-night-950/80 border border-gold-500/30">
-              <p id="piagam-ancient-text" class="font-javanese text-[22px] leading-[1.8] text-transparent bg-clip-text bg-gradient-to-b from-gold-100 via-gold-300 to-gold-400">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</p>
-              <p id="piagam-transliteration" class="font-serif-literary italic text-[12px] text-gold-200/90 mt-1">"Sinuhun surya bumi"</p>
+            <div class="py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700">
+              <p id="piagam-ancient-text" class="font-javanese text-[22px] leading-[1.8] text-slate-900 dark:text-white">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</p>
+              <p id="piagam-transliteration" class="font-serif-literary italic text-[13px] text-slate-600 dark:text-zinc-400 mt-1">"Sinuhun surya bumi"</p>
             </div>
 
             <div class="text-left px-1">
-              <span class="text-[9px] font-bold uppercase tracking-wider text-parchment-400 block mb-0.5">Alih Bahasa Resmi:</span>
-              <p id="piagam-translation" class="font-serif-literary text-[13px] text-night-200 leading-relaxed italic">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 block mb-0.5">Alih Bahasa Resmi:</span>
+              <p id="piagam-translation" class="font-serif-literary text-[13px] text-slate-800 dark:text-zinc-200 leading-relaxed italic">
                 "Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk."
               </p>
             </div>
 
             <!-- Epigrapher verification stamp -->
-            <div class="flex items-center justify-between pt-2 border-t border-gold-500/20 text-[10px]">
+            <div class="flex items-center justify-between pt-2.5 border-t border-slate-200 dark:border-zinc-700/80 text-[11px]">
               <div class="text-left">
-                <span class="text-parchment-500 block text-[9px]">Model Epigrafi:</span>
-                <span class="font-semibold text-gold-400">Gemini 3.8 Multimodal</span>
+                <span class="text-slate-400 dark:text-zinc-500 block text-[9px]">Model Epigrafi:</span>
+                <span class="font-semibold text-slate-800 dark:text-zinc-200">Gemini 3.5 Multimodal</span>
               </div>
               <!-- Verification Seal -->
-              <div class="px-2.5 py-1 rounded-lg bg-patina-500/20 border border-patina-400/50 text-patina-300 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-patina-400"></span>
+              <div class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 TERVERIFIKASI
               </div>
             </div>
@@ -1213,11 +1177,11 @@
 
           <!-- Modal Actions -->
           <div class="flex gap-2 pt-1">
-            <button id="btn-piagam-copy" type="button" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-night-950 font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-gold-sm transition-all">
+            <button id="btn-piagam-copy" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Salin Sertifikat
+              Salin Piagam
             </button>
-            <button id="btn-piagam-close" type="button" class="px-4 py-2.5 rounded-xl bg-night-800 hover:bg-night-750 text-night-200 border border-night-700 font-semibold text-[12px] cursor-pointer transition-colors">
+            <button id="btn-piagam-close" type="button" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-[12px] cursor-pointer transition-colors">
               Tutup
             </button>
           </div>
@@ -1407,8 +1371,14 @@
           if (bar) bar.style.transform = 'scaleX(0)';
           const icon = el.querySelector('.nav-icon');
           const label = el.querySelector('.nav-label');
-          if (icon) icon.classList.remove('text-gold-500', 'dark:text-gold-400');
-          if (label) label.classList.remove('text-gold-500', 'dark:text-gold-400');
+          if (icon) {
+            icon.classList.remove('text-slate-900', 'dark:text-white');
+            icon.classList.add('text-slate-400', 'dark:text-zinc-500');
+          }
+          if (label) {
+            label.classList.remove('text-slate-900', 'dark:text-white');
+            label.classList.add('text-slate-500', 'dark:text-zinc-400');
+          }
         });
 
         const activeNav = document.getElementById(NAV_MAP[targetId] || 'nav-home');
@@ -1417,51 +1387,14 @@
           if (bar) bar.style.transform = 'scaleX(1)';
           const icon = activeNav.querySelector('.nav-icon');
           const label = activeNav.querySelector('.nav-label');
-          if (icon) icon.classList.add('text-gold-500', 'dark:text-gold-400');
-          if (label) label.classList.add('text-gold-500', 'dark:text-gold-400');
-        }
-
-        if (targetId === 'screen-history') renderHistory();
-        document.querySelector('main').scrollTop = 0;
-      }
-
-        // Control Camera lifecycle
-        if (targetId === 'screen-scan') {
-          startCamera();
-        } else if (activeScreen === 'screen-scan') {
-          stopCamera();
-        }
-
-        Object.keys(screens).forEach(id => {
-          screens[id].classList.toggle('screen-hidden', id !== targetId);
-          screens[id].classList.toggle('screen-visible', id === targetId);
-        });
-
-        activeScreen = targetId;
-
-        // Bottom Navigation Active Indicator
-        const NAV_MAP = {
-          'screen-home': 'nav-home',
-          'screen-scan': 'nav-scan',
-          'screen-result': 'nav-scan',
-          'screen-history': 'nav-history',
-        };
-
-        document.querySelectorAll('.nav-item').forEach(el => {
-          el.querySelector('.nav-bar').style.transform = 'scaleX(0)';
-          const icon = el.querySelector('.nav-icon');
-          const label = el.querySelector('.nav-label');
-          icon.classList.remove('text-gold-500', 'dark:text-gold-400');
-          label.classList.remove('text-gold-500', 'dark:text-gold-400');
-        });
-
-        const activeNav = document.getElementById(NAV_MAP[targetId] || 'nav-home');
-        if (activeNav) {
-          activeNav.querySelector('.nav-bar').style.transform = 'scaleX(1)';
-          const icon = activeNav.querySelector('.nav-icon');
-          const label = activeNav.querySelector('.nav-label');
-          icon.classList.add('text-gold-500', 'dark:text-gold-400');
-          label.classList.add('text-gold-500', 'dark:text-gold-400');
+          if (icon) {
+            icon.classList.remove('text-slate-400', 'dark:text-zinc-500');
+            icon.classList.add('text-slate-900', 'dark:text-white');
+          }
+          if (label) {
+            label.classList.remove('text-slate-500', 'dark:text-zinc-400');
+            label.classList.add('text-slate-900', 'dark:text-white');
+          }
         }
 
         if (targetId === 'screen-history') renderHistory();
@@ -1531,8 +1464,9 @@
       // Flash / Torch toggle
       document.getElementById('btn-flash-toggle').addEventListener('click', async function () {
         flashActive = !flashActive;
-        this.classList.toggle('text-gold-400', flashActive);
-        this.classList.toggle('border-gold-500/60', flashActive);
+        this.classList.toggle('text-amber-400', flashActive);
+        this.classList.toggle('border-amber-400/80', flashActive);
+        this.classList.toggle('bg-amber-400/20', flashActive);
 
         if (cameraStream) {
           const track = cameraStream.getVideoTracks()[0];
@@ -1667,7 +1601,7 @@
           if (isApiKeyIssue) {
             if (titleEl) titleEl.textContent = 'Kunci API Gemini Belum Dikonfigurasi di Vercel';
             if (descEl) {
-              descEl.innerHTML = 'Kamera tidak dapat memproses via AI karena <code class="px-1.5 py-0.5 rounded bg-night-800 text-gold-400 font-mono text-[11px]">GEMINI_API_KEY</code> belum ditambahkan di dashboard Vercel (<strong>Project Settings &gt; Environment Variables</strong>).<br><br>Silakan tambahkan API key tersebut di Vercel agar pemindaian kamera aktif real-time, atau gunakan contoh naskah kurasi untuk pengujian fitur lomba.';
+              descEl.innerHTML = 'Kamera tidak dapat memproses via AI karena <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 border border-slate-300 dark:border-zinc-700 font-mono text-[11px]">GEMINI_API_KEY</code> belum ditambahkan di dashboard Vercel (<strong>Project Settings &gt; Environment Variables</strong>).<br><br>Silakan tambahkan API key tersebut di Vercel agar pemindaian kamera aktif real-time, atau gunakan contoh naskah kurasi untuk pengujian fitur lomba.';
             }
             if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Demo)';
             if (retryBtnLabel) retryBtnLabel.textContent = 'Tutup & Arahkan Kamera Lagi';
@@ -1881,8 +1815,8 @@
           const isActive = idx === 0;
           btn.className = `glyph-chip px-2.5 py-1 rounded-xl text-center border transition-all cursor-pointer ${
             isActive
-              ? 'bg-gold-500 text-night-950 border-gold-400 font-bold shadow-sm'
-              : 'bg-parchment-100 dark:bg-night-900 border-parchment-300 dark:border-night-800 text-night-900 dark:text-night-200 hover:border-gold-500/50'
+              ? 'bg-slate-900 dark:bg-white text-white dark:text-zinc-950 border-slate-900 dark:border-white font-bold shadow-xs'
+              : 'bg-slate-100 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 hover:border-slate-400 dark:hover:border-zinc-600'
           }`;
 
           btn.innerHTML = `
@@ -1892,11 +1826,9 @@
 
           btn.addEventListener('click', () => {
             chipsContainer.querySelectorAll('.glyph-chip').forEach(c => {
-              c.classList.remove('bg-gold-500', 'text-night-950', 'border-gold-400', 'font-bold', 'shadow-sm');
-              c.classList.add('bg-parchment-100', 'dark:bg-night-900', 'border-parchment-300', 'dark:border-night-800', 'text-night-900', 'dark:text-night-200');
+              c.className = 'glyph-chip px-2.5 py-1 rounded-xl text-center border transition-all cursor-pointer bg-slate-100 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 hover:border-slate-400 dark:hover:border-zinc-600';
             });
-            btn.classList.add('bg-gold-500', 'text-night-950', 'border-gold-400', 'font-bold', 'shadow-sm');
-            btn.classList.remove('bg-parchment-100', 'dark:bg-night-900', 'border-parchment-300', 'dark:border-night-800', 'text-night-900', 'dark:text-night-200');
+            btn.className = 'glyph-chip px-2.5 py-1 rounded-xl text-center border transition-all cursor-pointer bg-slate-900 dark:bg-white text-white dark:text-zinc-950 border-slate-900 dark:border-white font-bold shadow-xs';
             setDetail(g);
           });
 
@@ -2194,43 +2126,45 @@
 
         if (items.length === 0) {
           histContainer.classList.add('hidden');
+          emptyState.style.display = 'flex';
           emptyState.classList.remove('hidden');
           emptyState.classList.add('flex');
           return;
         }
 
         histContainer.classList.remove('hidden');
+        emptyState.style.display = 'none';
         emptyState.classList.add('hidden');
         emptyState.classList.remove('flex');
 
         items.forEach(item => {
           const card = document.createElement('article');
-          card.className = 'history-card p-4 rounded-2xl bg-white dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/40 shadow-sm transition-all cursor-pointer';
+          card.className = 'history-card p-4 rounded-2xl bg-white dark:bg-zinc-850 border border-slate-200/90 dark:border-zinc-800 hover:border-slate-400 dark:hover:border-zinc-600 shadow-sm transition-all cursor-pointer';
 
           card.innerHTML = `
             <div class="flex items-start justify-between gap-3 mb-2.5">
               <div class="flex-1 min-w-0">
-                <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 truncate mb-0.5">${esc(item.title)}</h4>
-                <p class="text-[10px] text-parchment-500 dark:text-night-400 font-medium">${esc(item.date)}</p>
+                <h4 class="text-[13px] font-bold text-slate-900 dark:text-zinc-100 truncate mb-0.5">${esc(item.title)}</h4>
+                <p class="text-[10px] text-slate-500 dark:text-zinc-400 font-medium">${esc(item.date)}</p>
               </div>
               <div class="flex items-center gap-1.5 shrink-0">
-                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gold-500/10 border border-gold-500/25 text-gold-600 dark:text-gold-400">${esc(item.language_short || 'Aksara Kuno')}</span>
-                <button type="button" data-id="${item.id}" class="btn-delete w-7 h-7 rounded-lg flex items-center justify-center text-parchment-400 dark:text-night-400 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer" title="Hapus dari arsip">
+                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300">${esc(item.language_short || 'Aksara Kuno')}</span>
+                <button type="button" data-id="${item.id}" class="btn-delete w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 dark:text-zinc-500 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer" title="Hapus dari arsip">
                   <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
                 </button>
               </div>
             </div>
 
-            <div class="bg-gradient-to-r from-[#211A13] via-[#2A2118] to-[#211A13] rounded-xl px-3.5 py-2 mb-2.5 border border-gold-500/20">
-              <p class="font-javanese text-[15px] text-gold-300 tracking-wider">${esc(item.ancientText)}</p>
-              <p class="font-serif-literary text-[11px] text-gold-200/80 italic mt-0.5">${esc(item.transliteration || '')}</p>
+            <div class="bg-slate-50 dark:bg-zinc-800/70 rounded-xl px-3.5 py-2.5 mb-2.5 border border-slate-200/80 dark:border-zinc-700/70">
+              <p class="font-javanese text-[15px] font-medium text-slate-900 dark:text-zinc-100 tracking-wider">${esc(item.ancientText)}</p>
+              <p class="font-serif-literary text-[11px] text-slate-600 dark:text-zinc-400 italic mt-0.5">${esc(item.transliteration || '')}</p>
             </div>
 
-            <p class="text-[12px] text-parchment-800 dark:text-night-300 font-normal line-clamp-2 leading-relaxed mb-3">
+            <p class="text-[12px] text-slate-600 dark:text-zinc-300 font-normal line-clamp-2 leading-relaxed mb-3">
               ${esc(item.translation)}
             </p>
 
-            <div class="pt-2 border-t border-parchment-200 dark:border-night-800 flex items-center justify-between text-[11px] font-semibold text-gold-600 dark:text-gold-400">
+            <div class="pt-2 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-semibold text-slate-900 dark:text-white">
               <span>Buka Kajian Filologi</span>
               <span>→</span>
             </div>
@@ -2286,11 +2220,11 @@
       document.querySelectorAll('.history-tag').forEach(tagBtn => {
         tagBtn.addEventListener('click', function () {
           document.querySelectorAll('.history-tag').forEach(btn => {
-            btn.classList.remove('bg-gold-500', 'text-night-950');
-            btn.classList.add('bg-parchment-200', 'dark:bg-night-850', 'text-parchment-700', 'dark:text-night-300');
+            btn.classList.remove('bg-slate-900', 'text-white', 'dark:bg-white', 'dark:text-zinc-950');
+            btn.classList.add('bg-slate-100', 'dark:bg-zinc-800', 'text-slate-600', 'dark:text-zinc-300');
           });
-          this.classList.add('bg-gold-500', 'text-night-950');
-          this.classList.remove('bg-parchment-200', 'dark:bg-night-850', 'text-parchment-700', 'dark:text-night-300');
+          this.classList.add('bg-slate-900', 'text-white', 'dark:bg-white', 'dark:text-zinc-950');
+          this.classList.remove('bg-slate-100', 'dark:bg-zinc-800', 'text-slate-600', 'dark:text-zinc-300');
 
           historyFilterTag = this.dataset.filter || '';
           renderHistory(document.getElementById('history-search').value);
@@ -2309,16 +2243,27 @@
       const htmlEl = document.documentElement;
       function applyTheme(isDark) {
         htmlEl.classList.toggle('dark', isDark);
+        const label = document.getElementById('theme-label');
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (label) {
+          label.textContent = isDark ? 'Terang' : 'Gelap';
+        }
+        if (toggleBtn) {
+          toggleBtn.title = isDark ? 'Beralih ke Mode Putih (Terang)' : 'Beralih ke Mode Hitam-Putih (Gelap)';
+        }
         try { localStorage.setItem('lontar_theme', isDark ? 'dark' : 'light'); } catch (_) {}
       }
 
+      // Default is clean Light (Putih). Only switch to dark if explicitly chosen by user.
       const savedTheme = localStorage.getItem('lontar_theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(savedTheme === 'dark' || (!savedTheme && prefersDark));
+      applyTheme(savedTheme === 'dark');
 
-      document.getElementById('theme-toggle').addEventListener('click', () => {
-        applyTheme(!htmlEl.classList.contains('dark'));
-      });
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          applyTheme(!htmlEl.classList.contains('dark'));
+        });
+      }
 
       // ── Event Bindings ────────────────────────────────────
       document.getElementById('nav-home').addEventListener('click', () => navigate('screen-home'));
