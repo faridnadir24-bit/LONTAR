@@ -236,7 +236,7 @@
                   </div>
                   <!-- Clean Aksara Jawa -->
                   <div class="font-javanese text-[28px] sm:text-[30px] text-slate-900 dark:text-zinc-100 font-medium py-1 select-none">
-                    ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
+                    ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ
                   </div>
                   <p class="font-serif-literary italic text-[14px] text-slate-600 dark:text-zinc-400 mt-1">
                     "Sinuhun surya bumi"
@@ -524,7 +524,7 @@
             <div id="camera-fallback" class="absolute inset-0 flex items-center justify-center p-6">
               <div class="w-full max-w-[290px] bg-zinc-900 rounded-2xl border border-zinc-800 shadow-xl relative px-6 py-6 flex flex-col gap-3">
                 <span class="text-[10px] text-center text-zinc-400 font-bold tracking-widest uppercase">Naskah Uji Coba Lontar</span>
-                <div class="font-javanese text-center text-[24px] text-white">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</div>
+                <div class="font-javanese text-center text-[24px] text-white">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ</div>
                 <div class="font-javanese text-center text-[15px] text-zinc-300">ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ</div>
                 <div class="font-javanese text-center text-[13px] text-zinc-400">ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ</div>
               </div>
@@ -749,7 +749,7 @@
               <div class="relative rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 p-4 sm:p-5 shadow-xs overflow-hidden">
                 <div class="relative z-10 py-1.5">
                   <p id="result-ancient-text" class="font-ancient-script ancient-text-short text-slate-900 dark:text-white select-all">
-                    ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
+                    ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ
                   </p>
                   <p id="result-transliteration" class="font-serif-literary italic text-[13px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-600 dark:text-zinc-300 mt-2.5 tracking-wide whitespace-pre-line break-words text-center">
                     "Sinuhun surya bumi"
@@ -852,6 +852,26 @@
                 </div>
                 <div id="line-by-line-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1">
                   <!-- Dynamically rendered lines -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Filological Lexicon & Etymology (Glosarium & Morfologi Istilah Kuno) ── -->
+            <div id="section-lexicon" class="hidden px-5 mt-3.5">
+              <div class="p-4 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs">
+                <div class="flex items-center justify-between mb-2.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+                      Glosarium & Morfologi Istilah Kuno
+                    </span>
+                  </div>
+                  <span id="lexicon-count-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-700 text-slate-700 dark:text-zinc-300">
+                    Kaidah Filologi
+                  </span>
+                </div>
+                <div id="lexicon-list" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+                  <!-- Dynamically rendered lexicon terms -->
                 </div>
               </div>
             </div>
@@ -1090,7 +1110,7 @@
             <span id="piagam-title" class="font-sans text-[15px] font-bold text-slate-900 dark:text-white">Lontar Surya Kencana</span>
 
             <div class="py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 max-h-48 overflow-y-auto">
-              <p id="piagam-ancient-text" class="font-ancient-script text-[18px] sm:text-[20px] leading-[1.85] text-slate-900 dark:text-white whitespace-pre-line">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</p>
+              <p id="piagam-ancient-text" class="font-ancient-script text-[18px] sm:text-[20px] leading-[1.85] text-slate-900 dark:text-white whitespace-pre-line">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ</p>
               <p id="piagam-transliteration" class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 mt-1 whitespace-pre-line">"Sinuhun surya bumi"</p>
             </div>
 

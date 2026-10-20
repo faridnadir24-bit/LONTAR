@@ -51,6 +51,18 @@ export function stopAudio() {
   }
 }
 
+export function sanitizeSpeechText(text) {
+  if (!text) return '';
+  return text
+    // Strip Brahmic & Indic script Unicode blocks (Javanese, Balinese, Sundanese, Batak, Bugis, Kawi, Devanagari)
+    .replace(/[\uA980-\uA9DF\u1B00-\u1B7F\u1B80-\u1BBF\u1BC0-\u1BFF\u1A00-\u1A1F\u{11F00}-\u{11F5F}\u0900-\u097F]/gu, '')
+    // Remove formatting punctuation that disrupts speech cadence
+    .replace(/[«»"“”'']/g, '')
+    // Consolidate whitespaces
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export function playAudio(textToSpeak) {
   if (isSpeaking) {
     stopAudio();
@@ -62,7 +74,8 @@ export function playAudio(textToSpeak) {
     return;
   }
 
-  const text = textToSpeak || (document.getElementById('result-translated-text') ? document.getElementById('result-translated-text').textContent.trim() : '');
+  const rawText = textToSpeak || (document.getElementById('result-translated-text') ? document.getElementById('result-translated-text').textContent.trim() : '');
+  const text = sanitizeSpeechText(rawText);
   if (!text) return;
 
   const utt = new SpeechSynthesisUtterance(text);

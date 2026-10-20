@@ -49,6 +49,10 @@ test('prepareSpeechPayload configures Indonesian speech synthesis parameters', (
   assert.equal(payload.lang, 'id-ID');
   assert.equal(payload.rate, 0.95);
   assert.equal(payload.text, 'Sinar matahari menyinari bumi. Memberi kehidupan.');
+
+  // Verify sanitization of Brahmic unicode and quotation marks
+  const payloadAksara = prepareSpeechPayload('ꦱꦶꦤꦸꦮꦸꦤ꧀ "Sinuhun surya bumi"');
+  assert.equal(payloadAksara.text, 'Sinuhun surya bumi');
 });
 
 test('validateScanInput validates required fields', () => {

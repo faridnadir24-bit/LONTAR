@@ -5,7 +5,7 @@
 export const SAMPLES = [
   {
     title: 'Lontar Surya Kencana — Lempeng I',
-    ancientText: 'ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ',
+    ancientText: 'ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ',
     transliteration: '"Sinuhun surya bumi"',
     translation: 'Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk semesta.',
     philosophical: 'Simbol kepemimpinan adiluhung yang mengayomi segenap rakyat tanpa pilih kasih.',
@@ -17,11 +17,15 @@ export const SAMPLES = [
       { char: 'ꦤꦸ', roman: 'Nu', type: 'Sandhangan Swara Suku', desc: 'Aksara Nglegena "Na" (ꦤ) dipasangi sandhangan swara "Suku" (ꦸ) yang mengubah vokal /a/ menjadi /u/.' },
       { char: 'ꦮꦸ', roman: 'Wu', type: 'Sandhangan Swara Suku', desc: 'Aksara Nglegena "Wa" (ꦮ) dipasangi sandhangan swara "Suku" (ꦸ) menghasilkan suku kata /wu/.' },
       { char: 'ꦤ꧀', roman: 'n', type: 'Panyigeg Pangkon', desc: 'Aksara Nglegena "Na" (ꦤ) dimatikan vokalnya dengan tanda "Pangkon" (꧀) menjadi konsonan penutup /n/.' },
-      { char: 'ꦱꦸ', roman: 'Su', type: 'Sandhangan Swara Suku', desc: 'Aksara Nglegena "Sa" (ꦱ) dipasangi sandhangan swara "Suku" (ꦸ) menghasilkan /su/.' },
-      { char: 'ꦫ', roman: 'Ra', type: 'Aksara Nglegena', desc: 'Aksara dasar "Ra" (ꦫ) dengan vokal inheren terbuka /ra/.' },
-      { char: 'ꦪ', roman: 'Ya', type: 'Aksara Nglegena', desc: 'Aksara dasar "Ya" (ꦪ) dengan vokal inheren terbuka /ya/.' },
+      { char: 'ꦱꦸꦂ', roman: 'Sur', type: 'Suku & Layar', desc: 'Aksara Nglegena "Sa" (ꦱ) dipasangi sandhangan "Suku" (ꦸ) dan panyigeg "Layar" (ꦂ) menghasilkan suku tertutup /sur/.' },
+      { char: 'ꦪ', roman: 'Ya', type: 'Aksara Nglegena', desc: 'Aksara konsonan dasar "Ya" (ꦪ) dengan vokal inheren terbuka /ya/.' },
       { char: 'ꦧꦸ', roman: 'Bu', type: 'Sandhangan Swara Suku', desc: 'Aksara Nglegena "Ba" (ꦧ) dipasangi sandhangan swara "Suku" (ꦸ) menghasilkan suku kata /bu/.' },
       { char: 'ꦩꦶ', roman: 'Mi', type: 'Sandhangan Swara Wulu', desc: 'Aksara Nglegena "Ma" (ꦩ) dipasangi sandhangan swara "Wulu" (ꦶ) menghasilkan suku kata /mi/.' }
+    ],
+    lexicon: [
+      { term: 'Sinuhun', origin: 'Jawa Kuno / Jawa Pertengahan', meaning: 'Yang dijunjung tinggi / junjungan mulia; gelar adiluhung bagi pemimpin yang mengayomi seluruh rakyat.' },
+      { term: 'Surya', origin: 'Sanskerta (sūrya)', meaning: 'Matahari; simbol kehangatan, penerangan jagad semesta, dan keadilan tanpa pilih kasih.' },
+      { term: 'Bumi', origin: 'Sanskerta (bhūmi)', meaning: 'Tanah air, persada semesta, serta ruang bernaung segenap titah kehidupan.' }
     ]
   },
   {
@@ -42,6 +46,13 @@ export const SAMPLES = [
       { char: 'ꦭ꧀', roman: 'l', type: 'Panyigeg Pangkon', desc: 'Aksara "La" (ꦭ) disusul tanda "Pangkon" (꧀) mematikan vokal suku kata menjadi konsonan /l/.' },
       { char: 'ꦲꦶ', roman: 'I', type: 'Sandhangan Swara', desc: 'Aksara "Ha" (ꦲ) dipasangi sandhangan "Wulu" (ꦶ) yang melafalkan vokal swara murni /i/.' },
       { char: 'ꦏ', roman: 'Ka', type: 'Aksara Nglegena', desc: 'Aksara konsonan dasar "Ka" (ꦏ) dengan vokal inheren /ka/.' }
+    ],
+    lexicon: [
+      { term: 'Bhinneka', origin: 'Jawa Kuno (bhinna + ika)', meaning: 'Berbeda-beda itu; kendati tampak beraneka bentuk luarnya, hakikatnya berpangkal pada satu esensi kosmis.' },
+      { term: 'Tunggal', origin: 'Austronesia / Jawa Kuno', meaning: 'Satu, esa, manunggal secara utuh tanpa keterpisahan.' },
+      { term: 'Ika', origin: 'Jawa Kuno / Kawi', meaning: 'Itu / demikianlah hakikat kebenarannya.' },
+      { term: 'Tan hana', origin: 'Jawa Kuno', meaning: 'Tiada / mustahil ada kontradiksi.' },
+      { term: 'Mangrwa', origin: 'Jawa Kuno (ma- + rwa)', meaning: 'Mendua atau terpecah belah; esensi dharma kebenaran tidak pernah berselisih.' }
     ]
   },
   {
@@ -79,6 +90,12 @@ Baris 9: tākasīdgumbīyumātukāgūkādaka`,
       { line: 7, script: 'ꦱꦷꦩꦏꦷꦭꦱꦸꦥꦶꦠ...', transliteration: 'sīmakīlasupitakavārāṇatuyṇmāyu...', translation: 'Istilah sima pertanahan dan batas suci.' },
       { line: 8, script: 'ꦪꦩꦴꦭꦷꦠꦏꦩꦸꦲ꧀...', transliteration: 'yamālītakamuhnītāsiyāmātasīdga...', translation: 'Penegasan kaidah hukum prasasti leluhur.' },
       { line: 9, script: 'ꦠꦴꦏꦱꦷꦢ꧀ꦒꦸꦩ꧀ꦧꦷ...', transliteration: 'tākasīdgumbīyumātukāgūkādaka', translation: 'Penutup tabel abjad dan glif peraga Kawi.' }
+    ],
+    lexicon: [
+      { term: 'Swastyastu', origin: 'Sanskerta (su + asti + astu)', meaning: 'Semoga ada dalam keselamatan lahir-batin dan kedamaian mutlak semesta.' },
+      { term: 'Namaḥ Śiwāya', origin: 'Sanskerta', meaning: 'Sembah sujud pemujaan kepada Hyang Siwa Mahatinggi pelindung tatanan kosmis.' },
+      { term: 'Varṇamālā', origin: 'Sanskerta', meaning: 'Untaian aksara vokal-konsonan peraga silabis Kawi kuno.' },
+      { term: 'Sīma', origin: 'Sanskerta / Jawa Kuno', meaning: 'Tanah perdikan suci berkekuatan hukum tetap yang bebas dari pajak kerajaan.' }
     ]
   },
   {
@@ -95,6 +112,11 @@ Baris 9: tākasīdgumbīyumātukāgūkādaka`,
       { char: 'ꦢ꧀ꦣꦶ', roman: 'Ddhi', type: 'Pasangan Mahaprana', desc: 'Aksara "Da" (ꦢ) dipasangi Pasangan Mahaprana "Dha" (꧀ꦣ) dan Wulu (ꦶ) bermakna kesempurnaan batin.' },
       { char: 'ꦫ', roman: 'Ra', type: 'Aksara Nglegena', desc: 'Aksara dasar "Ra" (ꦫ) dengan vokal inheren /ra/.' },
       { char: 'ꦱ꧀ꦠꦸ', roman: 'Stu', type: 'Pasangan & Suku', desc: 'Aksara "Sa" (ꦱ) disusul Pasangan "Ta" (꧀ꦠ) dan Suku (ꦸ) berbunyi /stu/, formula doa sakral leluhur.' }
+    ],
+    lexicon: [
+      { term: 'Siddhi', origin: 'Sanskerta', meaning: 'Pencapaian sempurna, kemanjuran spiritual, dan keberhasilan agung.' },
+      { term: 'Rastu', origin: 'Sanskerta (astu)', meaning: 'Semoga demikianlah adanya / semoga terkabulkan.' },
+      { term: 'Tatastu', origin: 'Sanskerta (tata + astu)', meaning: 'Jadilah demikian selaras tatanan kosmis semesta.' }
     ]
   },
 ];
@@ -112,6 +134,7 @@ export const DEFAULT_HISTORY = [
     language_short: 'Kawi / Jawa Kuno',
     confidence: 99.5,
     glyphs: SAMPLES[1].glyphs,
+    lexicon: SAMPLES[1].lexicon,
   },
   {
     id: 'init-2',
@@ -125,6 +148,7 @@ export const DEFAULT_HISTORY = [
     language_short: SAMPLES[2].language_short,
     confidence: SAMPLES[2].confidence,
     lineByLine: SAMPLES[2].lineByLine,
+    lexicon: SAMPLES[2].lexicon,
   },
   {
     id: 'init-3',
@@ -138,6 +162,7 @@ export const DEFAULT_HISTORY = [
     language_short: 'Jawa Kuno',
     confidence: 98.7,
     glyphs: SAMPLES[3].glyphs,
+    lexicon: SAMPLES[3].lexicon,
   },
 ];
 

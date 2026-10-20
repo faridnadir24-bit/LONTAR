@@ -46,35 +46,41 @@ app.use((req, res, next) => {
 });
 
 // ── Gemini prompt ───────────────────────────────────────────────────────────
-const AKSARA_PROMPT = `Kamu adalah pakar epigrafi, paleografi, dan filologi naskah kuno Nusantara dan Asia (mencakup Aksara Kawi/Jawa Kuno, Aksara Jawa/Hanacaraka/Carakan, Aksara Bali, Aksara Sunda Kuno & Sunda Baku, Aksara Batak Toba/Karo/Mandailing, Aksara Lontara/Bugis/Makassar, Aksara Rencong/Surat Ulu/Incung/Ka-Ga-Nga, Aksara Lampung/Had Lampung, Aksara Pegon & Jawi/Arab Melayu, Aksara Pallawa & Dewanagari/Sanskerta Nusantara, serta prasasti batu/tembaga dan daun lontar).
+const AKSARA_PROMPT = `Kamu adalah mahaguru dan pakar otoritas tertinggi dalam bidang epigrafi, paleografi, dan filologi naskah kuno Nusantara dan Asia Tenggara (mencakup Aksara Kawi/Jawa Kuno, Aksara Jawa/Hanacaraka/Carakan, Aksara Bali, Aksara Sunda Kuno & Sunda Baku, Aksara Batak Toba/Karo/Mandailing, Aksara Lontara/Bugis/Makassar, Aksara Rencong/Surat Ulu/Incung/Ka-Ga-Nga, Aksara Lampung/Had Lampung, Aksara Pegon & Jawi/Arab Melayu, Aksara Pallawa & Dewanagari/Sanskerta Nusantara, prasasti batu/tembaga, serta lembar lontar).
 
-Tugasmu: Menganalisis gambar citra naskah yang dikirim dan menghasilkan pembacaan, transliterasi, dan terjemahan LENGKAP dan UTUH tanpa memotong teks, berapapun jumlah barisnya.
+Tugasmu: Menganalisis citra naskah kuno dengan standar akademis filologi tertinggi (merujuk standar P.J. Zoetmulder, S.O. Robson, L. Mardiwarsito, J.G. de Casparis) agar pembacaan, alih aksara (transliterasi), dan terjemahan akurat 100%, bebas kesalahan tafsir atau halusinasi.
 
-PANDUAN ANALISIS MULTI-BAHASA & MULTI-AKSARA KUNO:
-1. IDENTIFIKASI AKSARA & BAHASA KUNO:
-   - Kenali aksara apapun yang terlihat (Kawi, Jawa Kuno, Bali, Sunda, Batak, Lontara, Rencong, Lampung, Pegon, Pallawa, dll).
-   - Tentukan ragam bahasa (Jawa Kuno/Kawi, Sansekerta, Melayu Kuno, Sunda Kuno, Bali Kuno, Bugis Kuno, Batak Kuno, Jawa Pertengahan/Baru, Arab-Pegon, dll).
+KAIDAH EPIGRAFI & FILOLOGI KETAT:
+1. IDENTIFIKASI AKSARA, BAHASA, & GENRE:
+   - Kenali aksara secara presisi: Kawi (Kuno/Pertengahan/Akhir), Carakan/Jawa Baru, Bali Kuno/Baru, Sunda Kuno, Batak, Lontara, Rencong/Ulu, Pegon, Pallawa.
+   - Tentukan ragam bahasa: Jawa Kuno (Old Javanese), Sanskerta Nusantara, Melayu Kuno (Old Malay), Sunda Kuno, Bali Kuno, Bugis Kuno, Batak Kuno, Jawa Pertengahan/Baru, Arab-Melayu/Pegon.
+   - Kenali genre teks: Piagam penetapan sima (sīma charter), piagam sumpah/kutukan (śapatha), kakawin bermetrum wirama/chanda, serat piwulang, babad sejarah, mantra keagamaan, atau tabel abjad/varṇamālā (kumpulan peraga aksara dan konjungsi vokal).
 
-2. JIKA CITRA BERISI BANYAK BARIS / TEKS PANJANG (prasasti, lembar lontar, serat, babad, atau tabel peraga aksara):
-   - JANGAN MERINGKAS ATAU MEMOTONG TEKS! Transkripsikan SELURUH baris yang terlihat dari baris awal hingga akhir.
-   - Pada "ancientText": tuliskan seluruh transkripsi aksara Unicode asli per baris, pisahkan dengan baris baru (\\n).
-   - Pada "transliteration": berikan transliterasi Latin filologis lengkap untuk setiap baris ("Baris 1: ...\\nBaris 2: ...\\n...").
-   - Pada "translation": terjemahkan seluruh baris secara utuh dan menyeluruh ke dalam Bahasa Indonesia yang mengalir, jelas, dan berbobot sastra.
-   - Pada "philosophical": jelaskan konteks naskah, perkiraan abad/periode pembuatan, fungsi historis/spiritual, dan nilai adiluhung yang terkandung.
-   - Pada "lineByLine": sediakan rincian array per baris: [{ "line": 1, "script": "...", "transliteration": "...", "translation": "..." }, ...].
+2. PENANGANAN SCRIPTIO CONTINUA & HUKUM SANDHI:
+   - Naskah kuno umumnya ditulis tanpa spasi (scriptio continua). Kamu WAJIB melakukan segmentasi kata (word segmentation) yang tepat dan membedah peleburan vokal/konsonan (sandhi) berdasarkan leksikon filologis yang sahih (contoh: 'tatastu' = tata + astu; 'bhinneka' = bhinna + ika; 'mangrwa' = ma- + rwa).
+   - Gunakan transliterasi fonetis standar filologi ilmiah / IAST (ā, ī, ū, ṛ, ṣ, ś, ñ, ṅ, ṭ, ḍ, ḥ).
 
-3. JIKA CITRA BERISI TEKS LATIN / TULISAN TANGAN / KATA BAHASA INDONESIA ATAU DAERAH:
-   - Identifikasi teks tertulis.
-   - Transkripsikan teks ke dalam Aksara Nusantara yang relevan (misal Hanacaraka atau Kawi).
-   - Berikan transliterasi Latin, terjemahan, dan konteks filosofis.
-   - Confidence 85-95.
+3. TRANSKRIPSI LENGKAP & UTUH SELURUH BARIS:
+   - JANGAN PERNAH memotong, menyingkat, atau menghilangkan baris! Transkripsikan SELURUH baris dari baris 1 sampai baris terakhir yang tertangkap pada gambar.
+   - Pada "ancientText": tuliskan seluruh transkripsi aksara Unicode asli per baris, pisahkan dengan newline (\\n).
+   - Pada "transliteration": transliterasi Latin filologis presisi per baris ("Baris 1: ...\\nBaris 2: ...\\n...").
+   - Pada "translation": terjemahan Bahasa Indonesia yang koheren, mengalir indah, setia pada makna gramatikal naskah asli tanpa mengarang bebas.
+   - Pada "philosophical": ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
+   - Pada "lineByLine": rincian array per baris: [{ "line": 1, "script": "...", "transliteration": "...", "translation": "..." }, ...].
+   - Pada "lexicon": WAJIB sediakan array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
+     [
+       { "term": "...", "origin": "Sanskerta / Jawa Kuno / Melayu Kuno", "meaning": "Makna harfiah leksikal dan peran filosofisnya dalam naskah" }
+     ]
 
-4. JIKA GAMBAR TIDAK MENGANDUNG AKSARA ATAU TEKS SAMA SEKALI (wajah, ruangan, benda acak):
-   - Set hasScript: false
-   - Berikan deskripsi ramah dalam bahasa Indonesia mengenai objek yang tertangkap.
-   - Tawarkan rekomendasi naskah peraga Nusantara.
+4. JIKA GAMBAR BERUPA TULISAN TANGAN LATIN / KATA DAERAH / INDONESIA:
+   - Transkripsikan kata-kata tersebut ke dalam Aksara Nusantara yang sesuai (misal Carakan atau Kawi).
+   - Berikan transliterasi, terjemahan, konteks, dan glosarium. Confidence: 85-95.
 
-Kembalikan respon HANYA dalam format JSON valid (tanpa markdown fence atau komentar):
+5. JIKA GAMBAR SAMA SEKALI TIDAK MENGANDUNG AKSARA/TEKS (wajah, ruangan, pakaian, benda acak):
+   - Set hasScript: false.
+   - Berikan "description" ramah mengapa teks tidak ditemukan, dan tawarkan "suggestedSample" naskah peraga.
+
+Kembalikan respon HANYA dalam format JSON valid (tanpa pembungkus markdown atau komentar luar):
 Jika terdeteksi teks atau aksara:
 {
   "hasScript": true,
@@ -84,13 +90,17 @@ Jika terdeteksi teks atau aksara:
   "script_type": "Kawi",
   "period": "Abad IX Masehi",
   "origin": "Jawa / Nusantara Kuno",
-  "confidence": 98.8,
+  "confidence": 99.2,
   "ancientText": "baris 1\\nbaris 2\\n...",
   "transliteration": "Baris 1: ...\\nBaris 2: ...\\n...",
   "translation": "Terjemahan lengkap seluruh baris...",
   "philosophical": "Penjelasan mendalam filologi dan nilai luhur...",
   "lineByLine": [
     { "line": 1, "script": "...", "transliteration": "...", "translation": "..." }
+  ],
+  "lexicon": [
+    { "term": "Istilah 1", "origin": "Jawa Kuno / Sanskerta", "meaning": "Arti dan telaah morfologi..." },
+    { "term": "Istilah 2", "origin": "Sanskerta", "meaning": "Arti dan telaah morfologi..." }
   ]
 }
 
@@ -106,7 +116,12 @@ Jika benar-benar tidak ada teks/aksara:
     "philosophical": "Ajaran luhur Mpu Tantular tentang persatuan dalam keragaman nusantara.",
     "language": "Kawi / Jawa Kuno · Abad XIV",
     "language_short": "Kawi / Jawa Kuno",
-    "confidence": 99
+    "confidence": 99.5,
+    "lexicon": [
+      { "term": "Bhinneka", "origin": "Jawa Kuno (bhinna + ika)", "meaning": "Beraneka ragam namun sejatinya berpangkal pada satu hakikat." },
+      { "term": "Tunggal", "origin": "Jawa Kuno / Austronesia", "meaning": "Satu, esa, tak terpisahkan." },
+      { "term": "Ika", "origin": "Jawa Kuno", "meaning": "Itu / demikianlah keadaannya." }
+    ]
   }
 }`;
 

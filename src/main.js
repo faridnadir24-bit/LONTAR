@@ -233,6 +233,7 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
         language_short: data.language_short || data.script_type || 'Aksara Nusantara',
         confidence: data.confidence || 98.8,
         lineByLine: data.lineByLine || [],
+        lexicon: data.lexicon || [],
       };
 
       populateResult(latestResultData);
@@ -476,6 +477,35 @@ export function populateResult(data) {
     if (sectionLineByLine) hideElement(sectionLineByLine);
   }
 
+  // Render Lexicon & Morphology breakdown if present
+  const sectionLexicon = document.getElementById('section-lexicon');
+  const lexiconListEl = document.getElementById('lexicon-list');
+  const lexiconCountBadge = document.getElementById('lexicon-count-badge');
+
+  if (data.lexicon && Array.isArray(data.lexicon) && data.lexicon.length > 0) {
+    if (lexiconCountBadge) lexiconCountBadge.textContent = `${data.lexicon.length} Istilah Kunci`;
+    if (lexiconListEl) {
+      lexiconListEl.innerHTML = data.lexicon.map(item => `
+        <div class="p-3 rounded-xl bg-slate-50/70 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800 flex flex-col gap-1 transition-colors hover:border-blue-500/30">
+          <div class="flex items-center justify-between">
+            <span class="font-serif-literary font-bold text-[13px] sm:text-[14px] text-slate-900 dark:text-white">
+              ${esc(item.term)}
+            </span>
+            <span class="text-[9px] font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/70 dark:border-blue-900/50">
+              ${esc(item.origin || 'Aksara Kuno')}
+            </span>
+          </div>
+          <p class="text-[11px] sm:text-[12px] text-slate-600 dark:text-zinc-300 leading-relaxed font-normal">
+            ${esc(item.meaning)}
+          </p>
+        </div>
+      `).join('');
+    }
+    if (sectionLexicon) showElement(sectionLexicon);
+  } else {
+    if (sectionLexicon) hideElement(sectionLexicon);
+  }
+
   const glyphList = data.glyphs && data.glyphs.length
     ? data.glyphs
     : extractGlyphs(data.ancientText, data.transliteration);
@@ -503,7 +533,7 @@ export function populateResult(data) {
       imgEl.classList.remove('hidden');
       if (imgNotice) imgNotice.textContent = 'Citra optik yang dipindai langsung dari kamera';
     } else {
-      imgEl.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' fill='%2318181B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23FFFFFF' font-size='22' font-family='serif'%3Eꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ%3C/text%3E%3C/svg%3E";
+      imgEl.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' fill='%2318181B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23FFFFFF' font-size='22' font-family='serif'%3Eꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ%3C/text%3E%3C/svg%3E";
       if (imgNotice) imgNotice.textContent = 'Menampilkan naskah peraga lontar kurasi filologi';
     }
   }
@@ -684,6 +714,8 @@ document.addEventListener('DOMContentLoaded', () => {
         language_short: s.language_short || 'Aksara Jawa',
         confidence: s.confidence || 98.8,
         glyphs: s.glyphs || extractGlyphs(s.ancientText, s.transliteration),
+        lineByLine: s.lineByLine || [],
+        lexicon: s.lexicon || [],
       };
 
       const items = getHistory();

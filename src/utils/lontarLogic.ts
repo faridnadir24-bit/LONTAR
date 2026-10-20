@@ -12,6 +12,8 @@ export interface LontarScanItem {
   transliteration?: string;
   language: string;
   icon: string;
+  lexicon?: Array<{ term: string; origin: string; meaning: string }>;
+  lineByLine?: Array<{ line: number; script: string; transliteration: string; translation: string }>;
 }
 
 export const INITIAL_MOCK_HISTORY: LontarScanItem[] = [
@@ -97,7 +99,11 @@ export function filterHistory(items: LontarScanItem[], query: string): LontarSca
 }
 
 export function prepareSpeechPayload(text: string): { text: string; lang: string; rate: number } {
-  const cleaned = text.replace(/\s+/g, ' ').trim();
+  const cleaned = text
+    .replace(/[\uA980-\uA9DF\u1B00-\u1B7F\u1B80-\u1BBF\u1BC0-\u1BFF\u1A00-\u1A1F\u{11F00}-\u{11F5F}\u0900-\u097F]/gu, '')
+    .replace(/[«»"“”'']/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
   return {
     text: cleaned,
     lang: 'id-ID',
