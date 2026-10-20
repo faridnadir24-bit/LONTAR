@@ -52,57 +52,71 @@ export function formatScanDate(dateInput) {
 
 export function extractGlyphs(ancientText, translit) {
   if (!ancientText) return [];
-  const tokens = ancientText.trim().split(/\s+/);
+
+  // Remove excessive whitespace & split into tokens
+  const cleanStr = ancientText.trim();
+  const words = cleanStr.split(/\s+/);
   const result = [];
+  const seenChars = new Set();
 
-  tokens.forEach((word, wIdx) => {
-    // Tokenize Javanese syllables (simple Brahmic cluster heuristic)
-    const clusters = word.match(/[\uA980-\uA9DF]+/g) || [word];
-    clusters.forEach((tok, cIdx) => {
-      const hasWulu = tok.includes('ꦶ');
-      const hasSuku = tok.includes('ꦸ');
-      const hasTaling = tok.includes('ꦺ');
-      const hasTalingTarung = tok.includes('ꦺꦴ') || (tok.includes('ꦺ') && tok.includes('ꦴ'));
-      const hasPangkon = tok.includes('꧀');
-      const hasCecak = tok.includes('ꦁ');
-      const hasLayar = tok.includes('ꦂ');
+  // Pattern covering all ancient Nusantara scripts (Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon)
+  const scriptRegex = /[\uA980-\uA9DF\u1B00-\u1B7F\u1B80-\u1BBF\u1BC0-\u1BFF\u1A00-\u1A1F\u0600-\u06FF\u{11F00}-\u{11F5F}]+/gu;
 
-      let type = 'Aksara Nglegena Dasar';
-      let desc = `Aksara konsonan murni berbunyi vokal inheren terbuka /a/.`;
+  for (let wIdx = 0; wIdx < words.length && result.length < 14; wIdx++) {
+    const word = words[wIdx];
+    const clusters = word.match(scriptRegex) || [word];
 
-      if (hasPangkon) {
-        type = 'Panyigeg Pangkon';
-        desc = `Konsonan penutup yang dimatikan vokalnya menggunakan tanda paten Pangkon (꧀).`;
-      } else if (hasTalingTarung) {
-        type = 'Sandhangan Swara /o/';
-        desc = `Dipasangi taling-tarung (ꦺ...ꦴ) yang mengubah vokal inheren menjadi vokal bundar /o/.`;
-      } else if (hasWulu) {
-        type = 'Sandhangan Swara Wulu';
-        desc = `Dipasangi sandhangan wulu (ꦶ) yang melafalkan vokal tinggi /i/.`;
-      } else if (hasSuku) {
-        type = 'Sandhangan Swara Suku';
-        desc = `Dipasangi sandhangan suku (ꦸ) yang melafalkan vokal tertutup /u/.`;
-      } else if (hasTaling) {
-        type = 'Sandhangan Swara Taling';
-        desc = `Dipasangi sandhangan taling (ꦺ) yang melafalkan vokal madya /e/.`;
-      } else if (hasCecak) {
-        type = 'Panyigeg Cecak';
-        desc = `Diakhiri konsonan sengau nasal /ng/ dengan sandhangan cecak (ꦁ).`;
-      } else if (hasLayar) {
-        type = 'Panyigeg Layar';
-        desc = `Diakhiri konsonan getar /r/ dengan sandhangan layar (ꦂ).`;
+    for (let cIdx = 0; cIdx < clusters.length && result.length < 14; cIdx++) {
+      const tok = clusters[cIdx];
+      if (!tok || tok.length > 8 || seenChars.has(tok)) continue;
+      seenChars.add(tok);
+
+      let type = 'Karakter / Glif Kuno';
+      let desc = 'Glif otentik yang didekode dari citra manuskrip/prasasti.';
+
+      // Epigraphic categorization
+      if (tok.includes('꧀') || tok.includes('᭄') || tok.includes('ᳵ')) {
+        type = 'Pangkon / Virama (Panguncik)';
+        desc = 'Tanda peredam vokal inheren (tanda paten konsonan akhir).';
+      } else if (tok.includes('ꦶ') || tok.includes('ꦸ') || tok.includes('ꦺ') || tok.includes('ᬶ') || tok.includes('ᬸ') || tok.includes('ᬾ')) {
+        type = 'Sandhangan Swara';
+        desc = 'Vokalisasi diakritik yang mengubah vokal inheren dasar.';
+      } else if (tok.includes('ꦁ') || tok.includes('ꦂ') || tok.includes('ᬂ') || tok.includes('ᬃ')) {
+        type = 'Panyigeg Nasal / Getar';
+        desc = 'Diakritik konsonan penutup suku kata (/ng/ atau /r/).';
+      } else if (/[\u{11F00}-\u{11F5F}]/u.test(tok)) {
+        type = 'Aksara Kawi Kuno';
+        desc = 'Karakter aksara Kawi dari periode Jawa Kuno abad VIII–XV Masehi.';
+      } else if (/[\u1B00-\u1B7F]/u.test(tok)) {
+        type = 'Aksara Bali';
+        desc = 'Karakter Carakan Bali yang berakar dari aksara Kawi tradisi lontar.';
+      } else if (/[\u1B80-\u1BBF]/u.test(tok)) {
+        type = 'Aksara Sunda Kuno';
+        desc = 'Karakter aksara Sunda kuno dari naskah lontar dan prasasti Sunda.';
+      } else if (/[\u1BC0-\u1BFF]/u.test(tok)) {
+        type = 'Surat Batak';
+        desc = 'Aksara pustaha laklak Batak tradisi Sumatera Utara.';
+      } else if (/[\u1A00-\u1A1F]/u.test(tok)) {
+        type = 'Aksara Lontara';
+        desc = 'Karakter Lontara tradisi naskah Bugis-Makassar Sulawesi.';
+      } else if (/[\u0600-\u06FF]/u.test(tok)) {
+        type = 'Aksara Pegon / Jawi';
+        desc = 'Aksara Arab gundul adaptasi bahasa Jawa/Sunda/Melayu tradisi pesantren.';
+      } else {
+        type = 'Aksara Nglegena / Dasar';
+        desc = 'Konsonan silabis dengan vokal inheren terbuka.';
       }
 
       result.push({
         char: tok,
-        roman: `Glif ${wIdx + 1}.${cIdx + 1}`,
-        type: type,
-        desc: desc,
+        roman: `Glif ${result.length + 1}`,
+        type,
+        desc,
       });
-    });
-  });
+    }
+  }
 
   return result.length ? result : [
-    { char: ancientText, roman: translit || 'Aksara', type: 'Glif Prasasti', desc: 'Analisis glif aksara kuno berbasis citra optik.' }
+    { char: cleanStr.slice(0, 4), roman: translit || 'Aksara', type: 'Glif Prasasti', desc: 'Analisis glif aksara kuno berbasis citra optik.' }
   ];
 }

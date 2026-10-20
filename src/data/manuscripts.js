@@ -45,6 +45,43 @@ export const SAMPLES = [
     ]
   },
   {
+    title: 'Prasasti Batavia — Huruf Kawi Museum',
+    ancientText: `𑀲𑀼𑀩𑀲𑁆𑀢𑀼𑀦𑀫𑀄𑀰𑀺𑀯𑀢𑀺𑀢𑀃𑀞𑀫𑀘𑀡𑀢𑀡𑀰𑀶𑀰𑁆𑀫𑀲𑀳𑀓𑁆𑀰𑀷𑀻𑀚𑀻𑀧𑀼
+𑀫𑀺𑀓𑁆𑀢𑀼𑀧𑀼𑀲𑁆𑀬𑀸𑀳𑀸𑀭𑀸𑀫𑀸𑀘𑀸𑀭𑀸𑀫𑀸𑀥𑀼𑀢𑀻𑀥𑀸𑀬𑀼𑀪𑀸𑀬𑀼𑀪𑀼𑀬𑀼𑀲𑀸𑀭𑀸
+𑀭𑀸𑀳𑀺𑀫𑀺𑀢ꦏ꧀ꦟꦷꦰ꧀ꦭꦷꦥꦸꦠꦧꦢꦶꦱꦘꦢꦫꦴꦩꦩꦕꦫꦧ꧀ꦭꦫꦸꦭꦴꦱꦸ
+𑀯𑀺ꦕ꧀ꦕꦶꦧ꧀ꦮꦴꦩꦴꦠꦱꦴꦭ꧀ꦪꦸꦩꦸꦧ꧀ꦢ꧀ꦮꦩꦴꦪꦩꦢꦶꦭꦴꦩꦴꦱꦴ
+ꦏꦕ꧀ꦪꦴꦢꦶꦏꦴꦢꦶꦩꦴꦠꦶꦤꦴꦪꦱꦶꦠ꧀ꦩꦫꦸꦮꦴꦭꦶꦢ꧀ꦮꦴꦠꦥꦸꦢꦶꦠꦏ꧀ꦟꦸꦧꦱ
+𑀰𑁆ꦭꦻꦪꦸꦢꦴꦏ꧀ꦏꦢꦴꦩꦲꦶꦩꦷꦱꦮꦠꦴꦟꦶꦮꦢꦶꦏꦴꦠꦏ꧀ꦱꦴꦭꦴꦩꦴꦱꦴꦩꦴꦠꦷꦭꦶ
+ꦱꦷꦩꦏꦷꦭꦱꦸꦥꦶꦠꦏꦮꦴꦫꦴꦟꦠꦸꦪ꧀ꦟ꧀ꦩꦴꦪꦸꦩꦴꦪꦪꦮꦸꦢ꧀ꦪꦸꦢ꧀ꦥꦸ
+ꦪꦩꦴꦭꦷꦠꦏꦩꦸꦲ꧀ꦤꦷꦠꦴꦱꦶꦪꦴꦩꦴꦠꦱꦷꦢ꧀ꦒꦠꦩꦱꦷꦩꦷꦢꦶꦏꦩꦴꦯꦸ
+ꦠꦴꦏꦱꦷꦢ꧀ꦒꦸꦩ꧀ꦧꦷꦪꦸꦩꦴꦠꦸꦏꦴꦒꦹꦏꦢꦏ`,
+    transliteration: `Baris 1: swastyastu namaḥ śiwatita tha ma ca ṇa ta ṇa ṣa ṣa śa ma sa ha kṣa ṇī jī pu
+Baris 2: miktupusyāhārāmācārāmādhūtīdhāyubhāyubhuyusārā
+Baris 3: rāhimitakṇīśrīputabadisacadarāmamacarablarulāsu
+Baris 4: viccibvāmātasālyumubdvamāyamadilāmāsā
+Baris 5: kacyādikādimātināyasitmaruvālidvātapuditakṇubasa
+Baris 6: śriyudākzkadamahimanasavatāṇīvadikātaksālāmāsāmātīli
+Baris 7: sīmakīlasupitakavārāṇatuyṇmāyumāyabhavudbhudpu
+Baris 8: yamālītakamuhnītāsiyāmātasīdgatamasīmīdikamāśu
+Baris 9: tākasīdgumbīyumātukāgūkādaka`,
+    translation: `Semoga selamatlah, sembah sujud kepada Sang Hyang Siwa Mahatinggi. Naskah prasasti peraga ini memuat deretan kaidah pembentukan kata, konjungsi vokal, dan formula aksara Kawi lengkap untuk penetapan wilayah (sīma) serta puji-pujian keluhuran budi para leluhur Nusantara.`,
+    philosophical: `Lembar peraga epigrafi Kawi dari salah satu prasasti kuno Batavia, melambangkan kekayaan tradisi literasi aksara Nusantara abad VIII–X Masehi.`,
+    language: 'Aksara Kawi · Abad VIII–X M',
+    language_short: 'Aksara Kawi',
+    confidence: 99.4,
+    lineByLine: [
+      { line: 1, script: '𑀲𑀼𑀩𑀲𑁆𑀢𑀼𑀦ꦫꦄꦰꦶꦯꦠꦶꦠ...', transliteration: 'swastyastu namaḥ śiwatita tha ma ca...', translation: 'Semoga selamatlah, hormat kepada Siwa-Tita...' },
+      { line: 2, script: '𑀫𑀺𑀓𑁆𑀢𑀼𑀧𑀼𑀲𑁆𑀬ꦴꦲꦴꦫꦴ...', transliteration: 'miktupusyāhārāmācārāmādhūtī...', translation: 'Kaidah variasi vokal panjang dan pendek Kawi.' },
+      { line: 3, script: 'ꦫꦴꦲꦶꦩꦶꦠꦏ꧀ꦟꦷꦰ꧀ꦭꦷꦥꦸ...', transliteration: 'rāhimitakṇīśrīputabadisacadarāma...', translation: 'Kombinasi sandhangan konsonan rangkap.' },
+      { line: 4, script: 'ꦯꦶꦕ꧀ꦕꦶꦧ꧀ꦮꦴꦩꦴꦠꦱꦴ...', transliteration: 'viccibvāmātasālyumubdvamāyamadi...', translation: 'Gugus konsonan majemuk epigrafi Jawa Kuno.' },
+      { line: 5, script: 'ꦏꦕ꧀ꦪꦴꦢꦶꦏꦴꦢꦶꦩꦴ...', transliteration: 'kacyādikādimātināyasitmaruvāli...', translation: 'Rangkaian silabis epigrafi klasik.' },
+      { line: 6, script: 'ꦰ꧀ꦭꦻꦪꦸꦢꦴꦏ꧀ꦏꦢꦴ...', transliteration: 'śriyudākzkadamahimanasavatāṇī...', translation: 'Formula gelar kehormatan Sri Maha Mulia.' },
+      { line: 7, script: 'ꦱꦷꦩꦏꦷꦭꦱꦸꦥꦶꦠ...', transliteration: 'sīmakīlasupitakavārāṇatuyṇmāyu...', translation: 'Istilah sima pertanahan dan batas suci.' },
+      { line: 8, script: 'ꦪꦩꦴꦭꦷꦠꦏꦩꦸꦲ꧀...', transliteration: 'yamālītakamuhnītāsiyāmātasīdga...', translation: 'Penegasan kaidah hukum prasasti leluhur.' },
+      { line: 9, script: 'ꦠꦴꦏꦱꦷꦢ꧀ꦒꦸꦩ꧀ꦧꦷ...', transliteration: 'tākasīdgumbīyumātukāgūkādaka', translation: 'Penutup tabel abjad dan glif peraga Kawi.' }
+    ]
+  },
+  {
     title: 'Prasasti Sukamerta — Lempeng III',
     ancientText: 'ꦱꦶꦢ꧀ꦣꦶ ꦫꦱ꧀ꦠꦸ',
     transliteration: '"Siddhi rastu tatastu astu"',

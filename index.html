@@ -10,11 +10,11 @@
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#FFFFFF" />
 
-    <!-- Google Fonts: Plus Jakarta Sans (UI & Display), Newsreader (Literary), Noto Sans Javanese (Script) -->
+    <!-- Google Fonts: Nusantara Epigraphy Scripts (Kawi, Jawa, Bali, Sunda, Batak, Bugis, Pegon), UI (Plus Jakarta Sans) & Literary (Newsreader) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Noto+Sans+Javanese:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+Balinese:wght@400;600;700&family=Noto+Sans+Batak&family=Noto+Sans+Buginese&family=Noto+Sans+Javanese:wght@400;500;600;700&family=Noto+Sans+Kawi:wght@400;600;700&family=Noto+Sans+Sundanese:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -219,7 +219,7 @@
                   </span>
                 </h2>
                 <p class="text-[13px] text-slate-600 dark:text-zinc-400 font-normal leading-relaxed mt-2">
-                  Arahkan kamera ke aksara Jawa atau naskah lontar untuk transkripsi Unicode instan, transliterasi Latin, dan pemaknaan filosofis.
+                  Arahkan kamera ke aksara Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon, prasasti batu, atau lembar lontar untuk transkripsi Unicode lengkap, alihaksara filologi, dan penafsiran makna adiluhung.
                 </p>
               </div>
 
@@ -388,7 +388,7 @@
                   <div class="w-5 h-5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</div>
                   <div>
                     <h5 class="text-[12px] font-semibold text-slate-900 dark:text-white">Transkripsi Glif Aksara Presisi</h5>
-                    <p class="text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">Deteksi karakter Unicode asli (Jawa, Kawi, Bali) langsung dari foto naskah fisik.</p>
+                    <p class="text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">Deteksi karakter Unicode asli (Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon, dll) dari lembar lontar atau prasasti.</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-2.5">
@@ -722,12 +722,12 @@
 
             <!-- TAB 1: Ancient Text Card (Clean Museum Typography) -->
             <div id="tab-content-script" class="px-5">
-              <div class="relative rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 p-5 shadow-xs overflow-hidden">
-                <div class="relative z-10 text-center py-2">
-                  <p id="result-ancient-text" class="font-javanese text-[28px] sm:text-[32px] leading-[1.85] text-slate-900 dark:text-white select-all">
+              <div class="relative rounded-2xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 p-4 sm:p-5 shadow-xs overflow-hidden">
+                <div class="relative z-10 py-1.5">
+                  <p id="result-ancient-text" class="font-ancient-script ancient-text-short text-slate-900 dark:text-white select-all">
                     ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
                   </p>
-                  <p id="result-transliteration" class="font-serif-literary italic text-[16px] text-slate-600 dark:text-zinc-300 mt-2.5 tracking-wide">
+                  <p id="result-transliteration" class="font-serif-literary italic text-[13px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-600 dark:text-zinc-300 mt-2.5 tracking-wide whitespace-pre-line break-words text-center">
                     "Sinuhun surya bumi"
                   </p>
                 </div>
@@ -806,9 +806,29 @@
                   </button>
                 </div>
 
-                <p id="result-translated-text" class="font-serif-literary text-[17px] leading-relaxed text-slate-900 dark:text-white font-medium">
+                <p id="result-translated-text" class="font-serif-literary text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed text-slate-900 dark:text-white font-medium whitespace-pre-line break-words">
                   Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
                 </p>
+              </div>
+            </div>
+
+            <!-- ── Line-by-Line Epigraphic Breakdown (for Multi-line Manuscripts) ── -->
+            <div id="section-line-by-line" class="hidden px-5 mt-3.5">
+              <div class="p-4 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 shadow-xs">
+                <div class="flex items-center justify-between mb-2.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+                      Rincian Naskah Baris per Baris
+                    </span>
+                  </div>
+                  <span id="line-count-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-700 text-slate-700 dark:text-zinc-300">
+                    9 Baris
+                  </span>
+                </div>
+                <div id="line-by-line-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1">
+                  <!-- Dynamically rendered lines -->
+                </div>
               </div>
             </div>
 
@@ -821,7 +841,7 @@
                     Konteks Filosofis & Nilai Luhur
                   </span>
                 </div>
-                <p id="result-philosophical" class="text-[13px] text-slate-800 dark:text-zinc-200 leading-relaxed font-normal">
+                <p id="result-philosophical" class="text-[12px] sm:text-[13px] md:text-[14px] text-slate-800 dark:text-zinc-200 leading-relaxed font-normal whitespace-pre-line break-words">
                   Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi, ibarat surya yang menyinari jagad raya.
                 </p>
               </div>
@@ -1045,14 +1065,14 @@
           <div class="flex flex-col gap-2.5 text-center px-1">
             <span id="piagam-title" class="font-sans text-[15px] font-bold text-slate-900 dark:text-white">Lontar Surya Kencana</span>
 
-            <div class="py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700">
-              <p id="piagam-ancient-text" class="font-javanese text-[22px] leading-[1.8] text-slate-900 dark:text-white">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</p>
-              <p id="piagam-transliteration" class="font-serif-literary italic text-[13px] text-slate-600 dark:text-zinc-400 mt-1">"Sinuhun surya bumi"</p>
+            <div class="py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 max-h-48 overflow-y-auto">
+              <p id="piagam-ancient-text" class="font-ancient-script text-[18px] sm:text-[20px] leading-[1.85] text-slate-900 dark:text-white whitespace-pre-line">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</p>
+              <p id="piagam-transliteration" class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 mt-1 whitespace-pre-line">"Sinuhun surya bumi"</p>
             </div>
 
             <div class="text-left px-1">
               <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 block mb-0.5">Alih Bahasa Resmi:</span>
-              <p id="piagam-translation" class="font-serif-literary text-[13px] text-slate-800 dark:text-zinc-200 leading-relaxed italic">
+              <p id="piagam-translation" class="font-serif-literary text-[12px] sm:text-[13px] text-slate-800 dark:text-zinc-200 leading-relaxed italic whitespace-pre-line">
                 "Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk."
               </p>
             </div>

@@ -229,9 +229,10 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
         transliteration: data.transliteration || '',
         translation: data.translation || 'Terjemahan tidak tersedia.',
         philosophical: data.philosophical || 'Konteks kearifan luhur Nusantara.',
-        language: data.language || 'Aksara Jawa Kuno',
-        language_short: data.language_short || 'Aksara Jawa',
-        confidence: data.confidence || 98.4,
+        language: data.language || 'Aksara Kuno Nusantara',
+        language_short: data.language_short || data.script_type || 'Aksara Nusantara',
+        confidence: data.confidence || 98.8,
+        lineByLine: data.lineByLine || [],
       };
 
       populateResult(latestResultData);
@@ -415,12 +416,63 @@ export function populateResult(data) {
   const confEl = document.getElementById('result-confidence');
 
   if (titleEl) titleEl.textContent = data.title;
-  if (ancientTextEl) ancientTextEl.textContent = data.ancientText;
-  if (translitEl) translitEl.textContent = data.transliteration;
   if (translatedTextEl) translatedTextEl.textContent = data.translation;
   if (philEl) philEl.textContent = data.philosophical;
   if (langBadge) langBadge.textContent = data.language;
   if (confEl) confEl.textContent = (data.confidence || 98.8) + '%';
+
+  // Dynamic typography sizing based on length / multi-line
+  const lines = (data.ancientText || '').split('\n').filter(Boolean);
+  const isMultiLine = lines.length > 2 || (data.ancientText && data.ancientText.length > 70);
+
+  if (ancientTextEl) {
+    ancientTextEl.textContent = data.ancientText;
+    ancientTextEl.classList.remove('ancient-text-short', 'ancient-text-long');
+    ancientTextEl.classList.add(isMultiLine ? 'ancient-text-long' : 'ancient-text-short');
+  }
+
+  if (translitEl) {
+    translitEl.textContent = data.transliteration;
+    if (isMultiLine) {
+      translitEl.classList.remove('text-center');
+      translitEl.classList.add('text-left');
+    } else {
+      translitEl.classList.add('text-center');
+      translitEl.classList.remove('text-left');
+    }
+  }
+
+  // Render Line-by-Line breakdown if present
+  const sectionLineByLine = document.getElementById('section-line-by-line');
+  const lineListEl = document.getElementById('line-by-line-list');
+  const lineCountBadge = document.getElementById('line-count-badge');
+
+  if (data.lineByLine && data.lineByLine.length > 1) {
+    if (lineCountBadge) lineCountBadge.textContent = `${data.lineByLine.length} Baris`;
+    if (lineListEl) {
+      lineListEl.innerHTML = data.lineByLine.map(item => `
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700/80">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+              Baris ${item.line}
+            </span>
+          </div>
+          <p class="font-ancient-script text-[17px] sm:text-[19px] leading-[1.85] text-slate-900 dark:text-white select-all mb-1">
+            ${esc(item.script)}
+          </p>
+          <p class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 leading-snug mb-1">
+            ${esc(item.transliteration)}
+          </p>
+          <p class="text-[12px] text-slate-800 dark:text-zinc-300 leading-relaxed">
+            ${esc(item.translation)}
+          </p>
+        </div>
+      `).join('');
+    }
+    if (sectionLineByLine) showElement(sectionLineByLine);
+  } else {
+    if (sectionLineByLine) hideElement(sectionLineByLine);
+  }
 
   const glyphList = data.glyphs && data.glyphs.length
     ? data.glyphs

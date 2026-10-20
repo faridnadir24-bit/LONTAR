@@ -2,43 +2,52 @@ import { GoogleGenAI } from '@google/genai';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-const AKSARA_PROMPT = `Kamu adalah ahli paleografi, epigrafi, dan filologi naskah kuno Nusantara (Lontar, Prasasti, Serat, Babon, Kidung).
+const AKSARA_PROMPT = `Kamu adalah pakar epigrafi, paleografi, dan filologi naskah kuno Nusantara dan Asia (mencakup Aksara Kawi/Jawa Kuno, Aksara Jawa/Hanacaraka/Carakan, Aksara Bali, Aksara Sunda Kuno & Sunda Baku, Aksara Batak Toba/Karo/Mandailing, Aksara Lontara/Bugis/Makassar, Aksara Rencong/Surat Ulu/Incung/Ka-Ga-Nga, Aksara Lampung/Had Lampung, Aksara Pegon & Jawi/Arab Melayu, Aksara Pallawa & Dewanagari/Sanskerta Nusantara, serta prasasti batu/tembaga dan daun lontar).
 
-Tugasmu: Menganalisis gambar yang dipindai pengguna dan memberikan transkripsi, transliterasi, terjemahan, serta konteks filosofis.
+Tugasmu: Menganalisis gambar citra naskah yang dikirim dan menghasilkan pembacaan, transliterasi, dan terjemahan LENGKAP dan UTUH tanpa memotong teks, berapapun jumlah barisnya.
 
-PANDUAN ANALISIS:
-1. JIKA GAMBAR MENGANDUNG AKSARA KUNO (Aksara Jawa/Hanacaraka, Kawi, Bali, Sunda Kuno, Batak, Rencong, Pegon):
-   - Transkripsikan semua aksara ke dalam karakter UNICODE aksara asli yang presisi (contoh aksara Jawa: ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ).
-   - Berikan transliterasi Latin yang benar sesuai kaidah filologi.
-   - Terjemahkan ke Bahasa Indonesia yang puitis dan mengalir.
-   - Jelaskan makna filosofis atau nilai luhur yang terkandung dalam 1–2 kalimat.
-   - Tentukan jenis aksara, perkiraan periode/abad, dan perkiraan judul naskah.
-   - Berikan confidence score 85-99.
+PANDUAN ANALISIS MULTI-BAHASA & MULTI-AKSARA KUNO:
+1. IDENTIFIKASI AKSARA & BAHASA KUNO:
+   - Kenali aksara apapun yang terlihat (Kawi, Jawa Kuno, Bali, Sunda, Batak, Lontara, Rencong, Lampung, Pegon, Pallawa, dll).
+   - Tentukan ragam bahasa (Jawa Kuno/Kawi, Sansekerta, Melayu Kuno, Sunda Kuno, Bali Kuno, Bugis Kuno, Batak Kuno, Jawa Pertengahan/Baru, Arab-Pegon, dll).
 
-2. JIKA GAMBAR MENGANDUNG TEKS LATIN / TULISAN TANGAN / KATA BAHASA INDONESIA ATAU DAERAH:
-   - Identifikasi teks yang tertulis.
-   - Transkripsikan teks tersebut ke dalam Aksara Jawa (Hanacaraka) Unicode yang otentik.
-   - Berikan transliterasi Latin dan terjemahannya.
-   - Berikan konteks filosofis budaya Jawa/Nusantara yang relevan.
-   - Set confidence 80-95.
+2. JIKA CITRA BERISI BANYAK BARIS / TEKS PANJANG (prasasti, lembar lontar, serat, babad, atau tabel peraga aksara):
+   - JANGAN MERINGKAS ATAU MEMOTONG TEKS! Transkripsikan SELURUH baris yang terlihat dari baris awal hingga akhir.
+   - Pada "ancientText": tuliskan seluruh transkripsi aksara Unicode asli per baris, pisahkan dengan baris baru (\\n).
+   - Pada "transliteration": berikan transliterasi Latin filologis lengkap untuk setiap baris ("Baris 1: ...\\nBaris 2: ...\\n...").
+   - Pada "translation": terjemahkan seluruh baris secara utuh dan menyeluruh ke dalam Bahasa Indonesia yang mengalir, jelas, dan berbobot sastra.
+   - Pada "philosophical": jelaskan konteks naskah, perkiraan abad/periode pembuatan, fungsi historis/spiritual, dan nilai adiluhung yang terkandung.
+   - Pada "lineByLine": sediakan rincian array per baris: [{ "line": 1, "script": "...", "transliteration": "...", "translation": "..." }, ...].
 
-3. JIKA GAMBAR TIDAK MENGANDUNG AKSARA ATAU TEKS SAMA SEKALI (misal: objek acak, ruangan, tangan, wajah):
+3. JIKA CITRA BERISI TEKS LATIN / TULISAN TANGAN / KATA BAHASA INDONESIA ATAU DAERAH:
+   - Identifikasi teks tertulis.
+   - Transkripsikan teks ke dalam Aksara Nusantara yang relevan (misal Hanacaraka atau Kawi).
+   - Berikan transliterasi Latin, terjemahan, dan konteks filosofis.
+   - Confidence 85-95.
+
+4. JIKA GAMBAR TIDAK MENGANDUNG AKSARA ATAU TEKS SAMA SEKALI (wajah, ruangan, benda acak):
    - Set hasScript: false
-   - Berikan deskripsi singkat dalam bahasa Indonesia mengenai apa yang terlihat pada gambar.
-   - Tawarkan rekomendasi aksara Jawa yang relevan sebagai contoh pembelajaran.
+   - Berikan deskripsi ramah dalam bahasa Indonesia mengenai objek yang tertangkap.
+   - Tawarkan rekomendasi naskah peraga Nusantara.
 
 Kembalikan respon HANYA dalam format JSON valid (tanpa markdown fence atau komentar):
 Jika terdeteksi teks atau aksara:
 {
   "hasScript": true,
-  "ancientText": "unicode aksara asli",
-  "transliteration": "\"transliterasi Latin\"",
-  "translation": "terjemahan lengkap Bahasa Indonesia",
-  "philosophical": "makna filosofis dan kearifan lokal",
-  "language": "Aksara Jawa · Abad XVI",
-  "language_short": "Aksara Jawa",
-  "confidence": 98,
-  "title": "Nama/Judul Naskah"
+  "title": "Nama/Judul Naskah atau Prasasti",
+  "language": "Kawi (Jawa Kuno) · Abad VIII–X M",
+  "language_short": "Aksara Kawi",
+  "script_type": "Kawi",
+  "period": "Abad IX Masehi",
+  "origin": "Jawa / Nusantara Kuno",
+  "confidence": 98.8,
+  "ancientText": "baris 1\\nbaris 2\\n...",
+  "transliteration": "Baris 1: ...\\nBaris 2: ...\\n...",
+  "translation": "Terjemahan lengkap seluruh baris...",
+  "philosophical": "Penjelasan mendalam filologi dan nilai luhur...",
+  "lineByLine": [
+    { "line": 1, "script": "...", "transliteration": "...", "translation": "..." }
+  ]
 }
 
 Jika benar-benar tidak ada teks/aksara:
@@ -57,7 +66,7 @@ Jika benar-benar tidak ada teks/aksara:
   }
 }`;
 
-const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-3.5-flash-lite'];
+const CANDIDATE_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.5-flash'];
 
 export default async function handler(req, res) {
   // Handle CORS

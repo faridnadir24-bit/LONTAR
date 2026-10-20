@@ -24,10 +24,30 @@ body {
 .font-display { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 700; }
 .font-royal { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 700; }
 .font-serif-literary { font-family: 'Newsreader', 'Cormorant Garamond', Georgia, serif; }
+
+/* Unified Ancient Nusantara Script Family (Kawi, Jawa, Bali, Sunda, Batak, Bugis, Pegon) */
+.font-ancient-script,
 .font-javanese {
-  font-family: 'Noto Sans Javanese', serif;
+  font-family: 'Noto Sans Kawi', 'Noto Sans Javanese', 'Noto Sans Balinese', 'Noto Sans Sundanese', 'Noto Sans Batak', 'Noto Sans Buginese', 'Noto Sans Arabic', 'Segoe UI Historic', serif;
   letter-spacing: normal !important;
-  line-height: 1.85;
+  line-height: 1.95;
+}
+
+/* Responsive Ancient Script Sizing (Mobile vs Desktop Optimization) */
+.ancient-text-long {
+  font-size: clamp(16px, 4.3vw, 23px) !important;
+  line-height: 2.15 !important;
+  text-align: left !important;
+  word-break: break-word;
+  white-space: pre-line;
+}
+
+.ancient-text-short {
+  font-size: clamp(21px, 6vw, 32px) !important;
+  line-height: 1.9 !important;
+  text-align: center;
+  word-break: break-word;
+  white-space: pre-line;
 }
 
 /* Screen Transitions */
