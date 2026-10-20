@@ -18,11 +18,10 @@ const PORT = process.env.PORT || 3000;
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 if (!GEMINI_API_KEY) {
-  console.error('❌  GEMINI_API_KEY is not set. Add it to your .env file.');
-  process.exit(1);
+  console.warn('⚠️ GEMINI_API_KEY is not set in .env.');
 }
 
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY || '' });
 
 // ── Middleware ──────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '25mb' }));
