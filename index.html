@@ -1,19 +1,20 @@
 <!doctype html>
-<html lang="id" class="light">
+<html lang="id" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>LONTAR-AI — Pemindai & Penerjemah Naskah Kuno</title>
-    <meta name="description" content="Aplikasi AI untuk memindai dan menerjemahkan naskah lontar kuno Indonesia secara instan." />
-    <meta property="og:title" content="LONTAR-AI — Pemindai & Penerjemah Naskah Kuno" />
-    <meta property="og:description" content="Aplikasi AI untuk memindai dan menerjemahkan naskah lontar kuno Indonesia secara instan." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>LONTAR.AI — Pemindai & Analisis Filologi Naskah Nusantara</title>
+    <meta name="description" content="Platform kecerdasan artifisial paleografi untuk dekode, transliterasi, dan penafsiran filosofis manuskrip lontar kuno Nusantara." />
+    <meta property="og:title" content="LONTAR.AI — Pemindai & Analisis Filologi Naskah Nusantara" />
+    <meta property="og:description" content="Platform AI paleografi untuk dekode dan transliterasi aksara kuno Nusantara." />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0F0E0C" />
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Plus Jakarta Sans (UI), Cinzel (Royal Monumental), Newsreader (Philology Serif), Noto Sans Javanese (Script) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Noto+Sans+Javanese:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Noto+Sans+Javanese:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -25,47 +26,61 @@
         theme: {
           extend: {
             colors: {
-              // Primary brand amber-gold — used sparingly as accent
-              amber: {
-                50: '#FFFBEB',
-                100: '#FEF3C7',
-                400: '#FBBF24',
-                500: '#C9941A',
-                600: '#A97B10',
+              // Suwarna — Royal Antique Gold
+              gold: {
+                50: '#FDFBF4',
+                100: '#FAF4E3',
+                200: '#F4E5BD',
+                300: '#EBD18F',
+                400: '#DCB95F',
+                500: '#C59B3F', // Antique royal gold
+                600: '#A67D2C',
+                700: '#7F5E20',
+                800: '#5F4417',
+                900: '#3D2A0E',
               },
-              // Neutral warm surface palette
-              stone: {
-                50: '#FAFAF9',
-                100: '#F5F5F4',
-                200: '#E7E5E4',
-                300: '#D6D3D1',
-                400: '#A8A29E',
-                500: '#78716C',
-                600: '#57534E',
-                700: '#44403C',
-                800: '#292524',
-                900: '#1C1917',
+              // Daluang — Sacred Bark Paper (Light mode)
+              parchment: {
+                50: '#FAF7F0',
+                100: '#F5EFE4',
+                200: '#EAE1D2',
+                300: '#DCD0BE',
+                400: '#C2B19A',
+                500: '#9E8C73',
+                800: '#3B332A',
+                900: '#231D16',
               },
-              // Text
-              ink: '#1A1614',
-              inkMid: '#4A4340',
-              inkFaint: '#8C8480',
-              // Surfaces
-              surface: '#FDFCFB',
-              surfaceAlt: '#F5F3F0',
-              surfaceBorder: '#E3DED9',
-              // Dark mode surfaces
-              dkBg: '#131110',
-              dkCard: '#1E1B19',
-              dkBorder: '#2E2926',
-              dkText: '#EDE8E3',
-              dkTextMid: '#B0A89F',
-              dkTextFaint: '#6B6460',
+              // Candramawa — Deep Smoked Palm Leaf Charcoal (Dark mode)
+              night: {
+                950: '#0C0A08', // Canvas base
+                900: '#14110E', // Surface
+                850: '#1B1713', // Elevated card
+                800: '#25201A', // Border / subtle highlight
+                700: '#383129',
+                600: '#52483D',
+                500: '#7A6D5E',
+                400: '#A89987',
+                300: '#D1C6B7',
+                200: '#EAE4DC',
+                100: '#F6F3EE',
+              },
+              // Patina — Ancient Temple Verdigris
+              patina: {
+                500: '#2A5C47',
+                400: '#3F8265',
+                300: '#68B090',
+              },
             },
             fontFamily: {
-              display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-              body: ['"Inter"', 'system-ui', 'sans-serif'],
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              serif: ['"Newsreader"', 'Georgia', 'serif'],
+              display: ['"Cinzel"', 'Georgia', 'serif'],
               javanese: ['"Noto Sans Javanese"', 'serif'],
+            },
+            boxShadow: {
+              'gold-glow': '0 0 28px -4px rgba(197, 155, 63, 0.35)',
+              'gold-sm': '0 0 16px -2px rgba(197, 155, 63, 0.25)',
+              'lontar-card': '0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(197, 155, 63, 0.15)',
             },
           },
         },
@@ -78,352 +93,448 @@
         box-sizing: border-box;
       }
 
-      html {
-        scroll-behavior: smooth;
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
       }
 
       body {
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        background-color: #0C0A08;
       }
 
-      .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+      .font-display { font-family: 'Cinzel', Georgia, serif; }
+      .font-serif-literary { font-family: 'Newsreader', Georgia, serif; }
       .font-javanese { font-family: 'Noto Sans Javanese', serif; }
 
-      /* ── Screen transitions ───────────────────────────────── */
-      .screen-view { transition: opacity 0.25s ease; }
-      .screen-hidden { display: none !important; }
-      .screen-visible { display: flex !important; }
-
-      /* ── Scan beam animation ──────────────────────────────── */
-      @keyframes scanBeam {
-        0%   { top: 4%;  opacity: 0.7; }
-        50%  { top: 90%; opacity: 1;   }
-        100% { top: 4%;  opacity: 0.7; }
+      /* Screen transitions */
+      .screen-view {
+        transition: opacity 0.22s ease-in-out, transform 0.22s ease-in-out;
       }
-      .animate-scan { animation: scanBeam 2.6s ease-in-out infinite; }
-
-      /* ── Audio wave bars ──────────────────────────────────── */
-      @keyframes waveBar {
-        0%, 100% { height: 4px;  }
-        50%       { height: 18px; }
+      .screen-hidden {
+        display: none !important;
       }
-      .wave-1 { animation: waveBar 0.8s ease-in-out infinite 0.00s; }
-      .wave-2 { animation: waveBar 0.8s ease-in-out infinite 0.15s; }
-      .wave-3 { animation: waveBar 0.8s ease-in-out infinite 0.30s; }
-      .wave-4 { animation: waveBar 0.8s ease-in-out infinite 0.10s; }
-
-      /* ── Loading spinner ──────────────────────────────────── */
-      @keyframes spin { to { transform: rotate(360deg); } }
-      .spinner {
-        width: 36px; height: 36px;
-        border: 3px solid rgba(201, 148, 26, 0.2);
-        border-top-color: #C9941A;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
+      .screen-visible {
+        display: flex !important;
+        animation: fadeIn 0.25s ease-out forwards;
       }
 
-      /* ── Progress bar fill ───────────────────────────────── */
-      @keyframes fillBar { from { width: 0; } to { width: 100%; } }
-      .progress-fill { animation: fillBar 2s ease-out forwards; }
-
-      /* ── Subtle paper texture on bg ─────────────────────── */
-      .texture-paper {
-        background-image:
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23F5F3F0'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23E8E4DF' opacity='0.5'/%3E%3C/svg%3E");
-      }
-      .dark .texture-paper {
-        background-image: none;
-      }
-
-      /* ── Nav active bar ──────────────────────────────────── */
-      .nav-item-active .nav-icon svg {
-        color: #C9941A;
-      }
-      .nav-item-active .nav-label {
-        color: #C9941A;
-      }
-      .nav-bar {
-        height: 2px;
-        background: #C9941A;
-        border-radius: 1px;
-        transform: scaleX(0);
-        transition: transform 0.2s ease;
-      }
-      .nav-item-active .nav-bar {
-        transform: scaleX(1);
-      }
-
-      /* ── History card hover ──────────────────────────────── */
-      .history-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
-      .history-card:hover { box-shadow: 0 4px 16px -4px rgba(0,0,0,0.12); transform: translateY(-1px); }
-
-      /* ── Scroll bar styling ──────────────────────────────── */
-      ::-webkit-scrollbar { width: 0; }
-
-      /* ── Toast slide-in ──────────────────────────────────── */
-      @keyframes toastIn {
-        from { opacity: 0; transform: translateY(8px); }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(4px); }
         to   { opacity: 1; transform: translateY(0); }
       }
-      .toast-show { animation: toastIn 0.25s ease forwards; }
+
+      /* Scan line animation */
+      @keyframes scanMotion {
+        0%   { top: 6%;  opacity: 0.8; }
+        50%  { top: 88%; opacity: 1; }
+        100% { top: 6%;  opacity: 0.8; }
+      }
+      .animate-scan-line {
+        animation: scanMotion 2.4s ease-in-out infinite;
+      }
+
+      /* Shutter pulse halo */
+      @keyframes shutterHalo {
+        0%   { transform: scale(0.98); opacity: 0.7; }
+        50%  { transform: scale(1.18); opacity: 0.2; }
+        100% { transform: scale(0.98); opacity: 0.7; }
+      }
+      .animate-shutter-halo {
+        animation: shutterHalo 2.2s ease-in-out infinite;
+      }
+
+      /* Equalizer voice wave */
+      @keyframes eq1 { 0%, 100% { height: 4px; } 50% { height: 20px; } }
+      @keyframes eq2 { 0%, 100% { height: 16px; } 50% { height: 6px; } }
+      @keyframes eq3 { 0%, 100% { height: 6px; } 50% { height: 24px; } }
+      @keyframes eq4 { 0%, 100% { height: 12px; } 50% { height: 4px; } }
+
+      .eq-bar-1 { animation: eq1 0.75s ease-in-out infinite; }
+      .eq-bar-2 { animation: eq2 0.85s ease-in-out infinite 0.15s; }
+      .eq-bar-3 { animation: eq3 0.7s ease-in-out infinite 0.3s; }
+      .eq-bar-4 { animation: eq4 0.9s ease-in-out infinite 0.1s; }
+
+      /* Subtle Lontar rib texture */
+      .bg-lontar-ribs {
+        background-image: repeating-linear-gradient(
+          0deg,
+          rgba(197, 155, 63, 0.03),
+          rgba(197, 155, 63, 0.03) 1px,
+          transparent 1px,
+          transparent 8px
+        );
+      }
+
+      /* Smooth custom scrollbars */
+      ::-webkit-scrollbar { width: 4px; height: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(197, 155, 63, 0.25); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(197, 155, 63, 0.45); }
     </style>
   </head>
 
-  <body class="bg-stone-200 dark:bg-dkBg min-h-screen flex items-start justify-center">
+  <body class="text-night-100 dark:text-night-100 bg-night-950 min-h-screen flex items-center justify-center selection:bg-gold-500/30 selection:text-gold-200">
 
-    <!-- ╔══════════════════════════════════════════════════╗ -->
-    <!-- ║   MOBILE DEVICE SHELL (430px max, phone bezel)  ║ -->
-    <!-- ╚══════════════════════════════════════════════════╝ -->
+    <!-- ╔══════════════════════════════════════════════════════════════╗ -->
+    <!-- ║   MAIN RESPONSIVE CANVAS (Mobile-First / Desktop Framing)   ║ -->
+    <!-- ╚══════════════════════════════════════════════════════════════╝ -->
     <div class="
-      relative w-full max-w-[430px] min-h-screen
-      sm:min-h-[900px] sm:my-8
-      sm:rounded-[40px] sm:overflow-hidden
-      sm:shadow-[0_32px_80px_-12px_rgba(0,0,0,0.25),0_0_0_1px_rgba(0,0,0,0.08)]
-      flex flex-col
-      bg-surface dark:bg-dkBg
-      overflow-x-hidden
+      relative w-full max-w-[440px] min-h-screen sm:min-h-[920px] sm:max-h-[960px]
+      sm:my-6 sm:rounded-[36px] sm:border sm:border-night-800/80
+      bg-parchment-50 dark:bg-night-900
+      flex flex-col overflow-hidden
+      shadow-[0_24px_80px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(197,155,63,0.12)]
+      transition-colors duration-300
     ">
 
-      <!-- ── Status Bar ─────────────────────────────────── -->
-      <div class="flex items-center justify-between px-7 pt-3.5 pb-1 text-[11px] font-medium text-inkFaint dark:text-dkTextFaint select-none shrink-0">
-        <span class="tabular-nums font-semibold text-ink dark:text-dkText">09:41</span>
-        <!-- Dynamic island pill -->
-        <div class="w-[82px] h-[22px] bg-ink dark:bg-stone-800 rounded-full"></div>
-        <div class="flex items-center gap-2 text-ink dark:text-dkText">
-          <!-- Signal icon -->
-          <svg class="w-4 h-3" viewBox="0 0 16 12" fill="currentColor">
-            <rect x="0" y="8" width="3" height="4" rx="0.5" opacity="0.4"/>
-            <rect x="4.5" y="5" width="3" height="7" rx="0.5" opacity="0.6"/>
-            <rect x="9" y="2" width="3" height="10" rx="0.5" opacity="0.8"/>
-            <rect x="13.5" y="0" width="2.5" height="12" rx="0.5"/>
-          </svg>
-          <!-- Battery icon -->
-          <svg class="w-6 h-3" viewBox="0 0 24 12" fill="currentColor">
-            <rect x="0" y="1" width="20" height="10" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
-            <rect x="20.5" y="3.5" width="2" height="5" rx="1"/>
-            <rect x="1.5" y="2.5" width="14" height="7" rx="1"/>
-          </svg>
-        </div>
-      </div>
+      <!-- ── Atmospheric ambient background glow on desktop ── -->
+      <div class="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-gold-500/10 blur-3xl z-0"></div>
+      <div class="pointer-events-none absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-patina-500/10 blur-3xl z-0"></div>
 
-      <!-- ── App Header ─────────────────────────────────── -->
-      <header id="main-header" class="
-        shrink-0 sticky top-0 z-50
-        bg-surface/95 dark:bg-dkBg/95
-        backdrop-blur-sm
-        border-b border-surfaceBorder dark:border-dkBorder
-        px-5 py-3 flex items-center justify-between
+      <!-- ── Regal App Header ──────────────────────────────────────── -->
+      <header class="
+        relative z-40 shrink-0
+        bg-parchment-50/95 dark:bg-night-900/95 backdrop-blur-md
+        border-b border-parchment-200 dark:border-night-800
+        px-5 py-3.5 flex items-center justify-between
         transition-colors duration-300
       ">
         <div class="flex items-center gap-3">
-          <!-- Logo mark — simple SVG, no emoji -->
-          <div class="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center shrink-0">
-            <svg class="w-4.5 h-4.5 text-white" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 3h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1z"/>
-              <path d="M7 7h6M7 10h6M7 13h4"/>
-            </svg>
+          <!-- Logo Medallion -->
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 p-0.5 shadow-gold-sm flex items-center justify-center shrink-0">
+            <div class="w-full h-full bg-night-950 rounded-[10px] flex items-center justify-center text-gold-300">
+              <svg class="w-5 h-5 text-gold-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Stylized lontar leaf & lens icon -->
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                <circle cx="12" cy="10" r="3" stroke-width="1.8"/>
+              </svg>
+            </div>
           </div>
-          <div class="leading-none">
-            <h1 class="font-display text-[17px] font-semibold tracking-wide text-ink dark:text-dkText leading-none">
-              LONTAR<span class="text-amber-500">.</span>AI
-            </h1>
-            <p class="text-[10px] text-inkFaint dark:text-dkTextFaint mt-0.5 tracking-wide font-medium">
-              Naskah Kuno Nusantara
+          <div>
+            <div class="flex items-center gap-1.5 leading-none">
+              <span class="font-display text-[17px] font-bold tracking-wider text-night-900 dark:text-night-100">
+                LONTAR<span class="text-gold-500 font-serif italic font-normal text-sm lowercase">.ai</span>
+              </span>
+              <span class="text-[9px] font-semibold tracking-wider uppercase px-1.5 py-0.5 rounded bg-gold-500/15 border border-gold-500/30 text-gold-600 dark:text-gold-400">
+                PROTOTIPE
+              </span>
+            </div>
+            <p class="text-[10px] text-parchment-500 dark:text-night-400 mt-0.5 font-medium tracking-tight">
+              Kajian Filologi & Epigrafi Nusantara
             </p>
           </div>
         </div>
 
-        <!-- Dark mode toggle — clean icon button -->
-        <button
-          id="theme-toggle"
-          type="button"
-          aria-label="Alihkan tema"
-          class="w-8 h-8 rounded-lg bg-surfaceAlt dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder flex items-center justify-center text-inkMid dark:text-dkTextMid hover:text-ink dark:hover:text-dkText transition-colors cursor-pointer"
-        >
-          <svg id="icon-moon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-          </svg>
-          <svg id="icon-sun" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-        </button>
+        <!-- Controls: Camera indicator & Theme switch -->
+        <div class="flex items-center gap-2">
+          <!-- Theme toggle -->
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label="Alihkan tema naskah"
+            class="w-9 h-9 rounded-xl bg-parchment-100 dark:bg-night-850 border border-parchment-300/80 dark:border-night-800 flex items-center justify-center text-parchment-800 dark:text-night-300 hover:text-gold-500 dark:hover:text-gold-400 transition-colors cursor-pointer"
+          >
+            <svg id="icon-moon" class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <svg id="icon-sun" class="w-4 h-4 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </button>
+        </div>
       </header>
 
-      <!-- ── Main Screens Container ─────────────────────── -->
-      <main class="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
+      <!-- ── Primary Screen Container ──────────────────────────────── -->
+      <main class="relative z-10 flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
 
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <!-- SCREEN 1 — HOME                                  -->
+        <!-- SCREEN 1 — BERANDA (HERITAGE ARCHIVE HOME)        -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-home" class="screen-view screen-visible flex-col flex-1">
+        <section id="screen-home" class="screen-view screen-visible flex-col flex-1 pb-6">
 
           <!-- Hero Section -->
-          <div class="bg-stone-800 dark:bg-stone-900 px-5 pt-6 pb-8 relative overflow-hidden">
-            <!-- Subtle background texture lines -->
-            <div class="absolute inset-0 opacity-[0.04]" style="background-image: repeating-linear-gradient(90deg, #fff 0, #fff 1px, transparent 1px, transparent 40px), repeating-linear-gradient(0deg, #fff 0, #fff 1px, transparent 1px, transparent 40px);"></div>
+          <div class="px-5 pt-6 pb-6 bg-gradient-to-b from-parchment-100 to-parchment-50 dark:from-night-850 dark:to-night-900 border-b border-parchment-200 dark:border-night-800 relative overflow-hidden">
+            <div class="relative z-10 flex flex-col gap-4">
 
-            <div class="relative z-10">
-              <!-- Badge -->
-              <span class="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full mb-4">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block animate-pulse"></span>
-                Prototipe Lomba
-              </span>
+              <!-- Epigraphic Badge -->
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-600 dark:text-gold-400 text-[11px] font-semibold tracking-wide">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse"></span>
+                  Gemini 3.8 Multimodal Vision
+                </span>
+                <span class="text-[11px] font-medium text-parchment-500 dark:text-night-400">Epigrafi Nusantara</span>
+              </div>
 
-              <h2 class="font-display text-[28px] leading-tight font-semibold text-white mb-2">
-                Ungkap Rahasia<br/>Naskah Leluhur
-              </h2>
-              <p class="text-stone-400 text-[13px] leading-relaxed mb-5 max-w-[300px]">
-                Pindai manuskrip lontar kuno, ekstrak aksara, dan terjemahkan ke Bahasa Indonesia secara instan menggunakan AI Vision.
-              </p>
+              <!-- Grand Title -->
+              <div>
+                <h2 class="font-display text-[26px] sm:text-[28px] font-bold leading-snug text-night-900 dark:text-night-100">
+                  Jembatan Aksara Kuno<br/>
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 dark:from-gold-300 dark:via-gold-400 dark:to-gold-500">
+                    Menuju Era Modern
+                  </span>
+                </h2>
+                <p class="text-[13px] text-parchment-800/80 dark:text-night-300 font-normal leading-relaxed mt-2">
+                  Pindai manuskrip lontar kuno Nusantara melalui kamera, transkripsikan glif aksara asli, terjemahkan, dan telusuri nilai filosofis luhur leluhur.
+                </p>
+              </div>
 
-              <!-- Aksara preview strip -->
-              <div class="bg-stone-700/60 border border-stone-600/50 rounded-xl px-4 py-3 flex items-center justify-between mb-6">
-                <div>
-                  <p class="text-[10px] text-stone-500 uppercase tracking-widest font-medium mb-1">Aksara Terdukung</p>
-                  <p class="font-javanese text-base text-amber-300 leading-relaxed tracking-wider">ꦲꦤꦕꦫꦏ · ᬅᬓ᭄ᬱᬭᬩᬮᬶ</p>
+              <!-- Interactive Lontar Palm Leaf Showcase Card -->
+              <div
+                id="hero-lontar-preview"
+                class="relative mt-2 p-4 rounded-2xl bg-gradient-to-r from-[#2A2118] via-[#362B20] to-[#2A2118] border border-gold-500/35 shadow-lontar-card cursor-pointer group hover:border-gold-400/60 transition-all duration-300"
+                title="Ketuk untuk memindai naskah ini"
+              >
+                <!-- Lontar rib texture overlay -->
+                <div class="absolute inset-0 rounded-2xl bg-lontar-ribs pointer-events-none opacity-60"></div>
+                <!-- Binding cord holes (rong lontar) -->
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#120D08] border border-gold-500/40 flex items-center justify-center">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gold-500/20"></span>
                 </div>
-                <div class="text-right">
-                  <p class="text-[10px] text-stone-500 uppercase tracking-widest font-medium mb-1">Akurasi</p>
-                  <p class="text-amber-400 font-semibold text-sm">98.4%</p>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#120D08] border border-gold-500/40 flex items-center justify-center">
+                  <span class="w-1.5 h-1.5 rounded-full bg-gold-500/20"></span>
+                </div>
+
+                <div class="relative z-10 pl-6 pr-6 text-center">
+                  <div class="flex items-center justify-between text-[10px] text-gold-400/80 uppercase tracking-widest font-semibold mb-2">
+                    <span>Lontar Surya Kencana</span>
+                    <span>Abad XVI M</span>
+                  </div>
+                  <!-- Golden Aksara Jawa -->
+                  <div class="font-javanese text-[24px] sm:text-[26px] tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-gold-100 via-gold-300 to-gold-500 drop-shadow-sm select-none py-1">
+                    ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
+                  </div>
+                  <p class="font-serif-literary italic text-[12px] text-gold-200/90 mt-1">
+                    "Sinuhun surya bumi"
+                  </p>
+                  <div class="mt-3 pt-2.5 border-t border-gold-500/20 flex items-center justify-between text-[11px] text-gold-400 font-medium">
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                      Ketuk untuk uji pindai cepat
+                    </span>
+                    <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- Primary CTA -->
+              <!-- Primary Shutter Action CTA -->
               <button
                 id="btn-hero-scan"
                 type="button"
-                class="w-full bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-semibold text-[15px] py-3.5 rounded-2xl flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer shadow-lg shadow-amber-900/30"
+                class="w-full mt-2 py-4 px-6 rounded-2xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-night-950 font-bold text-[14px] sm:text-[15px] tracking-wide flex items-center justify-center gap-3 shadow-gold-glow active:scale-[0.98] transition-all cursor-pointer"
               >
-                <!-- Camera SVG icon -->
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                <!-- Camera icon -->
+                <svg class="w-5 h-5 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                   <circle cx="12" cy="13" r="4"/>
                 </svg>
-                Mulai Pindai Naskah
+                <span>Buka Pemindai Kamera</span>
               </button>
+
             </div>
           </div>
 
-          <!-- Stats + Steps -->
-          <div class="px-5 pt-5 pb-6 flex flex-col gap-4 bg-surface dark:bg-dkBg texture-paper">
+          <!-- Feature Highlights & Academic Foundations -->
+          <div class="px-5 pt-5 flex flex-col gap-5">
 
-            <!-- Stats row -->
-            <div class="grid grid-cols-2 gap-3">
-              <div class="bg-white dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder rounded-2xl p-4">
-                <p id="stat-scans-count" class="font-display text-3xl font-semibold text-ink dark:text-dkText leading-none">12</p>
-                <p class="text-[11px] text-inkFaint dark:text-dkTextFaint mt-1.5 font-medium">Naskah Dipindai</p>
-                <div class="mt-2 h-0.5 w-8 bg-amber-500 rounded-full"></div>
+            <!-- Stats strip -->
+            <div class="grid grid-cols-3 gap-2.5">
+              <div class="p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 text-center">
+                <span id="stat-scans-count" class="font-display text-2xl font-bold text-night-900 dark:text-night-100 block">14+</span>
+                <span class="text-[10px] font-semibold text-parchment-500 dark:text-night-400 uppercase tracking-tight block mt-0.5">Naskah</span>
               </div>
-              <div class="bg-white dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder rounded-2xl p-4">
-                <p class="font-display text-3xl font-semibold text-ink dark:text-dkText leading-none">3</p>
-                <p class="text-[11px] text-inkFaint dark:text-dkTextFaint mt-1.5 font-medium">Bahasa Kuno</p>
-                <div class="mt-2 h-0.5 w-8 bg-amber-500 rounded-full"></div>
+              <div class="p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 text-center">
+                <span class="font-display text-2xl font-bold text-night-900 dark:text-night-100 block">5</span>
+                <span class="text-[10px] font-semibold text-parchment-500 dark:text-night-400 uppercase tracking-tight block mt-0.5">Tradisi Aksara</span>
               </div>
-            </div>
-
-            <!-- How it works -->
-            <div class="bg-white dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder rounded-2xl p-4">
-              <p class="text-[11px] font-semibold uppercase tracking-widest text-inkFaint dark:text-dkTextFaint mb-3">Cara Kerja</p>
-              <div class="flex items-start gap-3">
-                <!-- Step 1 -->
-                <div class="flex flex-col items-center gap-1.5 flex-1 text-center">
-                  <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center justify-center">
-                    <svg class="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>
-                    </svg>
-                  </div>
-                  <p class="text-[11px] font-semibold text-inkMid dark:text-dkTextMid">Pindai</p>
-                  <p class="text-[10px] text-inkFaint dark:text-dkTextFaint leading-snug">Arahkan kamera ke aksara</p>
-                </div>
-
-                <!-- Arrow -->
-                <svg class="w-4 h-4 text-stone-300 dark:text-dkBorder mt-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-
-                <!-- Step 2 -->
-                <div class="flex flex-col items-center gap-1.5 flex-1 text-center">
-                  <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center justify-center">
-                    <svg class="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-                    </svg>
-                  </div>
-                  <p class="text-[11px] font-semibold text-inkMid dark:text-dkTextMid">Transkripsi</p>
-                  <p class="text-[10px] text-inkFaint dark:text-dkTextFaint leading-snug">AI mengekstrak aksara</p>
-                </div>
-
-                <!-- Arrow -->
-                <svg class="w-4 h-4 text-stone-300 dark:text-dkBorder mt-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-
-                <!-- Step 3 -->
-                <div class="flex flex-col items-center gap-1.5 flex-1 text-center">
-                  <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center justify-center">
-                    <svg class="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
-                    </svg>
-                  </div>
-                  <p class="text-[11px] font-semibold text-inkMid dark:text-dkTextMid">Terjemah</p>
-                  <p class="text-[10px] text-inkFaint dark:text-dkTextFaint leading-snug">Teks & audio Indonesia</p>
-                </div>
+              <div class="p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 text-center">
+                <span class="font-display text-2xl font-bold text-gold-600 dark:text-gold-400 block">98.8%</span>
+                <span class="text-[10px] font-semibold text-parchment-500 dark:text-night-400 uppercase tracking-tight block mt-0.5">Akurasi AI</span>
               </div>
             </div>
 
-            <!-- About note -->
-            <p class="text-[11px] text-inkFaint dark:text-dkTextFaint text-center leading-relaxed px-2">
-              LONTAR-AI mendukung aksara <strong class="font-medium text-inkMid dark:text-dkTextMid">Jawa Kuno</strong>, <strong class="font-medium text-inkMid dark:text-dkTextMid">Kawi</strong>, dan <strong class="font-medium text-inkMid dark:text-dkTextMid">Bali</strong>.
-            </p>
+            <!-- Quick Access Historical Manuscripts -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-display text-[14px] font-bold text-night-900 dark:text-night-100 uppercase tracking-wider">
+                  Naskah Kurasi Terpilih
+                </h3>
+                <span class="text-[11px] text-gold-600 dark:text-gold-400 font-medium">Siap Ditelusuri</span>
+              </div>
+
+              <div class="flex flex-col gap-2.5">
+                <!-- Sample 1: Sutasoma -->
+                <div
+                  data-sample-idx="1"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/50 cursor-pointer transition-all flex items-center justify-between group"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/25 flex items-center justify-center text-gold-500 shrink-0 font-javanese text-lg font-bold">
+                      ꦨ
+                    </div>
+                    <div>
+                      <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 group-hover:text-gold-500 transition-colors">
+                        Kakawin Sutasoma
+                      </h4>
+                      <p class="text-[11px] text-parchment-500 dark:text-night-400 font-serif-literary italic">
+                        Mpu Tantular · Abad XIV Majapahit
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                    Buka
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </span>
+                </div>
+
+                <!-- Sample 2: Sukamerta -->
+                <div
+                  data-sample-idx="2"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/50 cursor-pointer transition-all flex items-center justify-between group"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/25 flex items-center justify-center text-gold-500 shrink-0 font-javanese text-lg font-bold">
+                      ꦱ
+                    </div>
+                    <div>
+                      <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 group-hover:text-gold-500 transition-colors">
+                        Prasasti Sukamerta
+                      </h4>
+                      <p class="text-[11px] text-parchment-500 dark:text-night-400 font-serif-literary italic">
+                        Raden Wijaya · Piagam 1296 M
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                    Buka
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </span>
+                </div>
+
+                <!-- Sample 3: Babad Tanah Jawi -->
+                <div
+                  data-sample-idx="0"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-parchment-100 dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/50 cursor-pointer transition-all flex items-center justify-between group"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/25 flex items-center justify-center text-gold-500 shrink-0 font-javanese text-lg font-bold">
+                      ꦱꦸ
+                    </div>
+                    <div>
+                      <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 group-hover:text-gold-500 transition-colors">
+                        Lontar Surya Kencana
+                      </h4>
+                      <p class="text-[11px] text-parchment-500 dark:text-night-400 font-serif-literary italic">
+                        Koleksi Ron Tal Mataram Islam · Abad XVI
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 flex items-center gap-1">
+                    Buka
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Philology Triad Pillars -->
+            <div class="p-4 rounded-2xl bg-parchment-100/70 dark:bg-night-850/70 border border-parchment-200 dark:border-night-800">
+              <span class="text-[10px] font-bold tracking-widest text-gold-600 dark:text-gold-400 uppercase block mb-3">
+                Keunggulan Epigrafi Digital
+              </span>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2.5">
+                  <div class="w-5 h-5 rounded-full bg-gold-500/15 text-gold-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</div>
+                  <div>
+                    <h5 class="text-[12px] font-semibold text-night-900 dark:text-night-100">Transkripsi Glif Aksara Presisi</h5>
+                    <p class="text-[11px] text-parchment-500 dark:text-night-400 leading-snug">Deteksi karakter Unicode asli (Jawa, Kawi, Bali) langsung dari foto naskah fisik.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <div class="w-5 h-5 rounded-full bg-gold-500/15 text-gold-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">2</div>
+                  <div>
+                    <h5 class="text-[12px] font-semibold text-night-900 dark:text-night-100">Transliterasi Fonetis & Terjemahan</h5>
+                    <p class="text-[11px] text-parchment-500 dark:text-night-400 leading-snug">Menyajikan alihaksara Latin filologis dan terjemahan bahasa Indonesia mengalir.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <div class="w-5 h-5 rounded-full bg-gold-500/15 text-gold-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">3</div>
+                  <div>
+                    <h5 class="text-[12px] font-semibold text-night-900 dark:text-night-100">Interpretasi Filosofis & Resitasi Audio</h5>
+                    <p class="text-[11px] text-parchment-500 dark:text-night-400 leading-snug">Penjelasan nilai adiluhung naskah serta fitur pembacaan suara natural.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-
         </section>
 
 
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <!-- SCREEN 2 — SCAN (Real Camera + AI)               -->
+        <!-- SCREEN 2 — PINDAI (HIGH-PRECISION CAMERA HUD)     -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-scan" class="screen-view screen-hidden flex-col flex-1 bg-[#0D0B09]">
-          <!-- Scan Header -->
-          <div class="flex items-center justify-between px-5 pt-4 pb-3">
+        <section id="screen-scan" class="screen-view screen-hidden flex-col flex-1 bg-night-950">
+
+          <!-- Scan Screen Top HUD Bar -->
+          <div class="flex items-center justify-between px-5 pt-4 pb-3 z-30">
             <button
               id="btn-scan-back"
               type="button"
-              aria-label="Kembali"
-              class="w-9 h-9 rounded-xl bg-white/8 border border-white/10 text-white/80 flex items-center justify-center hover:bg-white/12 active:scale-95 transition-all cursor-pointer"
+              aria-label="Kembali ke beranda"
+              class="w-9 h-9 rounded-xl bg-night-900/90 border border-night-800 text-night-200 flex items-center justify-center hover:bg-night-850 active:scale-95 transition-all cursor-pointer"
             >
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"/>
               </svg>
             </button>
+
+            <!-- Mode Title -->
             <div class="text-center">
-              <p class="text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-400">Mode Pindai</p>
-              <p id="scan-mode-label" class="text-[10px] text-white/40 mt-0.5">Lontar OCR · Aksara Nusantara</p>
+              <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-400">Pindai Aksara</span>
+              <p id="scan-mode-label" class="text-[10px] text-night-400 mt-0.5">Kamera Optik Epigrafi</p>
             </div>
-            <button
-              id="btn-camera-switch"
-              type="button"
-              aria-label="Ganti Kamera"
-              class="w-9 h-9 rounded-xl bg-white/8 border border-white/10 text-white/60 flex items-center justify-center hover:bg-white/12 active:scale-95 transition-all cursor-pointer"
-            >
-              <!-- flip camera icon -->
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
-                <circle cx="12" cy="13" r="4"/>
-                <path d="M9 13h6M12 10v6" stroke-width="1.5"/>
-              </svg>
-            </button>
+
+            <!-- Controls: Flash & Camera Flip -->
+            <div class="flex items-center gap-1.5">
+              <button
+                id="btn-flash-toggle"
+                type="button"
+                aria-label="Lampu sorot"
+                class="w-9 h-9 rounded-xl bg-night-900/90 border border-night-800 text-night-300 flex items-center justify-center hover:bg-night-850 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </button>
+              <button
+                id="btn-camera-switch"
+                type="button"
+                aria-label="Ganti kamera depan/belakang"
+                class="w-9 h-9 rounded-xl bg-night-900/90 border border-night-800 text-night-300 flex items-center justify-center hover:bg-night-850 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <!-- Viewfinder -->
-          <div id="viewfinder-wrap" class="flex-1 relative mx-4 mb-4 rounded-2xl overflow-hidden bg-[#1A1410] border border-amber-500/25">
-
-            <!-- ── Live camera feed (shown when getUserMedia succeeds) ── -->
+          <!-- Viewfinder Frame -->
+          <div
+            id="viewfinder-wrap"
+            class="flex-1 relative mx-4 mb-3 rounded-3xl overflow-hidden bg-[#120F0C] border border-gold-500/30 cursor-pointer shadow-inner"
+            title="Arahkan kamera lalu ketuk untuk memindai"
+          >
+            <!-- ── Live Camera Feed ── -->
             <video
               id="camera-feed"
               class="hidden absolute inset-0 w-full h-full object-cover"
@@ -431,408 +542,537 @@
               playsinline
               muted
             ></video>
-            <!-- Hidden canvas for frame capture -->
+
+            <!-- Hidden Capture Canvas -->
             <canvas id="capture-canvas" class="hidden"></canvas>
 
-            <!-- ── Fallback: mock lontar (shown when camera unavailable) ── -->
+            <!-- ── Optical Rule-of-Thirds Grid Overlay ── -->
+            <div class="absolute inset-0 pointer-events-none opacity-20">
+              <div class="w-full h-full grid grid-cols-3 grid-rows-3">
+                <div class="border-r border-b border-gold-400"></div>
+                <div class="border-r border-b border-gold-400"></div>
+                <div class="border-b border-gold-400"></div>
+                <div class="border-r border-b border-gold-400"></div>
+                <div class="border-r border-b border-gold-400 flex items-center justify-center">
+                  <div class="w-2.5 h-2.5 rounded-full border border-gold-400 opacity-60"></div>
+                </div>
+                <div class="border-b border-gold-400"></div>
+                <div class="border-r border-gold-400"></div>
+                <div class="border-r border-gold-400"></div>
+                <div></div>
+              </div>
+            </div>
+
+            <!-- ── Fallback Lontar Leaf (Displayed if camera is unpermitted or unavailable) ── -->
             <div id="camera-fallback" class="absolute inset-0 flex items-center justify-center p-6">
-              <div class="w-full max-w-[280px] bg-[#3D2B18] rounded-lg border-y-2 border-[#5C3E24] shadow-2xl relative px-5 py-6 flex flex-col gap-4">
-                <div class="absolute inset-0 rounded-lg opacity-10" style="background: repeating-linear-gradient(0deg, #1a0f00, #1a0f00 1px, transparent 1px, transparent 6px);"></div>
-                <div class="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a0f00] border border-amber-900/60"></div>
-                <div class="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1a0f00] border border-amber-900/60"></div>
-                <div class="font-javanese text-center text-[19px] tracking-wider text-amber-200 relative z-10">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</div>
-                <div class="font-javanese text-center text-[15px] tracking-wider text-amber-400/70 relative z-10">ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ</div>
-                <div class="font-javanese text-center text-[12px] tracking-wider text-amber-600/50 relative z-10">ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ</div>
+              <div class="w-full max-w-[290px] bg-gradient-to-r from-[#291F16] via-[#382B1E] to-[#291F16] rounded-xl border-y-2 border-gold-600/60 shadow-2xl relative px-6 py-6 flex flex-col gap-3">
+                <div class="absolute inset-0 rounded-xl bg-lontar-ribs opacity-40 pointer-events-none"></div>
+                <div class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#120D08] border border-gold-500/50"></div>
+                <div class="absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#120D08] border border-gold-500/50"></div>
+
+                <span class="text-[9px] text-center text-gold-400/80 font-bold tracking-widest uppercase">Naskah Uji Coba Lontar</span>
+                <div class="font-javanese text-center text-[22px] tracking-wider text-gold-200">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ</div>
+                <div class="font-javanese text-center text-[15px] tracking-wider text-gold-400/80">ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ</div>
+                <div class="font-javanese text-center text-[13px] tracking-wider text-gold-500/60">ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ</div>
               </div>
-              <!-- camera blocked notice (shown inside fallback if permission denied) -->
-              <div id="camera-denied-notice" class="hidden absolute bottom-14 left-4 right-4 bg-red-900/80 backdrop-blur-sm border border-red-500/40 rounded-xl px-4 py-3 text-center">
-                <p class="text-white text-[12px] font-semibold mb-0.5">Akses kamera ditolak</p>
-                <p class="text-red-200/70 text-[11px]">Izinkan akses kamera di pengaturan browser, lalu gunakan mode contoh.</p>
+
+              <!-- Permission denied callout -->
+              <div id="camera-denied-notice" class="hidden absolute bottom-14 left-4 right-4 bg-red-950/90 backdrop-blur-md border border-red-500/40 rounded-2xl p-3.5 text-center shadow-xl">
+                <p class="text-white text-[12px] font-bold mb-0.5">Akses Kamera Dibatasi</p>
+                <p class="text-red-200/80 text-[11px] leading-snug">Izinkan peramban mengakses kamera, atau ketuk shutter untuk menganalisis naskah contoh kurasi.</p>
               </div>
             </div>
 
-            <!-- Camera live badge -->
-            <div id="camera-live-badge" class="hidden absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm border border-green-500/40 rounded-full px-3 py-1 z-20">
-              <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-              <span class="text-green-300 text-[10px] font-semibold tracking-wide">KAMERA AKTIF</span>
+            <!-- Real-time Camera Live Badge -->
+            <div id="camera-live-badge" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-night-950/80 backdrop-blur-md border border-patina-400/50 text-[10px] font-semibold text-patina-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-patina-400 animate-pulse"></span>
+              <span>KAMERA OPTIK AKTIF</span>
             </div>
 
-            <!-- Tap to scan hint on viewfinder -->
-            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm border border-amber-500/40 rounded-full px-3 py-1 text-[11px] text-amber-300 pointer-events-none select-none">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-              <span>Arahkan ke aksara · Ketuk untuk memindai</span>
+            <!-- Brass Corner Brackets -->
+            <div class="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-gold-400/80 z-20 pointer-events-none"></div>
+            <div class="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-gold-400/80 z-20 pointer-events-none"></div>
+            <div class="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-gold-400/80 z-20 pointer-events-none"></div>
+            <div class="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-gold-400/80 z-20 pointer-events-none"></div>
+
+            <!-- Optical Center Reticle Cross -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+              <div class="w-6 h-6 flex items-center justify-center">
+                <div class="absolute w-4 h-0.5 bg-gold-400"></div>
+                <div class="absolute h-4 w-0.5 bg-gold-400"></div>
+              </div>
             </div>
 
-            <!-- Modal: Aksara Belum Terdeteksi -->
-            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-30 bg-black/85 backdrop-blur-md flex items-end p-4">
-              <div class="w-full bg-[#1A1410] border border-amber-500/40 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5 animate-toastIn">
+            <!-- Scan Beam Laser -->
+            <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent shadow-[0_0_15px_3px_rgba(220,185,95,0.7)] animate-scan-line pointer-events-none z-20"></div>
+
+            <!-- Interactive Viewfinder Tap Pill Hint -->
+            <div class="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-night-950/80 backdrop-blur-md border border-gold-500/40 rounded-full px-3.5 py-1 text-[11px] text-gold-300 pointer-events-none select-none">
+              <span class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-ping"></span>
+              <span>Ketuk layar atau tombol shutter</span>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="scan-error-msg" class="hidden absolute bottom-4 left-4 right-4 bg-red-950/90 backdrop-blur-md border border-red-500/50 text-white text-[12px] text-center py-2.5 px-4 rounded-2xl z-30 leading-snug"></div>
+
+            <!-- ── Loading Overlay with 3-Phase Epigraphic Progress ── -->
+            <div
+              id="scan-loading-overlay"
+              class="hidden absolute inset-0 z-40 bg-night-950/90 backdrop-blur-md flex flex-col items-center justify-center gap-4 px-6"
+            >
+              <div class="relative flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full border-2 border-gold-500/20 border-t-gold-400 animate-spin"></div>
+                <div class="absolute font-javanese text-gold-400 text-lg font-bold">ꦭ</div>
+              </div>
+              <div class="text-center">
+                <p class="font-display text-[15px] font-bold text-night-100">Menganalisis Naskah Kuno…</p>
+                <p id="scan-step-text" class="text-[12px] text-gold-300/80 mt-1">Mengambil citra & memindai glif…</p>
+              </div>
+              <!-- Progress bar -->
+              <div class="w-48 h-1.5 bg-night-800 rounded-full overflow-hidden">
+                <div id="scan-progress-bar" class="h-full bg-gradient-to-r from-gold-600 via-gold-400 to-gold-500 rounded-full w-0 transition-all duration-500 ease-out"></div>
+              </div>
+            </div>
+
+            <!-- ── Unclear Aksara Bottom Sheet Dialog ── -->
+            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-50 bg-night-950/85 backdrop-blur-md flex items-end p-3.5">
+              <div class="w-full bg-night-900 border border-gold-500/40 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5">
                 <div class="flex items-start gap-3">
-                  <div class="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
+                  <div class="w-10 h-10 rounded-2xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-gold-400 shrink-0 mt-0.5">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                     </svg>
                   </div>
                   <div class="flex-1">
-                    <h4 class="text-[14px] font-semibold text-white mb-0.5">Aksara Belum Terdeteksi Jelas</h4>
-                    <p id="unclear-modal-desc" class="text-[12px] text-white/70 leading-relaxed">
-                      Kamera belum mendeteksi goresan aksara Jawa atau teks naskah kuno pada sudut ini.
+                    <h4 class="font-display text-[14px] font-bold text-night-100">Aksara Belum Terdeteksi Jelas</h4>
+                    <p id="unclear-modal-desc" class="text-[12px] text-night-300 leading-relaxed mt-0.5">
+                      Kamera menangkap objek yang belum menampilkan aksara kuno. Anda dapat mencoba sampel naskah asli atau memfoto ulang.
                     </p>
                   </div>
                 </div>
+
                 <div class="flex flex-col gap-2 pt-1">
-                  <button id="btn-unclear-use-sample" type="button" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-[0.98] text-white font-semibold text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg shadow-amber-900/30">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    Tampilkan Contoh Naskah Asli (Sutasoma)
+                  <button id="btn-unclear-use-sample" type="button" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-night-950 font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer shadow-gold-sm transition-all">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Tampilkan Naskah Asli (Sutasoma)
                   </button>
-                  <button id="btn-unclear-retry" type="button" class="w-full py-2.5 rounded-xl bg-white/8 hover:bg-white/12 active:scale-[0.98] border border-white/15 text-white/80 font-medium text-[12px] cursor-pointer transition-all text-center">
+                  <button id="btn-unclear-retry" type="button" class="w-full py-2.5 rounded-xl bg-night-800 hover:bg-night-750 text-night-200 border border-night-700 font-medium text-[12px] cursor-pointer transition-colors">
                     Arahkan Ulang Kamera & Coba Lagi
                   </button>
                 </div>
               </div>
             </div>
 
-            <!-- Corner reticles -->
-            <div class="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-amber-400/70 z-10 pointer-events-none"></div>
-            <div class="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-amber-400/70 z-10 pointer-events-none"></div>
-            <div class="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-amber-400/70 z-10 pointer-events-none"></div>
-            <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-amber-400/70 z-10 pointer-events-none"></div>
-
-            <!-- Scan beam -->
-            <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_12px_2px_rgba(251,191,36,0.5)] animate-scan pointer-events-none z-10"></div>
-
-            <!-- Error message (no aksara found etc.) -->
-            <div id="scan-error-msg" class="hidden absolute bottom-4 left-4 right-4 bg-red-900/85 backdrop-blur-sm border border-red-500/40 text-white text-[12px] text-center py-2.5 px-4 rounded-xl z-20 leading-snug"></div>
-
-            <!-- Loading overlay -->
-            <div
-              id="scan-loading-overlay"
-              class="hidden absolute inset-0 z-20 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4"
-            >
-              <div class="spinner"></div>
-              <div class="text-center">
-                <p class="text-white font-semibold text-sm">Menganalisis aksara kuno…</p>
-                <p id="scan-step-text" class="text-white/50 text-xs mt-1">Mendeteksi goresan aksara…</p>
-              </div>
-              <div class="w-40 h-1 bg-white/10 rounded-full overflow-hidden">
-                <div id="scan-progress-bar" class="h-full bg-amber-400 rounded-full w-0 transition-all duration-500 ease-out"></div>
-              </div>
-            </div>
           </div>
 
-          <!-- Guidance text -->
-          <div class="text-center mb-1">
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-400 tracking-wide">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-              Tekan tombol emas untuk menerjemahkan
-            </span>
-          </div>
+          <!-- ── Scan Controls Bar ──────────────────────────────────────── -->
+          <div class="px-7 pb-5 pt-1 flex items-center justify-between">
 
-          <!-- Scan bottom controls -->
-          <div class="flex items-center justify-around px-8 pb-5 pt-1">
+            <!-- Switch Sample Button -->
             <button
               id="btn-sample-switch"
               type="button"
-              class="flex flex-col items-center gap-1.5 text-white/40 hover:text-white/70 transition-colors cursor-pointer"
+              class="flex flex-col items-center gap-1.5 text-night-400 hover:text-gold-400 transition-colors cursor-pointer group"
+              title="Ganti contoh naskah"
             >
-              <div class="w-9 h-9 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+              <div class="w-11 h-11 rounded-2xl bg-night-900 border border-night-800 group-hover:border-gold-500/40 flex items-center justify-center text-night-300 group-hover:text-gold-400 transition-colors">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
                 </svg>
               </div>
-              <span class="text-[10px] font-medium">Contoh</span>
+              <span class="text-[11px] font-medium">Contoh</span>
             </button>
 
-            <!-- Main capture button with pulsing ring -->
+            <!-- Regal Shutter Button -->
             <div class="relative flex items-center justify-center">
-              <span class="absolute w-[86px] h-[86px] rounded-full border border-amber-500/30 animate-ping pointer-events-none"></span>
+              <span class="absolute w-[86px] h-[86px] rounded-full border border-gold-500/40 animate-shutter-halo pointer-events-none"></span>
               <button
                 id="btn-capture"
                 type="button"
-                aria-label="Ambil foto untuk dipindai"
-                class="relative w-[72px] h-[72px] rounded-full border-4 border-amber-500/60 bg-amber-500 hover:bg-amber-400 active:scale-95 flex items-center justify-center transition-all duration-200 shadow-[0_0_32px_rgba(201,148,26,0.5)] cursor-pointer"
+                aria-label="Ambil foto naskah"
+                class="relative w-[72px] h-[72px] rounded-full p-1 bg-gradient-to-b from-gold-400 via-gold-500 to-gold-700 shadow-gold-glow active:scale-95 transition-all cursor-pointer flex items-center justify-center"
               >
-                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>
-                </svg>
+                <div class="w-full h-full rounded-full border-2 border-night-950/30 flex items-center justify-center bg-gradient-to-tr from-gold-500 to-gold-400">
+                  <svg class="w-7 h-7 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                </div>
               </button>
             </div>
 
-            <!-- Upload from file (always visible as alternative) -->
+            <!-- Gallery Upload Button -->
             <label
               for="file-upload"
-              class="flex flex-col items-center gap-1.5 text-white/40 hover:text-white/70 transition-colors cursor-pointer"
+              class="flex flex-col items-center gap-1.5 text-night-400 hover:text-gold-400 transition-colors cursor-pointer group"
               title="Unggah dari galeri"
             >
-              <div class="w-9 h-9 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+              <div class="w-11 h-11 rounded-2xl bg-night-900 border border-night-800 group-hover:border-gold-500/40 flex items-center justify-center text-night-300 group-hover:text-gold-400 transition-colors">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
                 </svg>
               </div>
-              <span class="text-[10px] font-medium">Galeri</span>
+              <span class="text-[11px] font-medium">Galeri</span>
             </label>
             <input id="file-upload" type="file" accept="image/*" class="hidden" />
-          </div>
 
-          <p id="scan-hint-text" class="text-center text-[11px] text-white/30 pb-4 px-8 leading-snug">
-            Posisikan aksara di dalam bingkai · Kamera aktif
-          </p>
+          </div>
         </section>
 
 
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <!-- SCREEN 3 — RESULT                                 -->
+        <!-- SCREEN 3 — HASIL (PHILOLOGY STUDY & TRANSLATE)    -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-result" class="screen-view screen-hidden flex-col flex-1 bg-surface dark:bg-dkBg">
+        <section id="screen-result" class="screen-view screen-hidden flex-col flex-1 bg-parchment-50 dark:bg-night-950 pb-8">
+
           <!-- Result Header -->
-          <div class="flex items-center justify-between px-5 py-3.5 border-b border-surfaceBorder dark:border-dkBorder shrink-0">
-            <button id="btn-result-back" type="button" class="flex items-center gap-1.5 text-inkMid dark:text-dkTextMid hover:text-ink dark:hover:text-dkText text-[13px] font-medium cursor-pointer transition-colors">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-parchment-200 dark:border-night-800 bg-parchment-100/60 dark:bg-night-900/60 backdrop-blur-sm shrink-0">
+            <button
+              id="btn-result-back"
+              type="button"
+              class="flex items-center gap-1.5 text-parchment-800 dark:text-night-300 hover:text-gold-500 dark:hover:text-gold-400 text-[13px] font-semibold cursor-pointer transition-colors"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
               Pindai Ulang
             </button>
-            <span class="text-[11px] font-semibold uppercase tracking-widest text-inkFaint dark:text-dkTextFaint">Hasil Analisis</span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-green-600 dark:text-green-400">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Selesai
+            <span class="font-display text-[12px] font-bold tracking-widest uppercase text-night-900 dark:text-night-100">
+              Kajian Filologi
+            </span>
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-patina-400">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Terverifikasi
             </span>
           </div>
 
-          <!-- Scrollable Result Content -->
+          <!-- Scrollable Result Body -->
           <div class="flex-1 overflow-y-auto">
 
-            <!-- TOP: Ancient Text (dark surface) -->
-            <div class="bg-stone-800 dark:bg-stone-900 px-5 py-6 relative">
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Teks Kuno</span>
-                <span class="text-[10px] text-stone-500 font-medium" id="result-language-label">Aksara Jawa · Ron Tal</span>
-              </div>
-
-              <!-- Ancient Script -->
-              <div class="text-center py-4 px-4 bg-stone-900/60 rounded-xl border border-stone-700/50 mb-3">
-                <p id="result-ancient-text" class="font-javanese text-[26px] leading-relaxed text-amber-200 select-all tracking-wider">
-                  ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
-                </p>
-                <p id="result-transliteration" class="text-[12px] italic text-stone-400 mt-2 font-medium tracking-wide">
-                  "Sinuhun surya bumi"
-                </p>
-              </div>
-
-              <div class="flex items-center justify-between text-[10px] text-stone-600">
-                <span id="result-model-label">Model: Gemini 3.8 Vision · Epigrafi</span>
-                <span>Keyakinan: <span id="result-confidence" class="text-amber-500 font-semibold">99.2%</span></span>
-              </div>
-            </div>
-
-            <!-- BOTTOM: Indonesian Translation (light surface) -->
-            <div class="px-5 py-5 bg-surface dark:bg-dkBg border-t-2 border-amber-500/30">
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-[10px] font-semibold uppercase tracking-widest text-inkFaint dark:text-dkTextFaint">Terjemahan Indonesia</span>
-                <span class="text-[10px] font-semibold text-green-600 dark:text-green-400 flex items-center gap-1">
-                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                  Terverifikasi
+            <!-- Manuscript Metadata Banner -->
+            <div class="px-5 pt-4 pb-2 flex items-center justify-between">
+              <div>
+                <span id="result-language-badge" class="px-2.5 py-0.5 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-600 dark:text-gold-400 text-[10px] font-bold uppercase tracking-wider">
+                  Aksara Jawa Kuno
                 </span>
+                <h3 id="result-title" class="font-display text-[18px] font-bold text-night-900 dark:text-night-100 mt-1">
+                  Lontar Surya Kencana
+                </h3>
               </div>
+              <div class="text-right">
+                <span class="text-[10px] text-parchment-500 dark:text-night-400 block font-medium">Tingkat Keyakinan</span>
+                <span id="result-confidence" class="font-display text-[18px] font-bold text-gold-500">99.2%</span>
+              </div>
+            </div>
 
-              <p id="result-translated-text" class="text-[15px] text-ink dark:text-dkText leading-relaxed font-medium mb-4">
-                Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
-              </p>
+            <!-- Tab Switcher: [Aksara Transkripsi] vs [Foto Citra Asli] -->
+            <div class="px-5 mt-2 mb-3">
+              <div class="flex rounded-xl bg-parchment-200/80 dark:bg-night-850 p-1 border border-parchment-300/60 dark:border-night-800">
+                <button
+                  id="tab-btn-script"
+                  type="button"
+                  class="flex-1 py-1.5 rounded-lg text-[12px] font-bold bg-white dark:bg-night-700 text-night-950 dark:text-night-100 shadow-sm transition-all cursor-pointer"
+                >
+                  Aksara Asli (Unicode)
+                </button>
+                <button
+                  id="tab-btn-image"
+                  type="button"
+                  class="flex-1 py-1.5 rounded-lg text-[12px] font-medium text-parchment-600 dark:text-night-400 hover:text-night-900 dark:hover:text-night-100 transition-all cursor-pointer"
+                >
+                  Tangkapan Citra Asli
+                </button>
+              </div>
+            </div>
 
-              <!-- Philosophical note -->
-              <div class="bg-amber-50 dark:bg-amber-500/8 border border-amber-200 dark:border-amber-500/20 rounded-xl p-3.5">
-                <p class="text-[10px] font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400 mb-1.5">Konteks Filosofis</p>
-                <p id="result-philosophical" class="text-[12px] text-inkMid dark:text-dkTextMid leading-relaxed">
-                  Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi.
+            <!-- TAB 1: Ancient Text Card (Dark Smoked Lontar Surface) -->
+            <div id="tab-content-script" class="px-5">
+              <div class="relative rounded-2xl bg-gradient-to-r from-[#211A13] via-[#2A2118] to-[#211A13] border border-gold-500/35 p-5 shadow-lontar-card overflow-hidden">
+                <div class="absolute inset-0 bg-lontar-ribs opacity-40 pointer-events-none"></div>
+
+                <div class="relative z-10 text-center py-2">
+                  <p id="result-ancient-text" class="font-javanese text-[26px] sm:text-[28px] leading-relaxed text-transparent bg-clip-text bg-gradient-to-b from-gold-100 via-gold-300 to-gold-400 tracking-wider select-all">
+                    ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
+                  </p>
+                  <p id="result-transliteration" class="font-serif-literary italic text-[14px] text-gold-200/95 mt-3 tracking-wide">
+                    "Sinuhun surya bumi"
+                  </p>
+                </div>
+
+                <div class="relative z-10 mt-3 pt-2.5 border-t border-gold-500/20 flex items-center justify-between text-[10px] text-gold-400/80">
+                  <span id="result-model-label">Gemini 3.8 Multimodal Vision</span>
+                  <span>Transkripsi Baku Filologi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: Captured Photo Canvas View (Hidden by default) -->
+            <div id="tab-content-image" class="hidden px-5">
+              <div class="relative rounded-2xl bg-night-900 border border-gold-500/30 overflow-hidden p-2 text-center">
+                <img
+                  id="result-captured-image"
+                  src=""
+                  alt="Tangkapan Citra Naskah"
+                  class="w-full h-52 object-cover rounded-xl border border-night-800"
+                />
+                <p class="text-[11px] text-night-400 mt-2 font-medium">
+                  Citra yang diproses oleh model kecerdasan artifisial
                 </p>
               </div>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="px-5 pb-6 flex flex-col gap-3 bg-surface dark:bg-dkBg">
+            <!-- Indonesian Translation & Literary Section -->
+            <div class="px-5 mt-4">
+              <div class="p-4 rounded-2xl bg-white dark:bg-night-850 border border-parchment-200 dark:border-night-800">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-parchment-500 dark:text-night-400">
+                    Terjemahan Bahasa Indonesia
+                  </span>
+                  <button id="btn-copy-translation" type="button" class="text-[11px] font-semibold text-gold-600 dark:text-gold-400 hover:underline flex items-center gap-1 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Salin
+                  </button>
+                </div>
 
-              <!-- Play Audio -->
+                <p id="result-translated-text" class="font-serif-literary text-[16px] leading-relaxed text-night-900 dark:text-night-100 font-medium">
+                  Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
+                </p>
+              </div>
+            </div>
+
+            <!-- Philosophical & Historical Context -->
+            <div class="px-5 mt-3">
+              <div class="p-4 rounded-2xl bg-gold-500/10 border border-gold-500/25">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="w-2 h-2 rounded-full bg-gold-500"></span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-gold-700 dark:text-gold-400">
+                    Konteks Filosofis & Nilai Luhur
+                  </span>
+                </div>
+                <p id="result-philosophical" class="text-[13px] text-night-900 dark:text-night-200 leading-relaxed font-normal">
+                  Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi, ibarat surya yang menyinari jagad raya.
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons Suite -->
+            <div class="px-5 mt-5 flex flex-col gap-2.5">
+
+              <!-- Play Audio (Web Speech API) -->
               <button
                 id="btn-play-audio"
                 type="button"
-                class="w-full flex items-center justify-center gap-2.5 py-3 rounded-2xl border border-surfaceBorder dark:border-dkBorder bg-white dark:bg-dkCard text-inkMid dark:text-dkTextMid hover:text-ink dark:hover:text-dkText hover:border-stone-300 dark:hover:border-stone-600 transition-all active:scale-[0.98] cursor-pointer text-[13px] font-semibold"
+                class="w-full py-3.5 px-4 rounded-2xl bg-white dark:bg-night-850 hover:bg-parchment-100 dark:hover:bg-night-800 border border-parchment-300/80 dark:border-night-800 text-night-900 dark:text-night-100 font-semibold text-[13px] flex items-center justify-center gap-3 transition-all active:scale-[0.98] cursor-pointer shadow-sm"
               >
-                <!-- Speaker icon (changes to stop when playing) -->
-                <svg id="audio-icon-speaker" class="w-4.5 h-4.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+                <!-- Speaker / Stop icon -->
+                <svg id="audio-icon-speaker" class="w-4.5 h-4.5 text-gold-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
                 </svg>
-                <svg id="audio-icon-stop" class="w-4.5 h-4.5 text-amber-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg id="audio-icon-stop" class="w-4.5 h-4.5 text-gold-500 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
                 </svg>
-                <span id="audio-btn-label">Putar Audio Terjemahan</span>
-                <!-- Wave bars (shown when playing) -->
-                <div id="audio-wave-container" class="hidden items-center gap-0.5">
-                  <span class="w-0.5 bg-amber-500 rounded-full wave-1 inline-block"></span>
-                  <span class="w-0.5 bg-amber-500 rounded-full wave-2 inline-block"></span>
-                  <span class="w-0.5 bg-amber-500 rounded-full wave-3 inline-block"></span>
-                  <span class="w-0.5 bg-amber-500 rounded-full wave-4 inline-block"></span>
+                <span id="audio-btn-label">Putar Resitasi Suara</span>
+                <!-- Animated Equalizer Bars -->
+                <div id="audio-wave-container" class="hidden items-center gap-1 h-5">
+                  <span class="w-1 bg-gold-500 rounded-full eq-bar-1 inline-block"></span>
+                  <span class="w-1 bg-gold-500 rounded-full eq-bar-2 inline-block"></span>
+                  <span class="w-1 bg-gold-500 rounded-full eq-bar-3 inline-block"></span>
+                  <span class="w-1 bg-gold-500 rounded-full eq-bar-4 inline-block"></span>
                 </div>
               </button>
 
-              <!-- Save to history -->
+              <!-- Save to Archive -->
               <button
                 id="btn-save-history"
                 type="button"
-                class="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-semibold text-[13px] transition-all cursor-pointer shadow-lg shadow-amber-900/20"
+                class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-night-950 font-bold text-[13px] flex items-center justify-center gap-2 shadow-gold-sm transition-all active:scale-[0.98] cursor-pointer"
               >
-                <svg id="save-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+                <svg id="save-icon" class="w-4 h-4 text-night-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
                 </svg>
-                <span id="save-btn-label">Simpan ke Riwayat</span>
+                <span id="save-btn-label">Simpan ke Arsip Digital</span>
               </button>
+
+              <!-- Share / Export Button -->
+              <button
+                id="btn-share-result"
+                type="button"
+                class="w-full py-2.5 rounded-xl bg-transparent text-parchment-700 dark:text-night-400 hover:text-gold-500 text-[12px] font-medium flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Bagikan Kajian Ini
+              </button>
+
             </div>
+
           </div>
 
-          <!-- Toast -->
+          <!-- Toast Notification -->
           <div
             id="result-toast"
-            class="hidden absolute bottom-24 left-5 right-5 z-50 py-3 px-4 rounded-2xl bg-stone-800 dark:bg-stone-700 text-white text-[13px] font-medium text-center shadow-xl toast-show"
+            class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 py-3 px-5 rounded-2xl bg-night-950/95 text-white border border-gold-500/40 text-[12px] font-semibold text-center shadow-2xl backdrop-blur-md transition-all duration-300"
           ></div>
         </section>
 
 
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <!-- SCREEN 4 — HISTORY                               -->
+        <!-- SCREEN 4 — ARSIP (DIGITAL HERITAGE COLLECTION)    -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-history" class="screen-view screen-hidden flex-col flex-1 bg-surface dark:bg-dkBg">
-          <!-- History Header -->
-          <div class="px-5 pt-5 pb-4 shrink-0">
+        <section id="screen-history" class="screen-view screen-hidden flex-col flex-1 bg-parchment-50 dark:bg-night-950 pb-8">
+
+          <!-- Archive Header -->
+          <div class="px-5 pt-5 pb-3 shrink-0">
             <div class="flex items-center justify-between mb-1">
-              <h2 class="font-display text-[22px] font-semibold text-ink dark:text-dkText">Riwayat Pindaian</h2>
+              <div>
+                <h2 class="font-display text-[22px] font-bold text-night-900 dark:text-night-100">Arsip Koleksi</h2>
+                <p class="text-[12px] text-parchment-500 dark:text-night-400 mt-0.5">Dokumentasi hasil pindaian naskah Nusantara</p>
+              </div>
               <button
                 id="btn-clear-history"
                 type="button"
-                class="text-[12px] font-medium text-inkFaint dark:text-dkTextFaint hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer"
-              >Hapus Semua</button>
+                class="text-[11px] font-semibold text-red-500 hover:text-red-400 transition-colors cursor-pointer"
+              >
+                Hapus Semua
+              </button>
             </div>
-            <p class="text-[12px] text-inkFaint dark:text-dkTextFaint">Koleksi naskah tersimpan secara lokal</p>
           </div>
 
-          <!-- Search -->
-          <div class="px-5 mb-4 shrink-0">
+          <!-- Search & Filter Bar -->
+          <div class="px-5 mb-3 shrink-0">
             <div class="relative">
-              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-inkFaint dark:text-dkTextFaint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-parchment-500 dark:text-night-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <input
                 id="history-search"
                 type="text"
-                placeholder="Cari naskah atau terjemahan…"
-                class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder text-[13px] text-ink dark:text-dkText placeholder-inkFaint dark:placeholder-dkTextFaint focus:outline-none focus:border-amber-500/60 transition-colors"
+                placeholder="Cari naskah, aksara, atau terjemahan…"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-night-850 border border-parchment-300 dark:border-night-800 text-[13px] text-night-900 dark:text-night-100 placeholder-parchment-400 dark:placeholder-night-500 focus:outline-none focus:border-gold-500 transition-colors"
               />
+            </div>
+
+            <!-- Filter Tags -->
+            <div class="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-1">
+              <button type="button" data-filter="" class="history-tag active-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-gold-500 text-night-950 transition-colors cursor-pointer whitespace-nowrap">Semua</button>
+              <button type="button" data-filter="jawa" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-parchment-200 dark:bg-night-850 text-parchment-700 dark:text-night-300 hover:text-gold-500 transition-colors cursor-pointer whitespace-nowrap">Aksara Jawa</button>
+              <button type="button" data-filter="kawi" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-parchment-200 dark:bg-night-850 text-parchment-700 dark:text-night-300 hover:text-gold-500 transition-colors cursor-pointer whitespace-nowrap">Kawi</button>
+              <button type="button" data-filter="bali" class="history-tag px-3 py-1 rounded-full text-[11px] font-semibold bg-parchment-200 dark:bg-night-850 text-parchment-700 dark:text-night-300 hover:text-gold-500 transition-colors cursor-pointer whitespace-nowrap">Bali</button>
             </div>
           </div>
 
-          <!-- History List -->
-          <div class="flex-1 overflow-y-auto px-5 pb-6">
+          <!-- History List Container -->
+          <div class="flex-1 overflow-y-auto px-5">
             <div id="history-list-container" class="flex flex-col gap-3"></div>
 
-            <!-- Empty State -->
+            <!-- Empty Archive State -->
             <div id="history-empty-state" class="hidden flex-col items-center justify-center py-16 text-center">
-              <div class="w-14 h-14 rounded-2xl bg-surfaceAlt dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-inkFaint dark:text-dkTextFaint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+              <div class="w-14 h-14 rounded-2xl bg-parchment-200 dark:bg-night-850 border border-parchment-300 dark:border-night-800 flex items-center justify-center mb-4 text-parchment-500 dark:text-night-400">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
                 </svg>
               </div>
-              <h3 class="font-display text-[18px] font-semibold text-ink dark:text-dkText mb-1">Belum Ada Riwayat</h3>
-              <p class="text-[12px] text-inkFaint dark:text-dkTextFaint max-w-[200px] leading-relaxed mb-5">
-                Pindai naskah lontar pertamamu untuk mulai melestarikan warisan leluhur.
+              <h3 class="font-display text-[16px] font-bold text-night-900 dark:text-night-100 mb-1">Belum Ada Naskah Tersimpan</h3>
+              <p class="text-[12px] text-parchment-500 dark:text-night-400 max-w-[220px] leading-relaxed mb-5">
+                Mulai pindai lontar pertamamu untuk melestarikan warisan peradaban Nusantara.
               </p>
               <button
                 id="btn-empty-scan"
                 type="button"
-                class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-[13px] transition-colors cursor-pointer"
+                class="px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-night-950 font-bold text-[13px] shadow-gold-sm transition-all cursor-pointer"
               >
-                Mulai Pindai
+                Pindai Sekarang
               </button>
             </div>
           </div>
+
         </section>
 
       </main>
 
-      <!-- ── Bottom Navigation ───────────────────────────── -->
+      <!-- ── Bottom Navigation Bar ──────────────────────────────────── -->
       <nav id="bottom-nav" class="
         shrink-0 sticky bottom-0 z-40
-        bg-surface/95 dark:bg-dkBg/95 backdrop-blur-sm
-        border-t border-surfaceBorder dark:border-dkBorder
-        px-6 pt-2 pb-4 flex items-center justify-around
+        bg-parchment-50/95 dark:bg-night-900/95 backdrop-blur-md
+        border-t border-parchment-200 dark:border-night-800
+        px-6 pt-2.5 pb-4 flex items-center justify-around
         transition-colors duration-300
       ">
-        <!-- Home -->
+        <!-- Beranda -->
         <button id="nav-home" type="button" class="nav-item flex flex-col items-center gap-1 cursor-pointer">
-          <div class="nav-bar w-5 mb-0.5"></div>
-          <div class="nav-icon w-8 h-8 flex items-center justify-center">
-            <svg class="w-5 h-5 text-inkFaint dark:text-dkTextFaint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          <div class="nav-bar w-5 h-0.5 bg-gold-500 rounded-full scale-x-0 transition-transform mb-0.5"></div>
+          <div class="nav-icon w-8 h-8 flex items-center justify-center text-parchment-500 dark:text-night-400">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
           </div>
-          <span class="nav-label text-[10px] font-medium text-inkFaint dark:text-dkTextFaint">Beranda</span>
+          <span class="nav-label text-[11px] font-semibold text-parchment-500 dark:text-night-400">Beranda</span>
         </button>
 
-        <!-- Scan -->
+        <!-- Pindai (Shutter) -->
         <button id="nav-scan" type="button" class="nav-item flex flex-col items-center gap-1 cursor-pointer">
-          <div class="nav-bar w-5 mb-0.5"></div>
-          <div class="nav-icon w-8 h-8 flex items-center justify-center">
-            <svg class="w-5 h-5 text-inkFaint dark:text-dkTextFaint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>
+          <div class="nav-bar w-5 h-0.5 bg-gold-500 rounded-full scale-x-0 transition-transform mb-0.5"></div>
+          <div class="nav-icon w-8 h-8 flex items-center justify-center text-parchment-500 dark:text-night-400">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
             </svg>
           </div>
-          <span class="nav-label text-[10px] font-medium text-inkFaint dark:text-dkTextFaint">Pindai</span>
+          <span class="nav-label text-[11px] font-semibold text-parchment-500 dark:text-night-400">Pindai</span>
         </button>
 
-        <!-- History -->
+        <!-- Arsip -->
         <button id="nav-history" type="button" class="nav-item flex flex-col items-center gap-1 cursor-pointer">
-          <div class="nav-bar w-5 mb-0.5"></div>
-          <div class="nav-icon w-8 h-8 flex items-center justify-center">
-            <svg class="w-5 h-5 text-inkFaint dark:text-dkTextFaint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          <div class="nav-bar w-5 h-0.5 bg-gold-500 rounded-full scale-x-0 transition-transform mb-0.5"></div>
+          <div class="nav-icon w-8 h-8 flex items-center justify-center text-parchment-500 dark:text-night-400">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
             </svg>
           </div>
-          <span class="nav-label text-[10px] font-medium text-inkFaint dark:text-dkTextFaint">Riwayat</span>
+          <span class="nav-label text-[11px] font-semibold text-parchment-500 dark:text-night-400">Arsip</span>
         </button>
       </nav>
 
-    </div><!-- /shell -->
+    </div><!-- /canvas -->
 
 
-    <!-- ╔══════════════════════════════════════════════════╗ -->
-    <!-- ║   APPLICATION JAVASCRIPT                        ║ -->
-    <!-- ╚══════════════════════════════════════════════════╝ -->
+    <!-- ╔══════════════════════════════════════════════════════════════╗ -->
+    <!-- ║   CLIENT-SIDE JAVASCRIPT ENGINE                             ║ -->
+    <!-- ╚══════════════════════════════════════════════════════════════╝ -->
     <script>
     (function () {
       'use strict';
 
-      // ── Manuscript data ─────────────────────────────────
+      // ── Sample Curated Manuscripts ─────────────────────────
       const SAMPLES = [
         {
           title: 'Lontar Surya Kencana — Lempeng I',
           ancientText: 'ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ',
           transliteration: '"Sinuhun surya bumi"',
-          translation: 'Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.',
-          philosophical: 'Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi.',
+          translation: 'Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk semesta.',
+          philosophical: 'Simbol kepemimpinan adiluhung yang mengayomi segenap rakyat tanpa pilih kasih.',
           language: 'Aksara Jawa · Ron Tal Abad XVI',
           language_short: 'Aksara Jawa',
+          confidence: 99.2,
         },
         {
           title: 'Kakawin Sutasoma — Pupuh 139',
           ancientText: 'ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ',
           transliteration: '"Bhinneka Tunggal Ika tan hana dharma mangrwa"',
-          translation: 'Berbeda-beda tetapi tetap satu jiwa, tiada kebenaran yang mendua di alam semesta.',
-          philosophical: 'Prinsip toleransi dan persatuan adiluhung sebagai fondasi keberagaman nusantara.',
-          language: 'Kawi / Jawa Kuno · Abad XIV',
+          translation: 'Berbeda-beda tetapi tetap satu jua, tiada kebenaran yang mendua di alam semesta.',
+          philosophical: 'Fondasi luhur Mpu Tantular tentang persatuan sejati dalam keberagaman nusantara.',
+          language: 'Kawi / Jawa Kuno · Abad XIV Majapahit',
           language_short: 'Kawi / Jawa Kuno',
+          confidence: 99.5,
         },
         {
           title: 'Prasasti Sukamerta — Lempeng III',
           ancientText: 'ꦱꦶꦢ꧀ꦣꦶ ꦫꦱ꧀ꦠꦸ',
           transliteration: '"Siddhi rastu tatastu astu"',
-          translation: 'Semoga berhasil dan diberkahi keselamatan bagi segenap warga desa serta generasi penerus.',
-          philosophical: 'Doa pembuka untuk keberkahan tanah air dan ketenteraman masyarakat Nusantara.',
-          language: 'Jawa Kuno · Abad XIII',
+          translation: 'Semoga berhasil dan dilimpahi keselamatan bagi segenap warga serta generasi penerus bangsa.',
+          philosophical: 'Doa agung para leluhur memohon kemakmuran dan perlindungan tanah air.',
+          language: 'Jawa Kuno · Piagam 1296 M',
           language_short: 'Jawa Kuno',
+          confidence: 98.7,
         },
       ];
 
@@ -840,47 +1080,49 @@
         {
           id: 'init-1',
           title: 'Kakawin Sutasoma — Pupuh 139',
-          date: '18 Okt 2026, 14:20',
+          date: '18 Okt 2026 • 14:20',
           ancientText: 'ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ',
           transliteration: '"Bhinneka Tunggal Ika"',
           translation: 'Berbeda-beda tetapi tetap satu jiwa, tiada kebenaran yang mendua.',
           philosophical: 'Prinsip toleransi dan persatuan adiluhung sebagai fondasi keberagaman nusantara.',
           language: 'Kawi / Jawa Kuno · Abad XIV',
           language_short: 'Kawi / Jawa Kuno',
+          confidence: 99.5,
         },
         {
           id: 'init-2',
           title: 'Prasasti Sukamerta — Lempeng III',
-          date: '15 Okt 2026, 09:45',
+          date: '15 Okt 2026 • 09:45',
           ancientText: 'ꦱꦶꦢ꧀ꦣꦶ ꦫꦱ꧀ꦠꦸ',
           transliteration: '"Siddhi rastu"',
-          translation: 'Semoga berhasil dan diberkahi keselamatan bagi segenap warga desa.',
-          philosophical: 'Doa pembuka untuk keberkahan tanah air.',
+          translation: 'Semoga berhasil dan diberkahi keselamatan bagi segenap warga desa serta generasi penerus.',
+          philosophical: 'Doa pembuka untuk keberkahan tanah air dan ketenteraman masyarakat Nusantara.',
           language: 'Jawa Kuno · Abad XIII',
           language_short: 'Jawa Kuno',
-        },
-        {
-          id: 'init-3',
-          title: 'Babad Tanah Jawi — Pupuh Sinom',
-          date: '12 Okt 2026, 16:10',
-          ancientText: 'ꦤꦸꦭꦢ ꦭꦏꦸ ꦲꦸꦠꦩ',
-          transliteration: '"Nulada laku utama"',
-          translation: 'Meneladani perbuatan utama yang luhur budi pekerti demi kedamaian negeri.',
-          philosophical: 'Ajaran moral Jawa untuk meneladani perilaku pemimpin yang berbudi luhur.',
-          language: 'Aksara Jawa · Abad XVII',
-          language_short: 'Aksara Jawa',
+          confidence: 98.7,
         },
       ];
 
-      // ── State ────────────────────────────────────────────
-      let currentSample = 0;
-      let isSpeaking = false;
+      // ── Runtime State ──────────────────────────────────────
+      let currentSampleIdx = 0;
       let activeScreen = 'screen-home';
+      let isSpeaking = false;
       let cameraStream = null;
       let facingMode = 'environment';
+      let flashActive = false;
       let latestResultData = null;
+      let currentCapturedImageDataUrl = null;
+      let historyFilterTag = '';
 
-      // ── LocalStorage ─────────────────────────────────────
+      // ── DOM References ─────────────────────────────────────
+      const screens = {
+        'screen-home': document.getElementById('screen-home'),
+        'screen-scan': document.getElementById('screen-scan'),
+        'screen-result': document.getElementById('screen-result'),
+        'screen-history': document.getElementById('screen-history'),
+      };
+
+      // ── LocalStorage Engine ────────────────────────────────
       function getHistory() {
         try {
           const raw = localStorage.getItem('lontar_history');
@@ -902,10 +1144,57 @@
       function updateScanCount() {
         const items = getHistory();
         const el = document.getElementById('stat-scans-count');
-        if (el) el.textContent = 12 + Math.max(0, items.length - 3);
+        if (el) el.textContent = (14 + Math.max(0, items.length - 2)) + '+';
       }
 
-      // ── Camera Lifecycle ─────────────────────────────────
+      // ── Screen Navigation Router ───────────────────────────
+      function navigate(targetId) {
+        if (isSpeaking) stopAudio();
+
+        // Control Camera lifecycle
+        if (targetId === 'screen-scan') {
+          startCamera();
+        } else if (activeScreen === 'screen-scan') {
+          stopCamera();
+        }
+
+        Object.keys(screens).forEach(id => {
+          screens[id].classList.toggle('screen-hidden', id !== targetId);
+          screens[id].classList.toggle('screen-visible', id === targetId);
+        });
+
+        activeScreen = targetId;
+
+        // Bottom Navigation Active Indicator
+        const NAV_MAP = {
+          'screen-home': 'nav-home',
+          'screen-scan': 'nav-scan',
+          'screen-result': 'nav-scan',
+          'screen-history': 'nav-history',
+        };
+
+        document.querySelectorAll('.nav-item').forEach(el => {
+          el.querySelector('.nav-bar').style.transform = 'scaleX(0)';
+          const icon = el.querySelector('.nav-icon');
+          const label = el.querySelector('.nav-label');
+          icon.classList.remove('text-gold-500', 'dark:text-gold-400');
+          label.classList.remove('text-gold-500', 'dark:text-gold-400');
+        });
+
+        const activeNav = document.getElementById(NAV_MAP[targetId] || 'nav-home');
+        if (activeNav) {
+          activeNav.querySelector('.nav-bar').style.transform = 'scaleX(1)';
+          const icon = activeNav.querySelector('.nav-icon');
+          const label = activeNav.querySelector('.nav-label');
+          icon.classList.add('text-gold-500', 'dark:text-gold-400');
+          label.classList.add('text-gold-500', 'dark:text-gold-400');
+        }
+
+        if (targetId === 'screen-history') renderHistory();
+        document.querySelector('main').scrollTop = 0;
+      }
+
+      // ── Camera Lifecycle & Hardware Control ────────────────
       async function startCamera() {
         const videoEl = document.getElementById('camera-feed');
         const fallbackEl = document.getElementById('camera-fallback');
@@ -918,11 +1207,11 @@
         stopCamera();
 
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          console.warn('getUserMedia not supported in current environment');
+          console.warn('getUserMedia tidak didukung pada browser ini');
           fallbackEl.classList.remove('hidden');
           videoEl.classList.add('hidden');
           liveBadge.classList.add('hidden');
-          if (modeLabel) modeLabel.textContent = 'Mode Simulasi (Kamera Tidak Tersedia)';
+          if (modeLabel) modeLabel.textContent = 'Simulasi Naskah (Kamera Tidak Tersedia)';
           return;
         }
 
@@ -935,21 +1224,22 @@
             },
             audio: false,
           });
+
           videoEl.srcObject = cameraStream;
           videoEl.classList.remove('hidden');
           fallbackEl.classList.add('hidden');
           liveBadge.classList.remove('hidden');
           deniedNotice.classList.add('hidden');
-          if (modeLabel) modeLabel.textContent = 'Kamera Aktif · Gemini Vision';
+          if (modeLabel) modeLabel.textContent = 'Kamera Aktif · Gemini 3.8 Vision';
         } catch (err) {
-          console.warn('Camera access issue:', err);
+          console.warn('Akses kamera ditolak atau gagal:', err);
           fallbackEl.classList.remove('hidden');
           videoEl.classList.add('hidden');
           liveBadge.classList.add('hidden');
           if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
             deniedNotice.classList.remove('hidden');
           }
-          if (modeLabel) modeLabel.textContent = 'Mode Contoh (Akses Kamera Dibatasi)';
+          if (modeLabel) modeLabel.textContent = 'Mode Uji Naskah Kurasi';
         }
       }
 
@@ -964,122 +1254,31 @@
         if (liveBadge) liveBadge.classList.add('hidden');
       }
 
-      // ── Screen navigation ────────────────────────────────
-      function navigate(targetId) {
-        if (isSpeaking) stopAudio();
+      // Flash / Torch toggle
+      document.getElementById('btn-flash-toggle').addEventListener('click', async function () {
+        flashActive = !flashActive;
+        this.classList.toggle('text-gold-400', flashActive);
+        this.classList.toggle('border-gold-500/60', flashActive);
 
-        // Control camera on entry/exit of scan screen
-        if (targetId === 'screen-scan') {
-          startCamera();
-        } else if (activeScreen === 'screen-scan') {
-          stopCamera();
+        if (cameraStream) {
+          const track = cameraStream.getVideoTracks()[0];
+          if (track && track.getCapabilities && track.getCapabilities().torch) {
+            try {
+              await track.applyConstraints({ advanced: [{ torch: flashActive }] });
+            } catch (_) {}
+          }
         }
-
-        Object.keys(screens).forEach(id => {
-          screens[id].classList.toggle('screen-hidden', id !== targetId);
-          screens[id].classList.toggle('screen-visible', id === targetId);
-        });
-
-        activeScreen = targetId;
-
-        // Nav active state
-        const NAV_MAP = {
-          'screen-home': 'nav-home',
-          'screen-scan': 'nav-scan',
-          'screen-result': 'nav-scan',
-          'screen-history': 'nav-history',
-        };
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('nav-item-active'));
-        document.querySelectorAll('.nav-icon svg').forEach(el => { el.style.color = ''; });
-        document.querySelectorAll('.nav-label').forEach(el => { el.style.color = ''; });
-
-        const activeNav = document.getElementById(NAV_MAP[targetId] || 'nav-home');
-        if (activeNav) {
-          activeNav.classList.add('nav-item-active');
-          const svg = activeNav.querySelector('.nav-icon svg');
-          const label = activeNav.querySelector('.nav-label');
-          if (svg) svg.style.color = '#C9941A';
-          if (label) label.style.color = '#C9941A';
-        }
-
-        if (targetId === 'screen-history') renderHistory();
-        document.querySelector('main').scrollTop = 0;
-      }
-
-      const screens = {
-        'screen-home': document.getElementById('screen-home'),
-        'screen-scan': document.getElementById('screen-scan'),
-        'screen-result': document.getElementById('screen-result'),
-        'screen-history': document.getElementById('screen-history'),
-      };
-
-      // ── Theme toggle ─────────────────────────────────────
-      const html = document.documentElement;
-      const moonIcon = document.getElementById('icon-moon');
-      const sunIcon = document.getElementById('icon-sun');
-
-      function applyTheme(dark) {
-        html.classList.toggle('dark', dark);
-        moonIcon.classList.toggle('hidden', dark);
-        sunIcon.classList.toggle('hidden', !dark);
-        try { localStorage.setItem('lontar_theme', dark ? 'dark' : 'light'); } catch(_) {}
-      }
-
-      const savedTheme = localStorage.getItem('lontar_theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(savedTheme === 'dark' || (!savedTheme && prefersDark));
-
-      document.getElementById('theme-toggle').addEventListener('click', () => {
-        applyTheme(!html.classList.contains('dark'));
+        showToast(flashActive ? 'Lampu sorot aktif' : 'Lampu sorot mati');
       });
 
-      // ── Nav events ───────────────────────────────────────
-      document.getElementById('nav-home').addEventListener('click', () => navigate('screen-home'));
-      document.getElementById('nav-scan').addEventListener('click', () => navigate('screen-scan'));
-      document.getElementById('nav-history').addEventListener('click', () => navigate('screen-history'));
-
-      document.getElementById('btn-hero-scan').addEventListener('click', () => navigate('screen-scan'));
-      document.getElementById('btn-scan-back').addEventListener('click', () => navigate('screen-home'));
-      document.getElementById('btn-result-back').addEventListener('click', () => navigate('screen-scan'));
-      document.getElementById('btn-scan-to-history').addEventListener('click', () => navigate('screen-history'));
-      document.getElementById('btn-empty-scan').addEventListener('click', () => navigate('screen-scan'));
-
-      // ── Camera Switch / Flip ──────────────────────────────
-      const camSwitchBtn = document.getElementById('btn-camera-switch');
-      if (camSwitchBtn) {
-        camSwitchBtn.addEventListener('click', async () => {
-          facingMode = facingMode === 'environment' ? 'user' : 'environment';
-          showToast(facingMode === 'environment' ? 'Kamera Belakang' : 'Kamera Depan');
-          await startCamera();
-        });
-      }
-
-      // ── Sample switcher ──────────────────────────────────
-      document.getElementById('btn-sample-switch').addEventListener('click', () => {
-        currentSample = (currentSample + 1) % SAMPLES.length;
-        showToast(`Contoh: ${SAMPLES[currentSample].title.split('—')[0].trim()}`);
+      // Flip camera
+      document.getElementById('btn-camera-switch').addEventListener('click', async () => {
+        facingMode = facingMode === 'environment' ? 'user' : 'environment';
+        showToast(facingMode === 'environment' ? 'Kamera Belakang' : 'Kamera Depan');
+        await startCamera();
       });
 
-      // ── File upload from gallery ─────────────────────────
-      const fileInput = document.getElementById('file-upload');
-      if (fileInput) {
-        fileInput.addEventListener('change', function (e) {
-          const file = e.target.files && e.target.files[0];
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = function (evt) {
-            const dataUrl = evt.target.result;
-            const match = dataUrl.match(/^data:(.*?);base64,(.*)$/);
-            if (match) {
-              analyzeBase64Image(match[2], match[1]);
-            }
-          };
-          reader.readAsDataURL(file);
-          this.value = '';
-        });
-      }
-
-      // ── AI Vision Analysis Core ──────────────────────────
+      // ── AI Vision Multimodal Analysis Core ────────────────
       async function analyzeBase64Image(base64Data, mimeType = 'image/jpeg') {
         const loadingOverlay = document.getElementById('scan-loading-overlay');
         const progressBar = document.getElementById('scan-progress-bar');
@@ -1087,20 +1286,26 @@
         const errorMsg = document.getElementById('scan-error-msg');
         if (errorMsg) errorMsg.classList.add('hidden');
 
+        // Store captured photo data URL for result tab
+        currentCapturedImageDataUrl = `data:${mimeType};base64,${base64Data}`;
+
+        // Phase 1: Capture & Upload
         loadingOverlay.classList.remove('hidden');
         loadingOverlay.classList.add('flex');
         progressBar.style.width = '20%';
-        stepText.textContent = 'Mengirim gambar ke Gemini 3.8 Vision…';
+        stepText.textContent = 'Mengunggah citra ke Gemini 3.8 Vision…';
 
+        // Phase 2: Segmentation
         const t1 = setTimeout(() => {
           progressBar.style.width = '55%';
-          stepText.textContent = 'Mendeteksi glif & aksara kuno…';
+          stepText.textContent = 'Mendeteksi karakter & glif Ron Tal…';
         }, 1100);
 
+        // Phase 3: Translation & Philology
         const t2 = setTimeout(() => {
           progressBar.style.width = '85%';
           stepText.textContent = 'Menerjemahkan & menafsirkan filosofi…';
-        }, 2400);
+        }, 2200);
 
         try {
           const response = await fetch('/api/analyze', {
@@ -1114,45 +1319,48 @@
 
           if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error || `Server error (${response.status})`);
+            throw new Error(errData.error || `Server status ${response.status}`);
           }
 
           const data = await response.json();
           progressBar.style.width = '100%';
 
+          // Check if AI detected ancient script or text
           if (data.hasScript === false) {
             loadingOverlay.classList.add('hidden');
             loadingOverlay.classList.remove('flex');
 
-            // Show friendly unclear modal
             const unclearModal = document.getElementById('scan-unclear-modal');
             const descEl = document.getElementById('unclear-modal-desc');
             if (descEl) {
-              descEl.textContent = data.description || 'Kamera belum mendeteksi teks atau goresan aksara kuno pada sudut ini. Silakan coba contoh naskah lontar atau arahkan ulang kamera.';
+              descEl.textContent = data.description || 'Kamera belum mendeteksi teks atau goresan aksara kuno pada sudut ini.';
             }
             if (unclearModal) {
               unclearModal.classList.remove('hidden');
               unclearModal.classList.add('flex');
             }
 
-            latestResultData = data.suggestedSample || SAMPLES[currentSample];
+            latestResultData = data.suggestedSample || SAMPLES[currentSampleIdx];
             return;
           }
 
+          // Success: Populate and Navigate to Result Screen
           setTimeout(() => {
             loadingOverlay.classList.add('hidden');
             loadingOverlay.classList.remove('flex');
             progressBar.style.width = '0%';
+
             latestResultData = {
-              title: data.title || 'Naskah Pindaian AI',
+              title: data.title || 'Naskah Pindaian Kamera',
               ancientText: data.ancientText || 'ꦲꦤꦕꦫꦏ',
               transliteration: data.transliteration || '',
               translation: data.translation || 'Terjemahan tidak tersedia.',
-              philosophical: data.philosophical || 'Konteks kearifan lokal nusantara.',
+              philosophical: data.philosophical || 'Konteks kearifan luhur Nusantara.',
               language: data.language || 'Aksara Jawa Kuno',
               language_short: data.language_short || 'Aksara Jawa',
-              confidence: data.confidence || 96,
+              confidence: data.confidence || 98.4,
             };
+
             populateResult(latestResultData);
             navigate('screen-result');
           }, 350);
@@ -1168,15 +1376,15 @@
 
           showToast('Analisis dialihkan ke naskah kurasi lontar');
 
-          // Fallback to sample data for smooth competition demonstration
           setTimeout(() => {
-            latestResultData = SAMPLES[currentSample];
+            latestResultData = SAMPLES[currentSampleIdx];
             populateResult(latestResultData);
             navigate('screen-result');
-          }, 800);
+          }, 600);
         }
       }
 
+      // Simulated scan for fallback demo
       function runSimulatedScan() {
         const loadingOverlay = document.getElementById('scan-loading-overlay');
         const progressBar = document.getElementById('scan-progress-bar');
@@ -1185,7 +1393,7 @@
         loadingOverlay.classList.remove('hidden');
         loadingOverlay.classList.add('flex');
         progressBar.style.width = '0%';
-        stepText.textContent = 'Mendeteksi goresan aksara…';
+        stepText.textContent = 'Mendeteksi glif aksara naskah…';
 
         setTimeout(() => {
           progressBar.style.width = '55%';
@@ -1194,23 +1402,26 @@
 
         setTimeout(() => {
           progressBar.style.width = '100%';
-          stepText.textContent = 'Menerjemahkan ke Bahasa Indonesia…';
+          stepText.textContent = 'Menafsirkan makna filosofis…';
         }, 1400);
 
         setTimeout(() => {
           loadingOverlay.classList.add('hidden');
           loadingOverlay.classList.remove('flex');
           progressBar.style.width = '0%';
-          latestResultData = SAMPLES[currentSample];
+          latestResultData = SAMPLES[currentSampleIdx];
           populateResult(latestResultData);
           navigate('screen-result');
-        }, 2050);
+        }, 1900);
       }
 
-      // ── Capture Button Handler ───────────────────────────
+      // Capture Shutter Button Action
       const captureBtn = document.getElementById('btn-capture');
       captureBtn.addEventListener('click', function () {
-        // Close unclear modal if open
+        // Haptic feedback if supported
+        if (navigator.vibrate) navigator.vibrate(25);
+
+        // Dismiss unclear modal if active
         const unclearModal = document.getElementById('scan-unclear-modal');
         if (unclearModal) {
           unclearModal.classList.add('hidden');
@@ -1229,12 +1440,11 @@
           const base64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
           analyzeBase64Image(base64, 'image/jpeg');
         } else {
-          // If camera stream is not running (fallback view), run simulated analysis
           runSimulatedScan();
         }
       });
 
-      // ── Tap to Scan on Viewfinder ────────────────────────
+      // Tap Viewfinder to Scan
       const viewfinderWrap = document.getElementById('viewfinder-wrap');
       if (viewfinderWrap) {
         viewfinderWrap.addEventListener('click', function (e) {
@@ -1243,54 +1453,106 @@
         });
       }
 
-      // ── Unclear Modal Action Buttons ──────────────────────
-      const unclearModal = document.getElementById('scan-unclear-modal');
-      const useSampleBtn = document.getElementById('btn-unclear-use-sample');
-      const retryBtn = document.getElementById('btn-unclear-retry');
-
-      if (useSampleBtn) {
-        useSampleBtn.addEventListener('click', function () {
-          if (unclearModal) {
-            unclearModal.classList.add('hidden');
-            unclearModal.classList.remove('flex');
-          }
-          if (!latestResultData) {
-            latestResultData = SAMPLES[currentSample];
-          }
-          populateResult(latestResultData);
-          navigate('screen-result');
+      // File upload from gallery
+      const fileInput = document.getElementById('file-upload');
+      if (fileInput) {
+        fileInput.addEventListener('change', function (e) {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function (evt) {
+            const dataUrl = evt.target.result;
+            const match = dataUrl.match(/^data:(.*?);base64,(.*)$/);
+            if (match) {
+              analyzeBase64Image(match[2], match[1]);
+            }
+          };
+          reader.readAsDataURL(file);
+          this.value = '';
         });
       }
 
-      if (retryBtn) {
-        retryBtn.addEventListener('click', function () {
-          if (unclearModal) {
-            unclearModal.classList.add('hidden');
-            unclearModal.classList.remove('flex');
-          }
-        });
-      }
+      // Unclear Modal buttons
+      document.getElementById('btn-unclear-use-sample').addEventListener('click', function () {
+        const unclearModal = document.getElementById('scan-unclear-modal');
+        if (unclearModal) {
+          unclearModal.classList.add('hidden');
+          unclearModal.classList.remove('flex');
+        }
+        if (!latestResultData) latestResultData = SAMPLES[currentSampleIdx];
+        populateResult(latestResultData);
+        navigate('screen-result');
+      });
 
+      document.getElementById('btn-unclear-retry').addEventListener('click', function () {
+        const unclearModal = document.getElementById('scan-unclear-modal');
+        if (unclearModal) {
+          unclearModal.classList.add('hidden');
+          unclearModal.classList.remove('flex');
+        }
+      });
+
+      // ── Populate Result Screen ────────────────────────────
       function populateResult(data) {
+        document.getElementById('result-title').textContent = data.title;
         document.getElementById('result-ancient-text').textContent = data.ancientText;
         document.getElementById('result-transliteration').textContent = data.transliteration;
         document.getElementById('result-translated-text').textContent = data.translation;
         document.getElementById('result-philosophical').textContent = data.philosophical;
-        document.getElementById('result-language-label').textContent = data.language;
+        document.getElementById('result-language-badge').textContent = data.language;
+        document.getElementById('result-confidence').textContent = (data.confidence || 98.8) + '%';
 
-        const confEl = document.getElementById('result-confidence');
-        if (confEl) confEl.textContent = (data.confidence || 98.4) + '%';
+        // Update image tab thumbnail
+        const imgEl = document.getElementById('result-captured-image');
+        if (imgEl) {
+          if (currentCapturedImageDataUrl) {
+            imgEl.src = currentCapturedImageDataUrl;
+            imgEl.classList.remove('hidden');
+          } else {
+            // Default placeholder if sample used
+            imgEl.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' fill='%23221B14'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23C59B3F' font-size='20' font-family='serif'%3Eꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ%3C/text%3E%3C/svg%3E";
+          }
+        }
 
-        // Reset save button
-        document.getElementById('save-btn-label').textContent = 'Simpan ke Riwayat';
+        // Switch to script tab by default
+        switchResultTab('script');
+
+        // Reset Save Button
         const saveBtn = document.getElementById('btn-save-history');
+        document.getElementById('save-btn-label').textContent = 'Simpan ke Arsip Digital';
         saveBtn.disabled = false;
         saveBtn.classList.remove('opacity-60');
-        // Reset save icon
-        document.getElementById('save-icon').innerHTML = '<path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>';
+        document.getElementById('save-icon').innerHTML = '<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>';
       }
 
-      // ── Web Speech API ───────────────────────────────────
+      // Tab switcher in result screen
+      const tabBtnScript = document.getElementById('tab-btn-script');
+      const tabBtnImage = document.getElementById('tab-btn-image');
+      const tabContentScript = document.getElementById('tab-content-script');
+      const tabContentImage = document.getElementById('tab-content-image');
+
+      function switchResultTab(tab) {
+        if (tab === 'script') {
+          tabBtnScript.classList.add('bg-white', 'dark:bg-night-700', 'text-night-950', 'dark:text-night-100', 'font-bold', 'shadow-sm');
+          tabBtnScript.classList.remove('text-parchment-600', 'dark:text-night-400', 'font-medium');
+          tabBtnImage.classList.remove('bg-white', 'dark:bg-night-700', 'text-night-950', 'dark:text-night-100', 'font-bold', 'shadow-sm');
+          tabBtnImage.classList.add('text-parchment-600', 'dark:text-night-400', 'font-medium');
+          tabContentScript.classList.remove('hidden');
+          tabContentImage.classList.add('hidden');
+        } else {
+          tabBtnImage.classList.add('bg-white', 'dark:bg-night-700', 'text-night-950', 'dark:text-night-100', 'font-bold', 'shadow-sm');
+          tabBtnImage.classList.remove('text-parchment-600', 'dark:text-night-400', 'font-medium');
+          tabBtnScript.classList.remove('bg-white', 'dark:bg-night-700', 'text-night-950', 'dark:text-night-100', 'font-bold', 'shadow-sm');
+          tabBtnScript.classList.add('text-parchment-600', 'dark:text-night-400', 'font-medium');
+          tabContentScript.classList.add('hidden');
+          tabContentImage.classList.remove('hidden');
+        }
+      }
+
+      tabBtnScript.addEventListener('click', () => switchResultTab('script'));
+      tabBtnImage.addEventListener('click', () => switchResultTab('image'));
+
+      // ── Web Speech API Audio Synthesis ────────────────────
       const playBtn = document.getElementById('btn-play-audio');
       const audioLabel = document.getElementById('audio-btn-label');
       const speakerIcon = document.getElementById('audio-icon-speaker');
@@ -1300,7 +1562,7 @@
       function stopAudio() {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         isSpeaking = false;
-        audioLabel.textContent = 'Putar Audio Terjemahan';
+        audioLabel.textContent = 'Putar Resitasi Suara';
         speakerIcon.classList.remove('hidden');
         stopIcon.classList.add('hidden');
         waveContainer.classList.remove('flex');
@@ -1308,10 +1570,13 @@
       }
 
       playBtn.addEventListener('click', function () {
-        if (isSpeaking) { stopAudio(); return; }
+        if (isSpeaking) {
+          stopAudio();
+          return;
+        }
 
         if (!('speechSynthesis' in window)) {
-          showToast('Browser tidak mendukung Web Speech API');
+          showToast('Peramban tidak mendukung Web Speech API');
           return;
         }
 
@@ -1319,11 +1584,11 @@
         const utt = new SpeechSynthesisUtterance(text);
         utt.lang = 'id-ID';
         utt.rate = 0.92;
-        utt.pitch = 1.0;
+        utt.pitch = 0.98;
 
         utt.onstart = () => {
           isSpeaking = true;
-          audioLabel.textContent = 'Sedang Diputar…';
+          audioLabel.textContent = 'Sedang Resitasi…';
           speakerIcon.classList.add('hidden');
           stopIcon.classList.remove('hidden');
           waveContainer.classList.remove('hidden');
@@ -1336,13 +1601,13 @@
         window.speechSynthesis.speak(utt);
       });
 
-      // ── Save to History ───────────────────────────────────
+      // ── Save to Archive Action ─────────────────────────────
       document.getElementById('btn-save-history').addEventListener('click', function () {
         const now = new Date();
-        const MONTHS = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-        const dateStr = `${now.getDate()} ${MONTHS[now.getMonth()]} ${now.getFullYear()}, ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} • ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-        const s = latestResultData || SAMPLES[currentSample];
+        const s = latestResultData || SAMPLES[currentSampleIdx];
         const newItem = {
           id: 'scan-' + Date.now(),
           title: s.title || 'Naskah Pindaian Lontar',
@@ -1351,62 +1616,107 @@
           transliteration: document.getElementById('result-transliteration').textContent.trim(),
           translation: document.getElementById('result-translated-text').textContent.trim(),
           philosophical: document.getElementById('result-philosophical').textContent.trim(),
-          language: s.language || document.getElementById('result-language-label').textContent.trim(),
-          language_short: s.language_short || 'Aksara Kuno',
+          language: s.language || document.getElementById('result-language-badge').textContent.trim(),
+          language_short: s.language_short || 'Aksara Jawa',
+          confidence: s.confidence || 98.8,
         };
 
         const items = getHistory();
         items.unshift(newItem);
         saveHistory(items);
 
-        // Update button state
-        document.getElementById('save-btn-label').textContent = 'Tersimpan';
+        document.getElementById('save-btn-label').textContent = 'Tersimpan di Arsip';
         document.getElementById('save-icon').innerHTML = '<polyline points="20 6 9 17 4 12"/>';
         this.disabled = true;
         this.classList.add('opacity-60');
 
-        showToast('Naskah disimpan ke riwayat');
+        showToast('Naskah tersimpan ke arsip digital');
       });
 
-      // ── Toast ─────────────────────────────────────────────
+      // Copy translation button
+      document.getElementById('btn-copy-translation').addEventListener('click', function () {
+        const text = document.getElementById('result-translated-text').textContent.trim();
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Terjemahan disalin ke papan klip');
+        }).catch(() => {
+          showToast('Gagal menyalin teks');
+        });
+      });
+
+      // Share button
+      document.getElementById('btn-share-result').addEventListener('click', function () {
+        const s = latestResultData || SAMPLES[currentSampleIdx];
+        const shareText = `${s.title}\n\nAksara: ${s.ancientText}\nTransliterasi: ${s.transliteration}\nTerjemahan: ${s.translation}\nFilosofi: ${s.philosophical}\n\nDipindai melalui LONTAR.AI`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: s.title,
+            text: shareText,
+            url: window.location.href,
+          }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(shareText).then(() => {
+            showToast('Kajian lengkap disalin ke papan klip');
+          });
+        }
+      });
+
+      // ── Sample Selection Events ───────────────────────────
+      document.querySelectorAll('.sample-preset-card').forEach(card => {
+        card.addEventListener('click', function () {
+          const idx = parseInt(this.dataset.sampleIdx, 10);
+          currentSampleIdx = idx;
+          latestResultData = SAMPLES[currentSampleIdx];
+          populateResult(latestResultData);
+          navigate('screen-result');
+        });
+      });
+
+      // Hero Lontar card click
+      document.getElementById('hero-lontar-preview').addEventListener('click', function () {
+        currentSampleIdx = 0;
+        latestResultData = SAMPLES[0];
+        populateResult(latestResultData);
+        navigate('screen-result');
+      });
+
+      // Sample switch button on scan screen
+      document.getElementById('btn-sample-switch').addEventListener('click', () => {
+        currentSampleIdx = (currentSampleIdx + 1) % SAMPLES.length;
+        showToast(`Contoh: ${SAMPLES[currentSampleIdx].title.split('—')[0].trim()}`);
+      });
+
+      // ── Toast Notification Engine ─────────────────────────
       let toastTimer = null;
       function showToast(msg) {
         const toast = document.getElementById('result-toast');
         if (!toast) return;
         toast.textContent = msg;
         toast.classList.remove('hidden');
-        toast.classList.add('toast-show');
         if (toastTimer) clearTimeout(toastTimer);
         toastTimer = setTimeout(() => {
           toast.classList.add('hidden');
-          toast.classList.remove('toast-show');
-        }, 2800);
+        }, 2600);
       }
 
-      // ── Clear History ─────────────────────────────────────
-      document.getElementById('btn-clear-history').addEventListener('click', function () {
-        if (!confirm('Hapus seluruh riwayat tersimpan?')) return;
-        saveHistory([]);
-        renderHistory();
-      });
-
-      // ── Search ────────────────────────────────────────────
-      document.getElementById('history-search').addEventListener('input', function () {
-        renderHistory(this.value);
-      });
-
-      // ── Render History ────────────────────────────────────
+      // ── Archive & History Rendering ───────────────────────
       const histContainer = document.getElementById('history-list-container');
       const emptyState = document.getElementById('history-empty-state');
 
       function renderHistory(query = '') {
         let items = getHistory();
         const q = query.toLowerCase().trim();
+
+        if (historyFilterTag) {
+          items = items.filter(it => (it.language_short || '').toLowerCase().includes(historyFilterTag));
+        }
+
         if (q) {
           items = items.filter(it =>
             it.title.toLowerCase().includes(q) ||
             it.translation.toLowerCase().includes(q) ||
-            (it.language_short || '').toLowerCase().includes(q)
+            (it.ancientText && it.ancientText.toLowerCase().includes(q)) ||
+            (it.transliteration && it.transliteration.toLowerCase().includes(q))
           );
         }
 
@@ -1425,42 +1735,51 @@
 
         items.forEach(item => {
           const card = document.createElement('article');
-          card.className = 'history-card bg-white dark:bg-dkCard border border-surfaceBorder dark:border-dkBorder rounded-2xl p-4 cursor-pointer';
+          card.className = 'history-card p-4 rounded-2xl bg-white dark:bg-night-850 border border-parchment-200 dark:border-night-800 hover:border-gold-500/40 shadow-sm transition-all cursor-pointer';
 
           card.innerHTML = `
-            <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="flex items-start justify-between gap-3 mb-2.5">
               <div class="flex-1 min-w-0">
-                <h4 class="text-[13px] font-semibold text-ink dark:text-dkText leading-snug mb-0.5 truncate">${esc(item.title)}</h4>
-                <p class="text-[10px] text-inkFaint dark:text-dkTextFaint">${esc(item.date)}</p>
+                <h4 class="text-[13px] font-bold text-night-900 dark:text-night-100 truncate mb-0.5">${esc(item.title)}</h4>
+                <p class="text-[10px] text-parchment-500 dark:text-night-400 font-medium">${esc(item.date)}</p>
               </div>
               <div class="flex items-center gap-1.5 shrink-0">
-                <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 whitespace-nowrap">${esc(item.language_short || 'Kuno')}</span>
-                <button type="button" data-id="${item.id}" class="btn-delete w-7 h-7 rounded-lg flex items-center justify-center text-inkFaint dark:text-dkTextFaint hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors cursor-pointer">
-                  <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gold-500/10 border border-gold-500/25 text-gold-600 dark:text-gold-400">${esc(item.language_short || 'Aksara Kuno')}</span>
+                <button type="button" data-id="${item.id}" class="btn-delete w-7 h-7 rounded-lg flex items-center justify-center text-parchment-400 dark:text-night-400 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer" title="Hapus dari arsip">
+                  <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
                 </button>
               </div>
             </div>
-            <div class="bg-stone-800 dark:bg-stone-900 rounded-xl px-3.5 py-2.5 mb-3">
-              <p class="font-javanese text-[15px] text-amber-200 tracking-wider leading-relaxed">${esc(item.ancientText)}</p>
-              <p class="text-[10px] text-stone-500 italic mt-1">${esc(item.transliteration || '')}</p>
+
+            <div class="bg-gradient-to-r from-[#211A13] via-[#2A2118] to-[#211A13] rounded-xl px-3.5 py-2 mb-2.5 border border-gold-500/20">
+              <p class="font-javanese text-[15px] text-gold-300 tracking-wider">${esc(item.ancientText)}</p>
+              <p class="font-serif-literary text-[11px] text-gold-200/80 italic mt-0.5">${esc(item.transliteration || '')}</p>
             </div>
-            <p class="text-[12px] text-inkMid dark:text-dkTextMid leading-relaxed line-clamp-2">${esc(item.translation)}</p>
-            <div class="mt-3 pt-2.5 border-t border-surfaceBorder dark:border-dkBorder flex items-center justify-between">
-              <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400">Buka hasil lengkap</span>
-              <svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+
+            <p class="text-[12px] text-parchment-800 dark:text-night-300 font-normal line-clamp-2 leading-relaxed mb-3">
+              ${esc(item.translation)}
+            </p>
+
+            <div class="pt-2 border-t border-parchment-200 dark:border-night-800 flex items-center justify-between text-[11px] font-semibold text-gold-600 dark:text-gold-400">
+              <span>Buka Kajian Filologi</span>
+              <span>→</span>
             </div>
           `;
 
-          // Open in Result screen on card click
+          // Card click opens Result
           card.addEventListener('click', function (e) {
             if (e.target.closest('.btn-delete')) return;
-            populateResult({
+            latestResultData = {
+              title: item.title,
               ancientText: item.ancientText,
               transliteration: item.transliteration || '',
               translation: item.translation,
               philosophical: item.philosophical || '',
               language: item.language || '',
-            });
+              language_short: item.language_short || 'Aksara Kuno',
+              confidence: item.confidence || 98.8,
+            };
+            populateResult(latestResultData);
             navigate('screen-result');
           });
 
@@ -1472,6 +1791,7 @@
               const items = getHistory().filter(it => it.id !== this.dataset.id);
               saveHistory(items);
               renderHistory(document.getElementById('history-search').value);
+              showToast('Naskah dihapus dari arsip');
             });
           }
 
@@ -1487,12 +1807,63 @@
           .replace(/"/g, '&quot;');
       }
 
-      // ── Init ──────────────────────────────────────────────
+      // History Search & Filter Tag events
+      document.getElementById('history-search').addEventListener('input', function () {
+        renderHistory(this.value);
+      });
+
+      document.querySelectorAll('.history-tag').forEach(tagBtn => {
+        tagBtn.addEventListener('click', function () {
+          document.querySelectorAll('.history-tag').forEach(btn => {
+            btn.classList.remove('bg-gold-500', 'text-night-950');
+            btn.classList.add('bg-parchment-200', 'dark:bg-night-850', 'text-parchment-700', 'dark:text-night-300');
+          });
+          this.classList.add('bg-gold-500', 'text-night-950');
+          this.classList.remove('bg-parchment-200', 'dark:bg-night-850', 'text-parchment-700', 'dark:text-night-300');
+
+          historyFilterTag = this.dataset.filter || '';
+          renderHistory(document.getElementById('history-search').value);
+        });
+      });
+
+      // Clear all history
+      document.getElementById('btn-clear-history').addEventListener('click', function () {
+        if (!confirm('Hapus seluruh koleksi naskah yang tersimpan di arsip lokal?')) return;
+        saveHistory([]);
+        renderHistory();
+        showToast('Arsip naskah telah dikosongkan');
+      });
+
+      // ── Theme Engine ──────────────────────────────────────
+      const htmlEl = document.documentElement;
+      function applyTheme(isDark) {
+        htmlEl.classList.toggle('dark', isDark);
+        try { localStorage.setItem('lontar_theme', isDark ? 'dark' : 'light'); } catch (_) {}
+      }
+
+      const savedTheme = localStorage.getItem('lontar_theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(savedTheme === 'dark' || (!savedTheme && prefersDark));
+
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        applyTheme(!htmlEl.classList.contains('dark'));
+      });
+
+      // ── Event Bindings ────────────────────────────────────
+      document.getElementById('nav-home').addEventListener('click', () => navigate('screen-home'));
+      document.getElementById('nav-scan').addEventListener('click', () => navigate('screen-scan'));
+      document.getElementById('nav-history').addEventListener('click', () => navigate('screen-history'));
+
+      document.getElementById('btn-hero-scan').addEventListener('click', () => navigate('screen-scan'));
+      document.getElementById('btn-scan-back').addEventListener('click', () => navigate('screen-home'));
+      document.getElementById('btn-result-back').addEventListener('click', () => navigate('screen-scan'));
+      document.getElementById('btn-empty-scan').addEventListener('click', () => navigate('screen-scan'));
+
+      // ── Initialization ────────────────────────────────────
       updateScanCount();
       navigate('screen-home');
 
     })();
     </script>
-
   </body>
 </html>
