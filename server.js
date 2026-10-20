@@ -174,22 +174,35 @@ app.post('/api/analyze', async (req, res) => {
     return res.status(400).json({ error: 'imageBase64 diperlukan.' });
   }
 
+  let cleanBase64 = imageBase64;
+  if (cleanBase64.includes('base64,')) {
+    cleanBase64 = cleanBase64.split('base64,')[1];
+  }
+  cleanBase64 = cleanBase64.replace(/\s+/g, '');
+
   // Validate base64 length (roughly < 20 MB)
-  if (imageBase64.length > 28_000_000) {
+  if (cleanBase64.length > 28_000_000) {
     return res.status(413).json({ error: 'Gambar terlalu besar. Maksimum ~20 MB.' });
   }
 
   // Return cached result if same image was already analyzed (ensures 100% determinism)
-  const imageHash = crypto.createHash('sha256').update(imageBase64).digest('hex');
+  const imageHash = crypto.createHash('sha256').update(cleanBase64).digest('hex');
   if (scanCache.has(imageHash)) {
     return res.json(scanCache.get(imageHash));
   }
 
-  const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash-lite'];
+  const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash'];
   let lastError = null;
   const activeAi = new GoogleGenAI({ apiKey: activeApiKey });
 
   for (const modelName of CANDIDATE_MODELS) {
+    const modelController = new AbortController();
+    const modelTimeout = setTimeout(() => {
+      try {
+        modelController.abort();
+      } catch (_) {}
+    }, 8500);
+
     try {
       const response = await activeAi.models.generateContent({
         model: modelName,
@@ -198,7 +211,7 @@ app.post('/api/analyze', async (req, res) => {
             role: 'user',
             parts: [
               { text: AKSARA_PROMPT },
-              { inlineData: { mimeType, data: imageBase64 } },
+              { inlineData: { mimeType, data: cleanBase64 } },
             ],
           },
         ],
@@ -206,8 +219,11 @@ app.post('/api/analyze', async (req, res) => {
           temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
           topP: 0.95,
           responseMimeType: 'application/json',
+          abortSignal: modelController.signal,
         },
       });
+
+      clearTimeout(modelTimeout);
 
       const rawText = response.text?.trim() ?? '';
 
@@ -243,13 +259,23 @@ app.post('/api/analyze', async (req, res) => {
 
       return res.json(parsed);
     } catch (err) {
+      clearTimeout(modelTimeout);
       lastError = err;
       console.warn(`Local model ${modelName} encountered error:`, err.message);
     }
   }
 
   const errMsg = lastError?.message || '';
+  const isTimeout = lastError?.name === 'AbortError' || errMsg.includes('timeout') || errMsg.includes('abort');
   const isQuota = errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED');
+
+  if (isTimeout) {
+    return res.status(504).json({
+      errorType: 'TIMEOUT',
+      error: 'Waktu respons layanan AI melebihi batas (server Google sedang sibuk). Silakan coba lagi atau gunakan naskah peraga.',
+    });
+  }
+
   if (isQuota) {
     return res.status(429).json({
       errorType: 'QUOTA_EXCEEDED',

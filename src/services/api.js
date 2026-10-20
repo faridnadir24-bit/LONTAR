@@ -36,7 +36,9 @@ export function setCustomApiKey(key) {
   }
 }
 
-export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jpeg') {
+export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jpeg', options = {}) {
+  const { signal, timeoutMs = 15000 } = options;
+
   const fingerprint = getImageFingerprint(base64Data);
   if (fingerprint && clientAnalysisCache.has(fingerprint)) {
     return JSON.parse(JSON.stringify(clientAnalysisCache.get(fingerprint)));
@@ -48,22 +50,60 @@ export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jp
     headers['x-gemini-api-key'] = customKey;
   }
 
-  const response = await fetch('/api/analyze', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      imageBase64: base64Data,
-      mimeType,
-      customApiKey: customKey || undefined,
-    }),
-  });
+  // Set up timeout controller combined with external caller signal
+  const abortCtrl = new AbortController();
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    abortCtrl.abort();
+  }, timeoutMs);
+
+  if (signal) {
+    if (signal.aborted) {
+      clearTimeout(timer);
+      const cancelErr = new Error('Pemindaian dibatalkan.');
+      cancelErr.errorType = 'CANCELLED';
+      throw cancelErr;
+    }
+    signal.addEventListener('abort', () => abortCtrl.abort(signal.reason), { once: true });
+  }
+
+  let response;
+  try {
+    response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        imageBase64: base64Data,
+        mimeType,
+        customApiKey: customKey || undefined,
+      }),
+      signal: abortCtrl.signal,
+    });
+  } catch (fetchErr) {
+    clearTimeout(timer);
+    if (timedOut) {
+      const timeoutError = new Error('Waktu analisis melebihi batas (koneksi lambat atau server sibuk).');
+      timeoutError.status = 408;
+      timeoutError.errorType = 'TIMEOUT';
+      throw timeoutError;
+    }
+    if (signal && signal.aborted) {
+      const cancelError = new Error('Pemindaian dibatalkan.');
+      cancelError.errorType = 'CANCELLED';
+      throw cancelError;
+    }
+    throw fetchErr;
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({}));
     const errorMsg = errData.error || `Server error (${response.status})`;
     const err = new Error(errorMsg);
     err.status = response.status;
-    err.errorType = errData.errorType;
+    err.errorType = errData.errorType || (response.status === 504 || response.status === 408 ? 'TIMEOUT' : 'UNKNOWN_ERROR');
     throw err;
   }
 

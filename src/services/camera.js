@@ -128,15 +128,30 @@ export async function switchCamera() {
   return facingMode;
 }
 
-export function captureSnapshot(video, canvas) {
+export function captureSnapshot(video, canvas, maxDimension = 1400) {
   if (!video || !canvas) return null;
-  const w = video.videoWidth || 640;
-  const h = video.videoHeight || 480;
-  canvas.width = w;
-  canvas.height = h;
+  let w = video.videoWidth || 640;
+  let h = video.videoHeight || 480;
+
+  if (w > maxDimension || h > maxDimension) {
+    if (w > h) {
+      h = Math.round((h * maxDimension) / w);
+      w = maxDimension;
+    } else {
+      w = Math.round((w * maxDimension) / h);
+      h = maxDimension;
+    }
+  }
+
+  canvas.width = Math.max(1, w);
+  canvas.height = Math.max(1, h);
   const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, w, h);
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+  if (ctx) {
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(video, 0, 0, w, h);
+  }
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
   const base64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
   return { dataUrl, base64, mimeType: 'image/jpeg' };
 }

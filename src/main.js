@@ -40,12 +40,14 @@ import {
   getCustomApiKey,
   setCustomApiKey,
 } from './services/api.js';
+import { optimizeImageFile } from './services/imageUtils.js';
 
 // ── Application Runtime State ──────────────────────────────
 let currentSampleIdx = 0;
 let activeScreen = 'screen-home';
 let latestResultData = null;
 let currentCapturedImageDataUrl = null;
+let activeScanAbortController = null;
 
 // DOM View Cache
 const screens = {
@@ -178,7 +180,17 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
   const progressBar = document.getElementById('scan-progress-bar');
   const stepText = document.getElementById('scan-step-text');
   const errorMsg = document.getElementById('scan-error-msg');
+  const btnCancelScan = document.getElementById('btn-cancel-scan');
   if (errorMsg) hideElement(errorMsg);
+
+  // Abort any prior in-flight scan
+  if (activeScanAbortController) {
+    try {
+      activeScanAbortController.abort();
+    } catch (_) {}
+  }
+  const currentScanController = new AbortController();
+  activeScanAbortController = currentScanController;
 
   currentCapturedImageDataUrl = `data:${mimeType};base64,${base64Data}`;
 
@@ -196,9 +208,36 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     if (stepText) stepText.textContent = 'Menerjemahkan & menafsirkan filosofi…';
   }, 1800);
 
-  try {
-    const data = await requestManuscriptAnalysis(base64Data, mimeType);
+  // Hard safety watchdog at 15s to guarantee overlay NEVER remains stuck
+  const watchdog = setTimeout(() => {
+    if (activeScanAbortController === currentScanController) {
+      currentScanController.abort(new Error('TIMEOUT'));
+    }
+  }, 15000);
 
+  // Hook up cancel button on the loading overlay
+  if (btnCancelScan) {
+    btnCancelScan.onclick = () => {
+      if (activeScanAbortController === currentScanController) {
+        currentScanController.abort();
+        activeScanAbortController = null;
+      }
+      clearTimeout(watchdog);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      hideElement(loadingOverlay);
+      if (progressBar) progressBar.style.width = '0%';
+      showToast('Pemindaian dibatalkan');
+    };
+  }
+
+  try {
+    const data = await requestManuscriptAnalysis(base64Data, mimeType, {
+      signal: currentScanController.signal,
+      timeoutMs: 14000,
+    });
+
+    clearTimeout(watchdog);
     clearTimeout(t1);
     clearTimeout(t2);
 
@@ -259,14 +298,31 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     }, 350);
 
   } catch (err) {
+    clearTimeout(watchdog);
     clearTimeout(t1);
     clearTimeout(t2);
-    console.error('AI Analysis failed:', err);
 
     hideElement(loadingOverlay);
     if (progressBar) progressBar.style.width = '0%';
 
+    // If cancelled intentionally by user clicking 'Batalkan', exit silently
+    if (err.errorType === 'CANCELLED' || (currentScanController.signal.aborted && !currentScanController.signal.reason)) {
+      return;
+    }
+
+    console.error('AI Analysis failed:', err);
+
     const errMsg = err.message || '';
+    const isTimeoutIssue = (
+      err.status === 408 ||
+      err.status === 504 ||
+      err.errorType === 'TIMEOUT' ||
+      currentScanController.signal.aborted ||
+      errMsg.includes('melebihi batas') ||
+      errMsg.includes('timeout') ||
+      errMsg.includes('TIMEOUT') ||
+      errMsg.includes('Gateway Timeout')
+    );
     const isQuotaIssue = (
       err.status === 429 ||
       err.errorType === 'QUOTA_EXCEEDED' ||
@@ -305,7 +361,14 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
       }
     }
 
-    if (isQuotaIssue) {
+    if (isTimeoutIssue) {
+      if (titleEl) titleEl.textContent = 'Waktu Pemrosesan Melebihi Batas';
+      if (descEl) {
+        descEl.innerHTML = 'Kamera tidak mendapat balasan AI tepat waktu (kemungkinan koneksi internet seluler lambat atau respons server Google sedang antre).<br><br>Anda dapat <strong>mencoba foto ulang</strong> atau langsung membuka <strong>contoh naskah kurasi</strong> untuk demonstrasi instan.';
+      }
+      if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Instan)';
+      if (retryBtnLabel) retryBtnLabel.textContent = 'Coba Foto Ulang';
+    } else if (isQuotaIssue) {
       if (titleEl) titleEl.textContent = 'Batas Kuota Harian AI Tercapai';
       if (descEl) {
         descEl.innerHTML = 'Kunci API Google Gemini (Free Tier) di server saat ini telah mencapai batas kuota harian dari Google.<br><br><span class="font-bold text-white">Opsi Akses:</span><br>• Klik tombol biru di bawah untuk <strong>memasukkan API Key Gemini pribadi</strong> (gratis di <em>aistudio.google.com</em>), atau<br>• Gunakan <strong>naskah peraga kurasi</strong> untuk demonstrasi pengujian.';
@@ -659,21 +722,27 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCameraSwitch.addEventListener('click', switchCamera);
   }
 
-  // Gallery File Upload
+  // Gallery File Upload with automatic compression for fast, reliable upload
   const fileInput = document.getElementById('file-upload');
   if (fileInput) {
-    fileInput.addEventListener('change', function (e) {
+    fileInput.addEventListener('change', async function (e) {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (evt) {
-        const dataUrl = evt.target.result;
-        const match = dataUrl.match(/^data:(.*?);base64,(.*)$/);
-        if (match) {
-          analyzeCapturedImage(match[2], match[1]);
-        }
-      };
-      reader.readAsDataURL(file);
+      try {
+        const optimized = await optimizeImageFile(file);
+        analyzeCapturedImage(optimized.base64, optimized.mimeType);
+      } catch (optErr) {
+        console.warn('Image optimization fallback:', optErr);
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+          const dataUrl = evt.target.result;
+          const match = dataUrl.match(/^data:(.*?);base64,(.*)$/);
+          if (match) {
+            analyzeCapturedImage(match[2], match[1]);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
       this.value = '';
     });
   }

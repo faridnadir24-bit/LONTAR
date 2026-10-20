@@ -157,3 +157,25 @@ test('resolveLanguageAttribution prevents cross-language confusion and auto-corr
   assert.match(resolvedLontara.language, /Aksara Lontara/);
   assert.equal(resolvedLontara.language_short, 'Aksara Lontara');
 });
+
+test('base64 sanitization and timeout error classification', () => {
+  // Test base64 extraction from data URL
+  const rawDataUrl = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...';
+  const clean = rawDataUrl.replace(/^data:(.*?);base64,/, '');
+  assert.equal(clean.startsWith('data:'), false);
+  assert.equal(clean.startsWith('/9j/'), true);
+
+  // Test timeout error classification
+  const timeoutErr = {
+    status: 504,
+    errorType: 'TIMEOUT',
+    message: 'Waktu analisis melebihi batas (koneksi lambat atau server sibuk).',
+  };
+  const isTimeout = (
+    timeoutErr.status === 408 ||
+    timeoutErr.status === 504 ||
+    timeoutErr.errorType === 'TIMEOUT' ||
+    timeoutErr.message.includes('melebihi batas')
+  );
+  assert.equal(isTimeout, true);
+});

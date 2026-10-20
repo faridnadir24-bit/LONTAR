@@ -114,7 +114,11 @@ Jika benar-benar tidak ada teks/aksara:
   }
 }`;
 
-const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash-lite'];
+export const config = {
+  maxDuration: 30,
+};
+
+const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash'];
 
 export default async function handler(req, res) {
   // Handle CORS
@@ -152,8 +156,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'imageBase64 diperlukan.' });
   }
 
+  let cleanBase64 = imageBase64;
+  if (cleanBase64.includes('base64,')) {
+    cleanBase64 = cleanBase64.split('base64,')[1];
+  }
+  cleanBase64 = cleanBase64.replace(/\s+/g, '');
+
   // Check cache for identical image to ensure 100% determinism across repeat scans
-  const imageHash = crypto.createHash('sha256').update(imageBase64).digest('hex');
+  const imageHash = crypto.createHash('sha256').update(cleanBase64).digest('hex');
   if (scanCache.has(imageHash)) {
     return res.status(200).json(scanCache.get(imageHash));
   }
@@ -161,8 +171,15 @@ export default async function handler(req, res) {
   let lastError = null;
   const ai = new GoogleGenAI({ apiKey: activeApiKey });
 
-  // Try candidate models in order if one experiences rate-limit or error
+  // Try candidate models in order with a strict per-model timeout
   for (const modelName of CANDIDATE_MODELS) {
+    const modelController = new AbortController();
+    const modelTimeout = setTimeout(() => {
+      try {
+        modelController.abort();
+      } catch (_) {}
+    }, 8500);
+
     try {
       const response = await ai.models.generateContent({
         model: modelName,
@@ -171,7 +188,7 @@ export default async function handler(req, res) {
             role: 'user',
             parts: [
               { text: AKSARA_PROMPT },
-              { inlineData: { mimeType, data: imageBase64 } },
+              { inlineData: { mimeType, data: cleanBase64 } },
             ],
           },
         ],
@@ -179,8 +196,11 @@ export default async function handler(req, res) {
           temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
           topP: 0.95,
           responseMimeType: 'application/json',
+          abortSignal: modelController.signal,
         },
       });
+
+      clearTimeout(modelTimeout);
 
       const rawText = response.text?.trim() ?? '';
       let cleaned = rawText
@@ -204,16 +224,25 @@ export default async function handler(req, res) {
 
       return res.status(200).json(parsed);
     } catch (err) {
+      clearTimeout(modelTimeout);
       lastError = err;
       console.warn(`Model ${modelName} encountered error:`, err.message);
-      // Continue to next model if quota or transient error
+      // Continue to next model if quota or transient error or timeout
     }
   }
 
   // If all models failed, parse and return human-friendly error
   const errMsg = lastError?.message || '';
+  const isTimeout = lastError?.name === 'AbortError' || errMsg.includes('timeout') || errMsg.includes('abort');
   const isQuota = errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('exhausted');
   const isInvalidKey = errMsg.includes('API_KEY_INVALID') || errMsg.includes('API key not valid') || errMsg.includes('403');
+
+  if (isTimeout) {
+    return res.status(504).json({
+      errorType: 'TIMEOUT',
+      error: 'Waktu respons layanan AI melebihi batas (server Google sedang sibuk). Silakan coba lagi atau gunakan naskah peraga.',
+    });
+  }
 
   if (isQuota) {
     return res.status(429).json({
