@@ -5,8 +5,8 @@
  * and rapid Gemini Vision inference times while maintaining script sharpness.
  */
 
-const DEFAULT_MAX_DIMENSION = 1400;
-const DEFAULT_QUALITY = 0.82;
+const DEFAULT_MAX_DIMENSION = 960;
+const DEFAULT_QUALITY = 0.76;
 
 /**
  * Optimizes an image File (e.g. from file input) by scaling it down to a maximum

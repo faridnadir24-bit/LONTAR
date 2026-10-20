@@ -193,9 +193,9 @@ app.post('/api/analyze', async (req, res) => {
 
   const CANDIDATE_MODELS = [
     'gemini-3-flash-preview',
-    'gemini-3.5-flash',
     'gemini-3.1-flash-lite-preview',
     'gemini-3.8-flash',
+    'gemini-3.5-flash',
   ];
   let lastError = null;
   let hadQuotaError = false;
@@ -207,7 +207,7 @@ app.post('/api/analyze', async (req, res) => {
       try {
         modelController.abort();
       } catch (_) {}
-    }, 13000);
+    }, 7000);
 
     try {
       const configObj = {
@@ -215,11 +215,8 @@ app.post('/api/analyze', async (req, res) => {
         topP: 0.95,
         responseMimeType: 'application/json',
         abortSignal: modelController.signal,
+        thinkingConfig: { thinkingBudget: 0 },
       };
-
-      if (modelName.includes('3.8')) {
-        configObj.thinkingConfig = { thinkingBudget: 0 };
-      }
 
       const response = await activeAi.models.generateContent({
         model: modelName,

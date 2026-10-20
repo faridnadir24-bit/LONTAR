@@ -120,9 +120,9 @@ export const config = {
 
 const CANDIDATE_MODELS = [
   'gemini-3-flash-preview',
-  'gemini-3.5-flash',
   'gemini-3.1-flash-lite-preview',
   'gemini-3.8-flash',
+  'gemini-3.5-flash',
 ];
 
 export default async function handler(req, res) {
@@ -177,14 +177,14 @@ export default async function handler(req, res) {
   let hadQuotaError = false;
   const ai = new GoogleGenAI({ apiKey: activeApiKey });
 
-  // Try candidate models in order with a resilient per-model timeout
+  // Try candidate models in order with a strict per-model timeout
   for (const modelName of CANDIDATE_MODELS) {
     const modelController = new AbortController();
     const modelTimeout = setTimeout(() => {
       try {
         modelController.abort();
       } catch (_) {}
-    }, 13000);
+    }, 7000);
 
     try {
       const configObj = {
@@ -192,11 +192,9 @@ export default async function handler(req, res) {
         topP: 0.95,
         responseMimeType: 'application/json',
         abortSignal: modelController.signal,
+        // Disable reasoning/thinking token budgets to ensure near-instant (1-2s) vision response
+        thinkingConfig: { thinkingBudget: 0 },
       };
-
-      if (modelName.includes('3.8')) {
-        configObj.thinkingConfig = { thinkingBudget: 0 };
-      }
 
       const response = await ai.models.generateContent({
         model: modelName,

@@ -128,7 +128,7 @@ export async function switchCamera() {
   return facingMode;
 }
 
-export function captureSnapshot(video, canvas, maxDimension = 1400) {
+export function captureSnapshot(video, canvas, maxDimension = 960) {
   if (!video || !canvas) return null;
   let w = video.videoWidth || 640;
   let h = video.videoHeight || 480;
@@ -151,7 +151,7 @@ export function captureSnapshot(video, canvas, maxDimension = 1400) {
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(video, 0, 0, w, h);
   }
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.76);
   const base64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
   return { dataUrl, base64, mimeType: 'image/jpeg' };
 }
