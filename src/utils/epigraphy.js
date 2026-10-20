@@ -50,6 +50,130 @@ export function formatScanDate(dateInput) {
   return `${day} ${month} ${year} • ${hours}:${minutes}`;
 }
 
+// ── Multi-Script Detection & Linguistic Attribution Engine ──────
+export function detectScriptFromUnicode(text) {
+  if (!text) return null;
+  const counts = {
+    javanese: (text.match(/[\uA980-\uA9DF]/g) || []).length,
+    balinese: (text.match(/[\u1B00-\u1B7F]/g) || []).length,
+    sundanese: (text.match(/[\u1B80-\u1BBF\u1CC0-\u1CCF]/g) || []).length,
+    batak: (text.match(/[\u1BC0-\u1BFF]/g) || []).length,
+    lontara: (text.match(/[\u1A00-\u1A1F]/g) || []).length,
+    pegon: (text.match(/[\u0600-\u06FF]/g) || []).length,
+    kawi: (text.match(/[\u{11000}-\u{1107F}\u{11F00}-\u{11F5F}]/gu) || []).length,
+  };
+
+  let top = null;
+  let max = 0;
+  for (const [k, v] of Object.entries(counts)) {
+    if (v > max) {
+      max = v;
+      top = k;
+    }
+  }
+  return max > 0 ? top : null;
+}
+
+export function getScriptMetadata(scriptKey) {
+  const SCRIPT_INFO = {
+    javanese: {
+      name: 'Aksara Jawa (Carakan)',
+      short: 'Aksara Jawa',
+      family: 'Turunan Kawi / Brahmi',
+      period: 'Abad XV–XX M',
+      origin: 'Jawa Tengah, D.I. Yogyakarta, Jawa Timur',
+    },
+    balinese: {
+      name: 'Aksara Bali (Hanacaraka Bali)',
+      short: 'Aksara Bali',
+      family: 'Turunan Kawi / Brahmi',
+      period: 'Abad XI M–Sekarang',
+      origin: 'Bali & Lombok (Tradisi Lontar)',
+    },
+    sundanese: {
+      name: 'Aksara Sunda Kuno & Baku',
+      short: 'Aksara Sunda',
+      family: 'Palaeo-Sunda Kuno',
+      period: 'Abad XIV–XVIII M (Prasasti Kawali)',
+      origin: 'Tatar Sunda (Jawa Barat & Banten)',
+    },
+    batak: {
+      name: 'Surat Batak (Pustaha Laklak)',
+      short: 'Surat Batak',
+      family: 'Kaganga Sumatera Utara',
+      period: 'Abad XIII–XX M',
+      origin: 'Toba, Karo, Mandailing, Simalungun',
+    },
+    lontara: {
+      name: 'Aksara Lontara (Sulapa Eppa)',
+      short: 'Aksara Lontara',
+      family: 'Lontara Sulawesi Selatan',
+      period: 'Abad XIV–XX M',
+      origin: 'Bugis, Makassar, Mandar',
+    },
+    pegon: {
+      name: 'Aksara Pegon & Jawi (Arab Melayu)',
+      short: 'Aksara Pegon',
+      family: 'Arabika Adaptasi Nusantara',
+      period: 'Abad XIII–XX M',
+      origin: 'Nusantara (Tradisi Pesantren & Kesultanan)',
+    },
+    kawi: {
+      name: 'Aksara Kawi Arkais & Pallawa',
+      short: 'Aksara Kawi',
+      family: 'Brahmi Selatan / Jawa Kuno',
+      period: 'Abad VIII–XV M (Era Mataram Kuno–Majapahit)',
+      origin: 'Jawa & Bali Kuno',
+    },
+  };
+  return SCRIPT_INFO[scriptKey] || null;
+}
+
+export function resolveLanguageAttribution(data) {
+  if (!data) return data;
+  const scriptKey = detectScriptFromUnicode(data.ancientText);
+  if (!scriptKey) return data;
+
+  const meta = getScriptMetadata(scriptKey);
+  if (!meta) return data;
+
+  const currentLang = (data.language || '').toLowerCase();
+
+  // Cross-script conflict prevention: ensure language badge strictly matches the detected script
+  let targetLang = data.language || meta.name;
+  let targetShort = data.language_short || meta.short;
+
+  if (scriptKey === 'sundanese' && (!currentLang.includes('sunda') || currentLang.includes('jawa') || currentLang.includes('kawi'))) {
+    targetLang = `${meta.name} · Tatar Sunda`;
+    targetShort = meta.short;
+  } else if (scriptKey === 'balinese' && (!currentLang.includes('bali') || currentLang.includes('jawa'))) {
+    targetLang = `${meta.name} · Tradisi Lontar`;
+    targetShort = meta.short;
+  } else if (scriptKey === 'batak') {
+    targetLang = `${meta.name} · Sumatera Utara`;
+    targetShort = meta.short;
+  } else if (scriptKey === 'lontara') {
+    targetLang = `${meta.name} · Sulawesi Selatan`;
+    targetShort = meta.short;
+  } else if (scriptKey === 'pegon') {
+    targetLang = `${meta.name} · Tradisi Naskah`;
+    targetShort = meta.short;
+  } else if (scriptKey === 'kawi' && (currentLang.includes('jawa baru') || !currentLang.includes('kawi'))) {
+    targetLang = `${meta.name} · Abad VIII–X M`;
+    targetShort = meta.short;
+  } else if (scriptKey === 'javanese' && !currentLang.includes('jawa') && !currentLang.includes('carakan')) {
+    targetLang = `${meta.name} · Jawa Kuno & Baru`;
+    targetShort = meta.short;
+  }
+
+  return {
+    ...data,
+    language: targetLang,
+    language_short: targetShort || meta.short,
+    script_type: meta.short,
+  };
+}
+
 export function cleanManuscriptText(text) {
   if (!text) return '';
   const lines = text

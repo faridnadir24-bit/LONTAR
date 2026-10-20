@@ -118,6 +118,142 @@ tākasīdgumbīyumātukāgūkādaka`,
       { term: 'Tatastu', origin: 'Sanskerta (tata + astu)', meaning: 'Jadilah demikian selaras tatanan kosmis semesta.' }
     ]
   },
+  {
+    title: 'Prasasti Kawali — Astana Gede',
+    ancientText: 'ᮔᮤᮠᮔ᮪ ᮒᮕᮊ᮪ ᮝᮜᮎ᮪ ᮞᮥᮔ᮪ᮓ',
+    transliteration: '"Nihan tapak walac sunda"',
+    translation: 'Inilah tanda jejak kejayaan tanah Sunda yang dimuliakan para leluhur.',
+    philosophical: 'Ajaran luhur Prabu Niskala Wastu Kancana tentang ketenteraman dan kemakmuran negeri Parahyangan.',
+    language: 'Aksara Sunda Kuno · Abad XIV',
+    language_short: 'Aksara Sunda Kuno',
+    confidence: 99.3,
+    glyphs: [
+      { char: 'ᮔᮤ', roman: 'Ni', type: 'Rarangken Panghulu', desc: 'Aksara ngalagena "Na" (ᮔ) dipasangi rarangken "Panghulu" (ᮤ) menghasilkan vokal /ni/.' },
+      { char: 'ᮠ', roman: 'Ha', type: 'Aksara Ngalagena', desc: 'Konsonan dasar Sunda "Ha" (ᮠ) berbunyi /ha/.' },
+      { char: 'ᮔ᮪', roman: 'n', type: 'Panyigeg Pamaeh', desc: 'Aksara "Na" (ᮔ) dimatikan vokalnya dengan "Pamaeh" (᮪) menjadi konsonan penutup /n/.' },
+      { char: 'ᮒ', roman: 'Ta', type: 'Aksara Ngalagena', desc: 'Konsonan dasar Sunda "Ta" (ᮒ).' },
+      { char: 'ᮕ', roman: 'Pa', type: 'Aksara Ngalagena', desc: 'Konsonan dasar Sunda "Pa" (ᮕ).' },
+      { char: 'ᮊ᮪', roman: 'k', type: 'Panyigeg Pamaeh', desc: 'Aksara "Ka" (ᮊ) dimatikan vokalnya dengan "Pamaeh" (᮪) berbunyi /k/.' },
+      { char: 'ᮝ', roman: 'Wa', type: 'Aksara Ngalagena', desc: 'Konsonan dasar Sunda "Wa" (ᮝ).' },
+      { char: 'ᮜ', roman: 'La', type: 'Aksara Ngalagena', desc: 'Konsonan dasar Sunda "La" (ᮜ).' },
+      { char: 'ᮞᮥ', roman: 'Su', type: 'Rarangken Panyuku', desc: 'Aksara "Sa" (ᮞ) dipasangi rarangken "Panyuku" (ᮥ) menghasilkan vokal /su/.' },
+      { char: 'ᮔ᮪ᮓ', roman: 'Nda', type: 'Pasangan Ngalagena', desc: 'Aksara "Na" (ᮔ) disusul "Da" (ᮓ) membentuk gabungan suku kata sengau /nda/.' }
+    ],
+    lexicon: [
+      { term: 'Nihan', origin: 'Sunda Kuno', meaning: 'Inilah / sesungguhnya demikian halnya.' },
+      { term: 'Tapak', origin: 'Austronesia / Sunda Kuno', meaning: 'Jejak tapak langkah kebajikan dan karya agung kepemimpinan.' },
+      { term: 'Walac', origin: 'Sunda Kuno', meaning: 'Tanda prasasti / piagam suci ketetapan hukum.' },
+      { term: 'Sunda', origin: 'Sunda Kuno / Sanskerta (suddha/cunda)', meaning: 'Cahaya putih bersih, suci, dan permai.' }
+    ]
+  },
+  {
+    title: 'Kakawin Arjuna Wiwaha — Lontar Bali',
+    ancientText: 'ᬑᬁ ᬅᬯᬶᬖ᭄ᬦᬫᬲ᭄ᬢᬸ ᬦᬫᭀ ᬲᬶᬤ᭄ᬥᬫ᭄',
+    transliteration: '"Om awighnamastu namo siddham"',
+    translation: 'Ya Tuhan, semoga tiada rintangan rintangan dan tercapailah keberhasilan sempurna.',
+    philosophical: 'Doa agung pembuka karya sastra kakawin klasik yang memohon perlindungan dari Sang Hyang Saraswati dan Sang Hyang Widhi.',
+    language: 'Aksara Bali · Kawi Bali Abad XI',
+    language_short: 'Aksara Bali',
+    confidence: 99.6,
+    glyphs: [
+      { char: 'ᬑᬁ', roman: 'Om', type: 'Aksara Pranava Suci', desc: 'Syllable kosmis agung "Omkara" lambang kesucian tertinggi alam semesta.' },
+      { char: 'ᬅ', roman: 'A', type: 'Aksara Swara', desc: 'Vokal mandiri murni /a/ dalam aksara Swalalita Bali.' },
+      { char: 'ᬯᬶ', roman: 'Wi', type: 'Sandhangan Ulu', desc: 'Aksara "Wa" (ᬯ) dipasangi sandhangan swara "Ulu" (ᬶ) berbunyi /wi/.' },
+      { char: 'ᬖ᭄ᬦ', roman: 'Ghna', type: 'Gantungan Mahaprana', desc: 'Aksara Mahaprana "Gha" (ᬖ) disusul gantungan "Na" (᭄ᬦ) berbunyi /ghna/ (rintangan).' },
+      { char: 'ᬫ', roman: 'Ma', type: 'Aksara Wreastra', desc: 'Konsonan dasar Bali "Ma" (ᬫ).' },
+      { char: 'ᬲ᭄ᬢᬸ', roman: 'Stu', type: 'Gantungan & Suku', desc: 'Aksara "Sa" (ᬲ) + gantungan "Ta" (᭄ᬢ) + vokal Suku (ᬸ) berbunyi /stu/ (semoga terkabul).' },
+      { char: 'ᬦ', roman: 'Na', type: 'Aksara Wreastra', desc: 'Konsonan dasar Bali "Na" (ᬦ).' },
+      { char: 'ᬫᭀ', roman: 'Mo', type: 'Tedong Taling', desc: 'Aksara "Ma" (ᬫ) dipasangi sandhangan "Taling Tedong" (ᭀ) berbunyi /mo/.' },
+      { char: 'ᬲᬶ', roman: 'Si', type: 'Sandhangan Ulu', desc: 'Aksara "Sa" (ᬲ) dipasangi "Ulu" (ᬶ) berbunyi /si/.' },
+      { char: 'ᬤ᭄ᬥ', roman: 'Ddha', type: 'Gantungan Mahaprana', desc: 'Aksara "Da" (ᬤ) dipasangi gantungan mahaprana "Dha" (᭄ᬥ) bermakna kesempurnaan.' }
+    ],
+    lexicon: [
+      { term: 'Awighnamastu', origin: 'Sanskerta (a- + vighna + astu)', meaning: 'Semoga tiada aral melintang atau halangan dalam melangkah.' },
+      { term: 'Namo', origin: 'Sanskerta (namaḥ)', meaning: 'Sembah sujud penuh rasa takzim ke hadirat Sang Pencipta.' },
+      { term: 'Siddham', origin: 'Sanskerta', meaning: 'Pencapaian sempurna yang telah tuntas dan terwujud.' }
+    ]
+  },
+  {
+    title: 'Pustaha Laklak Batak — Datu Poda',
+    ancientText: 'ᯅᯉᯪ ᯀᯂᯮ ᯔᯉᯮᯄ᯦᯲ ᯎᯮᯒ᯲ᯑᯰ',
+    transliteration: '"Bani ahu manuk gurdang sitiktik tano"',
+    translation: 'Inilah petuah pusaka datu tentang tatanan harmoni dan perlindungan semesta.',
+    philosophical: 'Kearifan ekologis suku Batak mengenai keseimbangan kosmologi antara manusia, hutan, tanah, dan pencipta (Mulajadi Na Bolon).',
+    language: 'Surat Batak · Toba / Laklak',
+    language_short: 'Surat Batak',
+    confidence: 99.1,
+    glyphs: [
+      { char: 'ᯅ', roman: 'Ba', type: 'Ina ni Surat', desc: 'Konsonan dasar Batak "Ba" (ᯅ) berbunyi /ba/.' },
+      { char: 'ᯉᯪ', roman: 'Ni', type: 'Anak ni Surat Haluan', desc: 'Aksara "Na" (ᯉ) dipasangi diakritik "Haluan" (ᯪ) yang mengubah vokal menjadi /ni/.' },
+      { char: 'ᯀ', roman: 'A', type: 'Ina ni Surat', desc: 'Vokal mandiri murni /a/ dalam tradisi Surat Batak.' },
+      { char: 'ᯂᯮ', roman: 'Hu', type: 'Anak ni Surat Sihorhor', desc: 'Aksara "Ha" (ᯂ) dipasangi anak surat "Sihorhor" (ᯮ) berbunyi /hu/.' },
+      { char: 'ᯔ', roman: 'Ma', type: 'Ina ni Surat', desc: 'Konsonan dasar Batak "Ma" (ᯔ).' },
+      { char: 'ᯉᯮ', roman: 'Nu', type: 'Anak ni Surat Sihorhor', desc: 'Aksara "Na" (ᯉ) dipasangi "Sihorhor" (ᯮ) berbunyi /nu/.' },
+      { char: 'ᯄ᯦᯲', roman: 'k', type: 'Anak ni Surat Pangolat', desc: 'Aksara "Ka" (ᯄ) dimatikan vokalnya dengan tanda "Pangolat" (᯲) menjadi konsonan penutup /k/.' },
+      { char: 'ᯎᯮ', roman: 'Gu', type: 'Anak ni Surat Sihorhor', desc: 'Aksara "Ga" (ᯎ) dipasangi "Sihorhor" (ᯮ) berbunyi /gu/.' },
+      { char: 'ᯒ᯲', roman: 'r', type: 'Anak Surat Haborotan', desc: 'Aksara "Ra" (ᯒ) dimatikan menjadi konsonan penutup /r/.' },
+      { char: 'ᯑᯰ', roman: 'Dang', type: 'Anak ni Surat Paminggil', desc: 'Aksara "Da" (ᯑ) dipasangi sengau "Paminggil" (ᯰ) berbunyi /dang/.' }
+    ],
+    lexicon: [
+      { term: 'Bani', origin: 'Batak (hata datu)', meaning: 'Kepada / peruntukan wejangan suci ini.' },
+      { term: 'Ahu', origin: 'Austronesia / Batak', meaning: 'Aku / jati diri sang pencari kearifan.' },
+      { term: 'Manuk Gurdang', origin: 'Batak', meaning: 'Burung mitologis perlambang kewaspadaan, pertanda kosmis, dan penjaga tanah.' },
+      { term: 'Poda', origin: 'Batak', meaning: 'Wejangan moral, petuah adiluhung yang diwariskan turun-temurun.' }
+    ]
+  },
+  {
+    title: 'Sureq Galigo — I La Galigo Bugis',
+    ancientText: 'ᨕᨗᨐᨊ ᨔᨙᨓ ᨒᨚᨈᨚ ᨄᨈᨘᨑᨗᨐᨚᨒᨚ',
+    transliteration: '"Iyana sewwa lonto patturioloang"',
+    translation: 'Inilah lembaran hikayat peradaban masa silam di tanah Bugis yang menjunjung tinggi martabat.',
+    philosophical: 'Falsafah siri\' na pesse dalam epos terpanjang dunia, mengajarkan kehormatan diri, kesetiakawanan, dan keutamaan budi pekerti.',
+    language: 'Aksara Lontara · Basa Ugi Abad XIV',
+    language_short: 'Aksara Lontara',
+    confidence: 99.4,
+    glyphs: [
+      { char: 'ᨕᨗ', roman: 'I', type: 'Ana\' Sureq Tetti\' Riase\'', desc: 'Aksara dasar "A" (ᨕ) dipasangi titik di atas "Tetti\' riase\'" (ᨗ) berbunyi /i/.' },
+      { char: 'ᨐ', roman: 'Ya', type: 'Aksara Sulapa Eppa', desc: 'Konsonan dasar Bugis "Ya" (ᨐ) berbentuk belah ketupat.' },
+      { char: 'ᨊ', roman: 'Na', type: 'Aksara Sulapa Eppa', desc: 'Konsonan dasar Bugis "Na" (ᨊ).' },
+      { char: 'ᨔᨙ', roman: 'Se', type: 'Ana\' Sureq Taling', desc: 'Aksara "Sa" (ᨔ) dipasangi diakritik "Taling" (ᨙ) berbunyi /se/.' },
+      { char: 'ᨓ', roman: 'Wa', type: 'Aksara Sulapa Eppa', desc: 'Konsonan dasar Bugis "Wa" (ᨓ).' },
+      { char: 'ᨒᨚ', roman: 'Lo', type: 'Ana\' Sureq Tecceng', desc: 'Aksara "La" (ᨒ) dipasangi diakritik "Tecceng" (ᨚ) berbunyi /lo/.' },
+      { char: 'ᨈᨚ', roman: 'To', type: 'Ana\' Sureq Tecceng', desc: 'Aksara "Ta" (ᨈ) dipasangi diakritik "Tecceng" (ᨚ) berbunyi /to/.' },
+      { char: 'ᨄ', roman: 'Pa', type: 'Aksara Sulapa Eppa', desc: 'Konsonan dasar Bugis "Pa" (ᨄ).' },
+      { char: 'ᨑᨗ', roman: 'Ri', type: 'Ana\' Sureq Tetti\' Riase\'', desc: 'Aksara "Ra" (ᨑ) dipasangi titik atas (ᨗ) berbunyi /ri/.' }
+    ],
+    lexicon: [
+      { term: 'Iyana', origin: 'Bugis (basa Ugi)', meaning: 'Inilah / sesungguhnya demikian perkaranya.' },
+      { term: 'Sewwa', origin: 'Bugis', meaning: 'Satu / suatu ketetapan yang tunggal.' },
+      { term: 'Patturioloang', origin: 'Bugis (pariolo)', meaning: 'Kisah para leluhur / adat kebiasaan tatanan masa lampau.' },
+      { term: 'Siri\'', origin: 'Bugis / Makassar', meaning: 'Kehormatan diri, harga diri luhur, dan martabat moral kemanusiaan.' }
+    ]
+  },
+  {
+    title: 'Kitab Pegon Melayu-Jawa',
+    ancientText: 'بِسْمِ اللَّهِ نِيَاتْ اِينْغْسُونْ اَنْجَاݢَا كَبَاجِيقَانْ',
+    transliteration: '"Bismillah niyat ingsun anjaga kabajikan ing bhuwana"',
+    translation: 'Dengan menyebut nama Tuhan yang Maha Pengasih, teguh niatku menjaga kebajikan di persada bumi.',
+    philosophical: 'Sintesis harmonis ajaran spiritual Islam dengan kearifan lokal Nusantara dalam memelihara keluhuran pekerti.',
+    language: 'Aksara Pegon · Tradisi Pesantren',
+    language_short: 'Aksara Pegon',
+    confidence: 99.3,
+    glyphs: [
+      { char: 'بِ', roman: 'Bi', type: 'Harakat Kasrah', desc: 'Konsonan Ba berharakat Kasrah berbunyi /bi/.' },
+      { char: 'سْ', roman: 's', type: 'Sukun', desc: 'Konsonan Sin berharakat Sukun mematikan vokal /s/.' },
+      { char: 'مِ', roman: 'Mi', type: 'Harakat Kasrah', desc: 'Konsonan Mim berharakat Kasrah /mi/.' },
+      { char: 'نِيَ', roman: 'Niya', type: 'Konsonan & Vokal', desc: 'Konsonan Nun dan Ya membentuk suku kata /niya/.' },
+      { char: 'تْ', roman: 't', type: 'Tanda Mati Sukun', desc: 'Konsonan Ta bertanda Sukun penutup kata /t/.' },
+      { char: 'اِي', roman: 'I', type: 'Alif Ya', desc: 'Vokal panjang awal kata /i/ dalam ortografi Pegon.' },
+      { char: 'ڠ', roman: 'Nga', type: 'Huruf Rekaan Nusantara', desc: 'Konsonan khas Pegon/Jawi "Nga" (Ain bertitik tiga di atas).' },
+      { char: 'ݢ', roman: 'Ga', type: 'Huruf Rekaan Nusantara', desc: 'Konsonan khas Pegon/Jawi "Ga" (Kaf bertitik satu di atas).' }
+    ],
+    lexicon: [
+      { term: 'Bismillah', origin: 'Arab (bi + ismi + Allah)', meaning: 'Dengan menyebut nama Allah yang Maha Pengasih lagi Maha Penyayang.' },
+      { term: 'Niyat ingsun', origin: 'Jawa Kuno / Jawa Pertengahan', meaning: 'Tekad tulus dari lubuk jiwaku.' },
+      { term: 'Kabajikan', origin: 'Jawa / Melayu Kuno', meaning: 'Kebaikan sejati yang membawa maslahat bagi sesama makhluk.' },
+      { term: 'Bhuwana', origin: 'Sanskerta / Jawa Kuno', meaning: 'Jagat semesta persada bumi kehidupan.' }
+    ]
+  },
 ];
 
 export const DEFAULT_HISTORY = [

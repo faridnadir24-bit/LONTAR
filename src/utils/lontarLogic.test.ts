@@ -7,6 +7,8 @@ import {
   prepareSpeechPayload,
   validateScanInput,
   cleanManuscriptText,
+  detectScriptFromUnicode,
+  resolveLanguageAttribution,
   INITIAL_MOCK_HISTORY,
 } from './lontarLogic.ts';
 
@@ -99,4 +101,59 @@ tatastu astu`;
   const bataviaHallucination = `tatarikantirikantarikan
 tatarikantirikantarikan`;
   assert.match(cleanManuscriptText(bataviaHallucination), /swastyastu namaḥ śiwatita/);
+});
+
+test('detectScriptFromUnicode accurately recognizes scripts across all traditions', () => {
+  assert.equal(detectScriptFromUnicode('ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ'), 'javanese');
+  assert.equal(detectScriptFromUnicode('ᬑᬁ ᬅᬯᬶᬖ᭄ᬦᬫᬲ᭄ᬢᬸ'), 'balinese');
+  assert.equal(detectScriptFromUnicode('ᮔᮤᮠᮔ᮪ ᮒᮕᮊ᮪ ᮞᮥᮔ᮪ᮓ'), 'sundanese');
+  assert.equal(detectScriptFromUnicode('ᯅᯉᯪ ᯀᯂᯮ ᯔᯉᯮᯄ᯦᯲'), 'batak');
+  assert.equal(detectScriptFromUnicode('ᨕᨗᨐᨊ ᨔᨙᨓ ᨒᨚᨈᨚ'), 'lontara');
+  assert.equal(detectScriptFromUnicode('بِسْمِ اللَّهِ نِيَاتْ'), 'pegon');
+  assert.equal(detectScriptFromUnicode('𑀲𑀼𑀩𑀲𑁆𑀢𑀼 𑀦𑀫𑀄'), 'kawi');
+  assert.equal(detectScriptFromUnicode('Plain latin text'), null);
+});
+
+test('resolveLanguageAttribution prevents cross-language confusion and auto-corrects mismatches', () => {
+  // If Sunda text was mistakenly tagged as Aksara Jawa by AI, it must be auto-corrected
+  const mismatchedSunda = {
+    title: 'Prasasti Kawali',
+    ancientText: 'ᮔᮤᮠᮔ᮪ ᮒᮕᮊ᮪ ᮞᮥᮔ᮪ᮓ',
+    language: 'Aksara Jawa Kuno',
+    language_short: 'Aksara Jawa',
+  };
+  const resolvedSunda = resolveLanguageAttribution(mismatchedSunda);
+  assert.match(resolvedSunda.language, /Aksara Sunda/);
+  assert.equal(resolvedSunda.language_short, 'Aksara Sunda');
+  assert.equal(resolvedSunda.script_type, 'Aksara Sunda');
+
+  // If Balinese lontar was tagged as Jawa, auto-correct to Bali
+  const mismatchedBali = {
+    title: 'Arjuna Wiwaha',
+    ancientText: 'ᬑᬁ ᬅᬯᬶᬖ᭄ᬦᬫᬲ᭄ᬢᬸ',
+    language: 'Aksara Jawa',
+  };
+  const resolvedBali = resolveLanguageAttribution(mismatchedBali);
+  assert.match(resolvedBali.language, /Aksara Bali/);
+  assert.equal(resolvedBali.language_short, 'Aksara Bali');
+
+  // If Batak pustaha was passed, guarantee Surat Batak
+  const batakData = {
+    title: 'Pustaha Laklak',
+    ancientText: 'ᯅᯉᯪ ᯀᯂᯮ',
+    language: 'Batak',
+  };
+  const resolvedBatak = resolveLanguageAttribution(batakData);
+  assert.match(resolvedBatak.language, /Surat Batak/);
+  assert.equal(resolvedBatak.language_short, 'Surat Batak');
+
+  // If Lontara Bugis was passed, guarantee Aksara Lontara
+  const lontaraData = {
+    title: 'Sureq Galigo',
+    ancientText: 'ᨕᨗᨐᨊ ᨔᨙᨓ',
+    language: 'Bugis',
+  };
+  const resolvedLontara = resolveLanguageAttribution(lontaraData);
+  assert.match(resolvedLontara.language, /Aksara Lontara/);
+  assert.equal(resolvedLontara.language_short, 'Aksara Lontara');
 });

@@ -4,7 +4,15 @@
  */
 
 import { SAMPLES } from './data/manuscripts.js';
-import { esc, showToast, showElement, hideElement, extractGlyphs, cleanManuscriptText } from './utils/epigraphy.js';
+import {
+  esc,
+  showToast,
+  showElement,
+  hideElement,
+  extractGlyphs,
+  cleanManuscriptText,
+  resolveLanguageAttribution,
+} from './utils/epigraphy.js';
 import {
   startCamera,
   stopCamera,
@@ -415,8 +423,11 @@ function renderGlyphBreakdown(glyphs) {
 }
 
 // ── Populate Result Screen ─────────────────────────────────
-export function populateResult(data) {
-  if (!data) return;
+export function populateResult(rawData) {
+  if (!rawData) return;
+
+  // Resolve and normalize language/script attribution based on Unicode codepoint inspection
+  const data = resolveLanguageAttribution(rawData);
 
   const titleEl = document.getElementById('result-title');
   const ancientTextEl = document.getElementById('result-ancient-text');
