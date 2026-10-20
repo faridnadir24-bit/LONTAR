@@ -246,7 +246,7 @@
                       <svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
                       Buka telaah filologi lengkap
                     </span>
-                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-slate-800 dark:group-hover:text-white transition-all">→</span>
+                    <svg class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 group-hover:text-slate-800 dark:group-hover:text-white transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
                   </div>
                 </div>
               </div>
@@ -269,7 +269,7 @@
                     <span class="text-[10px] font-semibold text-white/70 dark:text-zinc-950/70 block mt-1 uppercase tracking-wider">Kamera Optik Real-Time</span>
                   </div>
                 </div>
-                <span class="text-lg font-bold text-white/80 dark:text-zinc-950/80">→</span>
+                <svg class="w-5 h-5 text-white/80 dark:text-zinc-950/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
               </button>
 
             </div>
@@ -328,9 +328,33 @@
                   </span>
                 </div>
 
-                <!-- Sample 2: Sukamerta -->
+                <!-- Sample 2: Prasasti Batavia Kawi -->
                 <div
                   data-sample-idx="2"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 hover:border-slate-300 dark:hover:border-zinc-600 cursor-pointer transition-all flex items-center justify-between group shadow-xs"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-700/60 border border-slate-200 dark:border-zinc-600 flex items-center justify-center text-slate-800 dark:text-zinc-200 shrink-0 font-ancient-script text-xl font-bold">
+                      𑀲
+                    </div>
+                    <div>
+                      <h4 class="text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        Prasasti Batavia Kawi (9 Baris)
+                      </h4>
+                      <p class="text-[11px] text-slate-500 dark:text-zinc-400 font-serif-literary italic">
+                        Epigrafi Museum Batavia · Abad VIII–X M
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1">
+                    Buka
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </span>
+                </div>
+
+                <!-- Sample 3: Sukamerta -->
+                <div
+                  data-sample-idx="3"
                   class="sample-preset-card p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 hover:border-slate-300 dark:hover:border-zinc-600 cursor-pointer transition-all flex items-center justify-between group shadow-xs"
                 >
                   <div class="flex items-center gap-3">
@@ -1128,8 +1152,9 @@
             <p>
               Secara bawaan aplikasi menggunakan server API. Jika kuota gratis server harian tercapai (Rate Limit 429), Anda dapat memasukkan kunci API Google Gemini milik sendiri.
             </p>
-            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800/70 border border-slate-200 dark:border-zinc-700/80 text-[11px] text-slate-600 dark:text-zinc-400">
-              💡 <strong>Gratis tanpa kartu kredit:</strong> Buat kunci dalam 30 detik di <a href="https://aistudio.google.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 underline font-semibold">aistudio.google.com</a>. Kunci disimpan aman hanya di browser perangkat ini.
+            <div class="flex items-start gap-2 p-2.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-900/60 text-[11px] text-slate-700 dark:text-zinc-300">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span><strong>Akses Bebas Kuota:</strong> Buat kunci API gratis di <a href="https://aistudio.google.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 underline font-semibold">aistudio.google.com</a> tanpa kartu kredit. Kunci disimpan lokal di perangkat ini.</span>
             </div>
           </div>
 

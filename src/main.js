@@ -289,7 +289,7 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     if (isQuotaIssue) {
       if (titleEl) titleEl.textContent = 'Batas Kuota Harian AI Tercapai';
       if (descEl) {
-        descEl.innerHTML = 'Kunci API Google Gemini (Free Tier) di server saat ini telah mencapai batas kuota harian dari Google.<br><br>💡 <strong>Solusi Cepat:</strong><br>• Klik tombol biru di bawah untuk <strong>memasukkan API Key Gemini pribadi</strong> (gratis di <em>aistudio.google.com</em>), atau<br>• Gunakan <strong>naskah peraga kurasi</strong> untuk demonstrasi pengujian.';
+        descEl.innerHTML = 'Kunci API Google Gemini (Free Tier) di server saat ini telah mencapai batas kuota harian dari Google.<br><br><span class="font-bold text-white">Opsi Akses:</span><br>• Klik tombol biru di bawah untuk <strong>memasukkan API Key Gemini pribadi</strong> (gratis di <em>aistudio.google.com</em>), atau<br>• Gunakan <strong>naskah peraga kurasi</strong> untuk demonstrasi pengujian.';
       }
       if (sampleBtnLabel) sampleBtnLabel.textContent = 'Gunakan Contoh Naskah Peraga (Demo)';
       if (retryBtnLabel) retryBtnLabel.textContent = 'Tutup';
@@ -451,21 +451,23 @@ export function populateResult(data) {
     if (lineCountBadge) lineCountBadge.textContent = `${data.lineByLine.length} Baris`;
     if (lineListEl) {
       lineListEl.innerHTML = data.lineByLine.map(item => `
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700/80">
-          <div class="flex items-center justify-between mb-1">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-              Baris ${item.line}
+        <div class="p-3.5 rounded-xl bg-slate-50/70 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800 transition-colors hover:border-blue-500/30">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-900/60 px-2 py-0.5 rounded-md">
+              Baris ${String(item.line).padStart(2, '0')}
             </span>
           </div>
-          <p class="font-ancient-script text-[17px] sm:text-[19px] leading-[1.85] text-slate-900 dark:text-white select-all mb-1">
+          <p class="font-ancient-script text-[17px] sm:text-[19px] leading-[1.85] text-slate-900 dark:text-white select-all mb-1.5">
             ${esc(item.script)}
           </p>
-          <p class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 leading-snug mb-1">
-            ${esc(item.transliteration)}
+          <p class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 leading-snug mb-1.5">
+            "${esc(item.transliteration)}"
           </p>
-          <p class="text-[12px] text-slate-800 dark:text-zinc-300 leading-relaxed">
-            ${esc(item.translation)}
-          </p>
+          <div class="border-l-2 border-slate-300 dark:border-zinc-700 pl-2.5 py-0.5">
+            <p class="text-[12px] text-slate-800 dark:text-zinc-200 leading-relaxed">
+              ${esc(item.translation)}
+            </p>
+          </div>
         </div>
       `).join('');
     }

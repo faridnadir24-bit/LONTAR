@@ -87,9 +87,9 @@ export function renderHistory(query = '', onSelectManuscript) {
         </div>
       </div>
 
-      <div class="bg-slate-50 dark:bg-zinc-800/70 rounded-xl px-3.5 py-2.5 mb-2.5 border border-slate-200/80 dark:border-zinc-700/70">
-        <p class="font-javanese text-[15px] font-medium text-slate-900 dark:text-zinc-100 tracking-wider">${esc(item.ancientText)}</p>
-        <p class="font-serif-literary text-[11px] text-slate-600 dark:text-zinc-400 italic mt-0.5">${esc(item.transliteration || '')}</p>
+      <div class="bg-slate-50/80 dark:bg-zinc-800/70 rounded-xl px-3.5 py-2.5 mb-2.5 border border-slate-200/80 dark:border-zinc-700/70">
+        <p class="font-ancient-script text-[15px] font-medium text-slate-900 dark:text-zinc-100 tracking-wider truncate">${esc(item.ancientText)}</p>
+        <p class="font-serif-literary text-[11px] text-slate-600 dark:text-zinc-400 italic mt-0.5 truncate">${esc(item.transliteration || '')}</p>
       </div>
 
       <p class="text-[12px] text-slate-600 dark:text-zinc-300 font-normal line-clamp-2 leading-relaxed mb-3">
@@ -98,7 +98,7 @@ export function renderHistory(query = '', onSelectManuscript) {
 
       <div class="pt-2 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-semibold text-slate-900 dark:text-white">
         <span>Buka Kajian Filologi</span>
-        <span>→</span>
+        <svg class="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 group-hover:translate-x-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
     `;
 

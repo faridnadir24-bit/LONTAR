@@ -115,6 +115,19 @@ export const DEFAULT_HISTORY = [
   },
   {
     id: 'init-2',
+    title: 'Prasasti Batavia — Huruf Kawi Museum',
+    date: '20 Okt 2026 • 16:45',
+    ancientText: SAMPLES[2].ancientText,
+    transliteration: SAMPLES[2].transliteration,
+    translation: SAMPLES[2].translation,
+    philosophical: SAMPLES[2].philosophical,
+    language: SAMPLES[2].language,
+    language_short: SAMPLES[2].language_short,
+    confidence: SAMPLES[2].confidence,
+    lineByLine: SAMPLES[2].lineByLine,
+  },
+  {
+    id: 'init-3',
     title: 'Prasasti Sukamerta — Lempeng III',
     date: '15 Okt 2026 • 09:45',
     ancientText: 'ꦱꦶꦢ꧀ꦣꦶ ꦫꦱ꧀ꦠꦸ',
@@ -124,7 +137,7 @@ export const DEFAULT_HISTORY = [
     language: 'Jawa Kuno · Abad XIII',
     language_short: 'Jawa Kuno',
     confidence: 98.7,
-    glyphs: SAMPLES[2].glyphs,
+    glyphs: SAMPLES[3].glyphs,
   },
 ];
 

@@ -129,7 +129,28 @@ body {
 /* Clean Minimal Scrollbars */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.18); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(15, 23, 42, 0.35); }
-.dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); }
-.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.16); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(15, 23, 42, 0.3); }
+.dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); }
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.35); }
+
+/* Pro Software Tactility & Focus States */
+::selection {
+  background-color: rgba(37, 99, 235, 0.22);
+  color: inherit;
+}
+
+*:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.7);
+  outline-offset: 2px;
+}
+
+.pro-card-hover {
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.16s ease;
+}
+.pro-card-hover:hover {
+  transform: translateY(-1px);
+}
+.pro-card-hover:active {
+  transform: translateY(0);
+}
