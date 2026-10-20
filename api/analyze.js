@@ -94,7 +94,7 @@ export default async function handler(req, res) {
   try {
     const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
+      model: 'gemini-3.5-flash',
       contents: [
         {
           role: 'user',
