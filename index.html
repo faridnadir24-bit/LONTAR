@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="id" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>LONTAR-AI - Ancient Manuscript Scanner & Translator</title>
+    <meta name="description" content="Mobile-first web UI prototype for LONTAR-AI, an AI app that scans ancient Indonesian manuscripts (lontar) and translates them into modern Indonesian." />
+    <meta property="og:title" content="LONTAR-AI - Ancient Manuscript Scanner & Translator" />
+    <meta property="og:description" content="Mobile-first web UI prototype for LONTAR-AI, an AI app that scans ancient Indonesian manuscripts (lontar) and translates them into modern Indonesian." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts: Playfair Display, Inter, Noto Sans Javanese, Noto Sans Balinese -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,600&family=Noto+Sans+Javanese:wght@400;600;700&family=Noto+Sans+Balinese:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gold: {
+                DEFAULT: '#D4AF37',
+                light: '#E8CA65',
+                dark: '#B38F24',
+                glow: 'rgba(212, 175, 55, 0.4)',
+              },
+              brown: {
+                DEFAULT: '#4A3728',
+                dark: '#2E2016',
+                deep: '#1F150E',
+                light: '#6B533E',
+              },
+              forest: {
+                DEFAULT: '#1B4332',
+                dark: '#112C21',
+                light: '#2D6A4F',
+              },
+              cream: {
+                DEFAULT: '#FDF6E3',
+                light: '#FFFDF7',
+                dark: '#F4E8C1',
+              },
+              darkbg: '#171310',
+              darkcard: '#241D17',
+              darksurface: '#2D241C',
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'Georgia', 'serif'],
+              sans: ['"Inter"', 'sans-serif'],
+              javanese: ['"Noto Sans Javanese"', '"Playfair Display"', 'serif'],
+            },
+            boxShadow: {
+              soft: '0 4px 20px -2px rgba(74, 55, 40, 0.08), 0 2px 6px -1px rgba(74, 55, 40, 0.04)',
+              goldglow: '0 0 25px rgba(212, 175, 55, 0.35)',
+              elevated: '0 10px 30px -5px rgba(0, 0, 0, 0.15)',
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Smooth transitions & custom scrollbar */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      h1, h2, h3, .font-title {
+        font-family: 'Playfair Display', serif;
+      }
+      .font-javanese {
+        font-family: 'Noto Sans Javanese', 'Playfair Display', serif;
+      }
+
+      /* Scanning line animation inside camera viewfinder */
+      @keyframes scanBeam {
+        0% {
+          top: 6%;
+          opacity: 0.85;
+        }
+        50% {
+          top: 88%;
+          opacity: 1;
+        }
+        100% {
+          top: 6%;
+          opacity: 0.85;
+        }
+      }
+      .animate-scan {
+        animation: scanBeam 2.4s ease-in-out infinite;
+      }
+
+      /* Pulsing audio wave animation */
+      @keyframes waveBar {
+        0%, 100% { height: 6px; }
+        50% { height: 22px; }
+      }
+      .wave-1 { animation: waveBar 0.9s ease-in-out infinite 0.1s; }
+      .wave-2 { animation: waveBar 0.9s ease-in-out infinite 0.3s; }
+      .wave-3 { animation: waveBar 0.9s ease-in-out infinite 0.5s; }
+      .wave-4 { animation: waveBar 0.9s ease-in-out infinite 0.2s; }
+
+      /* Screen fade transition */
+      .screen-view {
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .screen-hidden {
+        display: none !important;
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      .screen-visible {
+        display: flex !important;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* Subtle parchment texture pattern */
+      .bg-parchment-pattern {
+        background-image: radial-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 0);
+        background-size: 20px 20px;
+      }
+      .dark .bg-parchment-pattern {
+        background-image: radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 0);
+        background-size: 20px 20px;
+      }
+    </style>
+  </head>
+  <body class="bg-[#F0EBE1] dark:bg-[#0E0C0A] text-[#2E2016] dark:text-[#EEDDCC] min-h-screen flex flex-col items-center justify-start antialiased selection:bg-gold/30">
+
+    <!-- Desktop Frame Shell for mobile presentation -->
+    <div class="w-full max-w-[430px] min-h-screen sm:min-h-[880px] sm:my-6 sm:rounded-[36px] sm:border-[6px] sm:border-[#382B20]/40 sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] flex flex-col bg-cream dark:bg-darkbg relative border-x border-[#E2D5C3] dark:border-[#2C231B] overflow-x-hidden sm:overflow-hidden transition-all duration-300">
+
+      <!-- Simulated Mobile Status Bar (Visible on mobile/desktop for realistic prototype feel) -->
+      <div class="w-full px-6 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold text-[#66503E] dark:text-[#A69584] select-none bg-cream/95 dark:bg-darkbg/95">
+        <span class="tracking-tight">09:41</span>
+        <div class="w-20 h-4 bg-black/10 dark:bg-white/10 rounded-full flex items-center justify-center">
+          <div class="w-3 h-3 rounded-full bg-black/20 dark:bg-white/20"></div>
+        </div>
+        <div class="flex items-center gap-1.5 text-[10px]">
+          <span>5G</span>
+          <span>📶</span>
+          <span>🔋</span>
+        </div>
+      </div>
+
+      <!-- TOP APP HEADER -->
+      <header id="main-header" class="sticky top-0 z-40 bg-cream/95 dark:bg-darkbg/95 backdrop-blur-md px-5 py-3 border-b border-[#EADFCB] dark:border-[#2C231B] flex items-center justify-between transition-colors duration-300">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-[12px] bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-white shadow-md shadow-gold/25 font-bold text-lg select-none">
+            📜
+          </div>
+          <div>
+            <h1 class="font-title text-xl font-bold tracking-tight text-brown dark:text-gold flex items-center gap-1.5 leading-none">
+              LONTAR-AI
+              <span class="text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-forest text-white font-sans font-semibold">Pro</span>
+            </h1>
+            <p class="text-[11px] text-[#7A624E] dark:text-[#B5A18E] font-medium tracking-tight mt-0.5">
+              Jembatan Bahasa Kuno ke Modern
+            </p>
+          </div>
+        </div>
+
+        <!-- Header Actions: Dark Mode Toggle -->
+        <div class="flex items-center gap-2">
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label="Alihkan tema gelap/terang"
+            class="w-9 h-9 rounded-full bg-[#EFE6D4] dark:bg-darksurface text-brown dark:text-gold flex items-center justify-center text-sm shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-[#DFD1BD] dark:border-[#3D3025]"
+          >
+            <span id="theme-icon">🌙</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN APP CONTAINER FOR 4 SCREENS -->
+      <main class="flex-1 flex flex-col pb-4 overflow-y-auto relative">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: HOME                             -->
+        <!-- ========================================== -->
+        <section id="screen-home" class="screen-view screen-visible flex-col px-5 py-6 gap-6 bg-parchment-pattern">
+          
+          <!-- Cultural Banner Badge -->
+          <div class="inline-flex items-center gap-2 self-start px-3 py-1 rounded-full bg-forest/10 dark:bg-forest/30 border border-forest/20 text-forest dark:text-[#64B687] text-xs font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-forest animate-pulse"></span>
+            Pelestarian Aksara Nusantara
+          </div>
+
+          <!-- Large Hero Card -->
+          <div class="relative overflow-hidden rounded-[16px] bg-gradient-to-b from-[#FAF2E1] to-[#F3E3C3] dark:from-darkcard dark:to-darksurface border border-gold/30 dark:border-gold/20 shadow-soft p-6 flex flex-col gap-4">
+            
+            <!-- Ornate Background Ornament -->
+            <div class="absolute -right-6 -bottom-6 w-36 h-36 rounded-full bg-gold/10 dark:bg-gold/5 blur-xl pointer-events-none"></div>
+            
+            <div class="flex items-start justify-between">
+              <div class="w-16 h-16 rounded-[16px] bg-gradient-to-tr from-brown to-brown-light dark:from-brown-dark dark:to-brown p-0.5 shadow-md flex items-center justify-center">
+                <div class="w-full h-full rounded-[14px] bg-cream dark:bg-darkcard flex items-center justify-center text-3xl select-none">
+                  📜
+                </div>
+              </div>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-gold/20 text-brown dark:text-gold border border-gold/40">
+                AI Vision V4.2
+              </span>
+            </div>
+
+            <div>
+              <h2 class="font-title text-2xl font-bold text-brown dark:text-[#F7EBD9] leading-snug">
+                Pindai Naskah Lontar, Ungkap Rahasia Leluhur
+              </h2>
+              <p class="text-xs text-[#6B533E] dark:text-[#BFAF9F] mt-2 leading-relaxed">
+                Dekonstruksi aksara kuno nusantara ke dalam terjemahan modern instan bertenaga kecerdasan buatan berbasis model visi multimodal.
+              </p>
+            </div>
+
+            <!-- Manuscript preview ribbon -->
+            <div class="bg-brown/5 dark:bg-black/25 rounded-xl p-3 border border-brown/10 dark:border-white/5 flex items-center justify-between">
+              <div class="flex flex-col">
+                <span class="text-[10px] text-[#8C735E] dark:text-[#9E8B7A] uppercase font-semibold">Aksara Terdukung</span>
+                <span class="font-javanese text-sm font-semibold text-brown dark:text-gold mt-0.5">ꦲꦤꦕꦫꦏ • ᬅᬓ᭄ᬱᬭᬩᬮᬶ</span>
+              </div>
+              <span class="text-xs font-semibold text-forest dark:text-[#52B788]">Akurasi 98.4%</span>
+            </div>
+          </div>
+
+          <!-- Big CTA Button: Mulai Pindai Naskah -->
+          <button
+            id="btn-hero-scan"
+            type="button"
+            class="w-full py-4 px-6 rounded-[16px] bg-gradient-to-r from-gold-light via-gold to-gold-dark hover:brightness-105 active:scale-[0.98] text-[#1D160A] font-bold text-base shadow-lg shadow-gold/30 flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer border border-[#FFE898]/40"
+          >
+            <span class="text-xl">📷</span>
+            <span class="font-semibold tracking-wide">Mulai Pindai Naskah</span>
+            <svg class="w-5 h-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </button>
+
+          <!-- Small Stats Card -->
+          <div class="grid grid-cols-2 gap-3.5">
+            <div class="rounded-[16px] bg-white/80 dark:bg-darkcard border border-[#E8DDCE] dark:border-[#382B20] p-4 flex flex-col justify-between shadow-soft">
+              <div class="flex items-center justify-between text-[#8E7560] dark:text-[#9A8778]">
+                <span class="text-xs font-medium">Digitalisasi</span>
+                <span class="text-base">🗂️</span>
+              </div>
+              <div class="mt-2">
+                <p id="stat-scans-count" class="font-title text-2xl font-bold text-brown dark:text-gold leading-none">12</p>
+                <p class="text-xs font-semibold text-[#5C4533] dark:text-[#C5B3A2] mt-1">Naskah Dipindai</p>
+              </div>
+            </div>
+
+            <div class="rounded-[16px] bg-white/80 dark:bg-darkcard border border-[#E8DDCE] dark:border-[#382B20] p-4 flex flex-col justify-between shadow-soft">
+              <div class="flex items-center justify-between text-[#8E7560] dark:text-[#9A8778]">
+                <span class="text-xs font-medium">Leksikon</span>
+                <span class="text-base">🏛️</span>
+              </div>
+              <div class="mt-2">
+                <p class="font-title text-2xl font-bold text-forest dark:text-[#64B687] leading-none">3</p>
+                <p class="text-xs font-semibold text-[#5C4533] dark:text-[#C5B3A2] mt-1">Bahasa Kuno</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Highlight / Quick Steps -->
+          <div class="rounded-[16px] bg-white/60 dark:bg-darkcard/60 border border-[#EADFCB] dark:border-[#35291F] p-4 flex flex-col gap-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-[#8A715C] dark:text-[#9E8976]">
+              Cara Kerja Cepat
+            </h3>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="flex flex-col items-center p-2 rounded-xl bg-cream/70 dark:bg-darksurface/70">
+                <span class="text-lg mb-1">📸</span>
+                <span class="text-[11px] font-semibold text-brown dark:text-cream">1. Pindai</span>
+                <span class="text-[9px] text-[#7A6552] dark:text-[#9E8B7A]">Arahkan kamera</span>
+              </div>
+              <div class="flex flex-col items-center p-2 rounded-xl bg-cream/70 dark:bg-darksurface/70">
+                <span class="text-lg mb-1">⚡</span>
+                <span class="text-[11px] font-semibold text-brown dark:text-cream">2. Ekstrak</span>
+                <span class="text-[9px] text-[#7A6552] dark:text-[#9E8B7A]">AI OCR lontar</span>
+              </div>
+              <div class="flex flex-col items-center p-2 rounded-xl bg-cream/70 dark:bg-darksurface/70">
+                <span class="text-lg mb-1">🗣️</span>
+                <span class="text-[11px] font-semibold text-brown dark:text-cream">3. Terjemah</span>
+                <span class="text-[9px] text-[#7A6552] dark:text-[#9E8B7A]">Teks & audio</span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: SCAN (CAMERA MOCKUP)             -->
+        <!-- ========================================== -->
+        <section id="screen-scan" class="screen-view screen-hidden flex-col px-5 py-5 gap-5 bg-[#120F0D] text-white min-h-[580px] flex-1 justify-between">
+          
+          <!-- Camera Viewfinder Header -->
+          <div class="flex items-center justify-between z-10">
+            <button
+              id="btn-scan-back"
+              type="button"
+              aria-label="Kembali ke Beranda"
+              class="w-10 h-10 rounded-full bg-black/40 border border-white/10 text-white flex items-center justify-center text-base hover:bg-black/60 active:scale-95 transition-all cursor-pointer"
+            >
+              ←
+            </button>
+            <div class="flex flex-col items-center">
+              <span class="text-xs font-bold uppercase tracking-widest text-gold">Mode Lontar OCR</span>
+              <span class="text-[10px] text-white/60">Deteksi Goresan Ron Tal</span>
+            </div>
+            <button
+              id="btn-flash-toggle"
+              type="button"
+              aria-label="Nyalakan lampu kilat"
+              class="w-10 h-10 rounded-full bg-black/40 border border-white/10 text-gold flex items-center justify-center text-sm hover:bg-black/60 active:scale-95 transition-all cursor-pointer"
+            >
+              ⚡
+            </button>
+          </div>
+
+          <!-- MOCK VIEWFINDER CONTAINER -->
+          <div class="relative w-full flex-1 min-h-[360px] rounded-[16px] overflow-hidden bg-[#1E1712] border-2 border-dashed border-gold shadow-goldglow flex flex-col items-center justify-center select-none">
+            
+            <!-- Simulated Ancient Palm Leaf (Lontar) Backdrop with Real Inscription -->
+            <div class="absolute inset-0 bg-[#281D14] flex flex-col items-center justify-center p-6 opacity-90">
+              <!-- Lontar palm leaf strips -->
+              <div class="w-full max-w-[290px] bg-[#3B291A] rounded-md p-4 border-y border-[#543D27] shadow-inner relative flex flex-col gap-3">
+                
+                <!-- Palm Leaf Fiber lines -->
+                <div class="absolute inset-0 opacity-15 bg-[repeating-linear-gradient(0deg,#000,#000_2px,transparent_2px,transparent_8px)] pointer-events-none"></div>
+                
+                <!-- Top Inscription Row -->
+                <div class="font-javanese text-center text-xl tracking-wider text-[#ECC872] drop-shadow-sm">
+                  ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
+                </div>
+                <!-- Middle Inscription Row -->
+                <div class="font-javanese text-center text-base tracking-widest text-[#D4AF37] opacity-80">
+                  ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ
+                </div>
+                <!-- Bottom Inscription Row -->
+                <div class="font-javanese text-center text-sm tracking-widest text-[#BFA058] opacity-60">
+                  ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ
+                </div>
+
+                <!-- Lontar string hole (traditional tali pengikat lontar) -->
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#1A120B] border border-gold/40 flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-gold/70"></div>
+                </div>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#1A120B] border border-gold/40 flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-gold/70"></div>
+                </div>
+              </div>
+
+              <!-- AI live target bounding box indicator -->
+              <div class="w-[85%] max-w-[270px] mt-4 py-1.5 px-3 rounded-lg bg-black/60 backdrop-blur-sm border border-gold/40 flex items-center justify-between text-[11px] text-gold">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+                  Aksara Jawa Kuno Teridentifikasi
+                </span>
+                <span class="font-bold text-white">98.4%</span>
+              </div>
+            </div>
+
+            <!-- Viewfinder Corner Markers (L-brackets) -->
+            <div class="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-gold pointer-events-none"></div>
+            <div class="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-gold pointer-events-none"></div>
+            <div class="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-gold pointer-events-none"></div>
+            <div class="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold pointer-events-none"></div>
+
+            <!-- Glowing Gold Horizontal Scanning Line Animation -->
+            <div class="absolute left-2 right-2 h-1 bg-gradient-to-r from-transparent via-[#FFF1A8] to-transparent shadow-[0_0_15px_#D4AF37,0_0_28px_#D4AF37] animate-scan pointer-events-none z-10"></div>
+          </div>
+
+          <!-- Instruction Text Below Viewfinder -->
+          <div class="text-center px-4">
+            <p class="text-sm font-semibold text-[#F5E6CC] tracking-wide">
+              Posisikan aksara di dalam bingkai
+            </p>
+            <p class="text-xs text-[#A89382] mt-1">
+              Jaga kamera stabil & pastikan pencahayaan cukup
+            </p>
+          </div>
+
+          <!-- Bottom Controls & Big Circular Capture Button -->
+          <div class="flex items-center justify-around w-full pt-2 pb-3">
+            <!-- Sample manuscript switch helper -->
+            <button
+              id="btn-sample-switch"
+              type="button"
+              class="flex flex-col items-center gap-1 text-[#A89382] hover:text-gold text-xs transition-colors cursor-pointer"
+            >
+              <span class="text-xl">📑</span>
+              <span class="text-[10px]">Contoh Naskah</span>
+            </button>
+
+            <!-- Big Circular Capture Button -->
+            <button
+              id="btn-capture"
+              type="button"
+              aria-label="Ambil foto naskah untuk dipindai"
+              class="w-20 h-20 rounded-full border-4 border-gold p-1 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 shadow-goldglow cursor-pointer relative group bg-black/40"
+            >
+              <div class="w-full h-full rounded-full bg-gradient-to-br from-gold-light via-gold to-gold-dark flex items-center justify-center text-brown-deep shadow-inner">
+                <div class="w-8 h-8 rounded-full border-2 border-brown-deep/30 flex items-center justify-center text-lg">
+                  📸
+                </div>
+              </div>
+            </button>
+
+            <!-- Library / History shortcut -->
+            <button
+              id="btn-scan-to-history"
+              type="button"
+              class="flex flex-col items-center gap-1 text-[#A89382] hover:text-gold text-xs transition-colors cursor-pointer"
+            >
+              <span class="text-xl">📚</span>
+              <span class="text-[10px]">Riwayat</span>
+            </button>
+          </div>
+
+          <!-- Loading Spinner Modal Overlay (Shown when scanning/analyzing) -->
+          <div
+            id="scan-loading-overlay"
+            class="hidden absolute inset-0 z-50 bg-black/85 backdrop-blur-md rounded-[16px] flex flex-col items-center justify-center p-6 text-center gap-4"
+          >
+            <!-- Spinning Gold Ring -->
+            <div class="relative w-20 h-20 flex items-center justify-center">
+              <div class="w-20 h-20 rounded-full border-4 border-gold/20 border-t-gold animate-spin"></div>
+              <span class="absolute text-2xl">📜</span>
+            </div>
+            
+            <div>
+              <p class="font-title text-xl font-bold text-gold">Menganalisis aksara kuno...</p>
+              <p id="scan-step-text" class="text-xs text-[#D8C7B5] mt-1.5 transition-all">
+                Mengekstrak karakter Ron Tal Abad ke-16...
+              </p>
+            </div>
+
+            <!-- Loading Progress bar -->
+            <div class="w-48 h-1.5 bg-white/10 rounded-full overflow-hidden mt-2">
+              <div id="scan-progress-bar" class="h-full bg-gradient-to-r from-gold-light to-gold rounded-full w-0 transition-all duration-[2000ms] ease-out"></div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: RESULT (SPLIT SCREEN)            -->
+        <!-- ========================================== -->
+        <section id="screen-result" class="screen-view screen-hidden flex-col px-4 py-4 gap-3 bg-parchment-pattern">
+          
+          <!-- Result Header -->
+          <div class="flex items-center justify-between pb-0.5">
+            <button
+              id="btn-result-back"
+              type="button"
+              class="inline-flex items-center gap-1.5 text-xs font-semibold text-brown dark:text-gold hover:underline cursor-pointer"
+            >
+              <span>←</span>
+              <span>Pindai Ulang</span>
+            </button>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#8A715C] dark:text-[#A89482]">
+              Hasil Analisis AI
+            </span>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-forest/15 text-forest dark:text-[#52B788] border border-forest/30">
+              Selesai ✓
+            </span>
+          </div>
+
+          <!-- SPLIT SCREEN CONTAINER (Top Brown, Bottom Cream) -->
+          <div class="w-full rounded-[16px] overflow-hidden shadow-soft border border-brown/20 dark:border-gold/30 flex flex-col">
+            
+            <!-- TOP HALF: Brown Background (#4A3728) -->
+            <div class="bg-brown dark:bg-[#342417] text-white p-3.5 flex flex-col gap-2 relative">
+              
+              <!-- Subtle decorative wood grain texture accent -->
+              <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gold/20 border border-gold/40 text-gold-light text-[10px] font-semibold">
+                  <span>📜</span>
+                  <span>Teks Kuno (Aksara Jawa)</span>
+                </span>
+                <span class="text-[10px] text-cream/70 font-mono tracking-tight">
+                  Ron Tal • Abad XVI
+                </span>
+              </div>
+
+              <!-- Ancient Javanese Script Text (Serif & Unicode font) -->
+              <div class="py-1 text-center">
+                <p id="result-ancient-text" class="font-javanese text-2xl sm:text-3xl font-semibold text-[#F7E7B4] tracking-wider leading-relaxed select-all">
+                  ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ
+                </p>
+                <!-- Latin Transliteration helper -->
+                <p id="result-transliteration" class="text-xs text-cream/75 italic mt-0.5 font-serif tracking-wide">
+                  "Sinuhun surya bumi"
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between pt-1.5 border-t border-white/10 text-[9px] text-cream/60">
+                <span>Model: Lontar-Vision-CRNN</span>
+                <span>Tingkat Keyakinan: 99.2%</span>
+              </div>
+            </div>
+
+            <!-- BOTTOM HALF: Cream Background (#FDF6E3) -->
+            <div class="bg-cream dark:bg-darkcard text-[#2E2016] dark:text-[#EEDDCC] p-3.5 flex flex-col gap-2 border-t-2 border-gold/40">
+              
+              <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-forest/10 dark:bg-forest/30 border border-forest/20 text-forest dark:text-[#52B788] text-[10px] font-semibold">
+                  <span>🇮🇩</span>
+                  <span>Terjemahan (Bahasa Indonesia)</span>
+                </span>
+                <span class="text-[10px] text-[#8C735E] dark:text-[#A89482] font-semibold">
+                  Terverifikasi Leksikon
+                </span>
+              </div>
+
+              <!-- Translated Indonesian Text -->
+              <div class="py-1">
+                <p id="result-translated-text" class="text-sm sm:text-base font-medium text-brown-deep dark:text-[#F4ECE1] leading-snug">
+                  Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.
+                </p>
+              </div>
+
+              <!-- Philosophical Context Note -->
+              <div class="p-2.5 rounded-xl bg-brown/5 dark:bg-darksurface/70 border border-brown/10 dark:border-white/5 text-[11px] text-[#6B533E] dark:text-[#BFAF9F] flex items-start gap-2">
+                <span class="text-gold text-xs mt-0.5">💡</span>
+                <p class="leading-snug">
+                  <strong class="font-semibold text-brown dark:text-gold">Konteks Filosofis:</strong> Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ACTION BUTTONS: Play Audio & Simpan ke Riwayat -->
+          <div class="flex flex-col gap-2.5 pt-0.5">
+            
+            <!-- Play Audio Button (Web Speech API) -->
+            <button
+              id="btn-play-audio"
+              type="button"
+              class="w-full py-3 px-4 rounded-[16px] bg-forest hover:bg-forest-dark text-white font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#2D6A4F]"
+            >
+              <span id="audio-btn-icon" class="text-base">🔊</span>
+              <span id="audio-btn-label">Putar Audio (Bahasa Indonesia)</span>
+              
+              <!-- Animated Soundwaves (hidden when idle) -->
+              <div id="audio-wave-container" class="hidden items-center gap-1 ml-2">
+                <span class="w-1 bg-gold rounded-full wave-1 inline-block"></span>
+                <span class="w-1 bg-gold rounded-full wave-2 inline-block"></span>
+                <span class="w-1 bg-gold rounded-full wave-3 inline-block"></span>
+                <span class="w-1 bg-gold rounded-full wave-4 inline-block"></span>
+              </div>
+            </button>
+
+            <!-- Simpan ke Riwayat Button (localStorage) -->
+            <button
+              id="btn-save-history"
+              type="button"
+              class="w-full py-3 px-4 rounded-[16px] bg-gradient-to-r from-gold-light via-gold to-gold-dark hover:brightness-105 active:scale-[0.98] text-brown-deep font-bold text-xs sm:text-sm shadow-md shadow-gold/25 transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#FFE898]/40"
+            >
+              <span id="save-btn-icon">💾</span>
+              <span id="save-btn-label">Simpan ke Riwayat</span>
+            </button>
+
+          </div>
+
+          <!-- Toast notification for save / speech -->
+          <div
+            id="result-toast"
+            class="hidden transform transition-all duration-300 py-2 px-4 rounded-xl bg-brown-dark text-gold text-xs font-semibold shadow-lg text-center border border-gold/30"
+          >
+            Naskah berhasil disimpan ke riwayat!
+          </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: HISTORY                          -->
+        <!-- ========================================== -->
+        <section id="screen-history" class="screen-view screen-hidden flex-col px-5 py-6 gap-5 bg-parchment-pattern">
+          
+          <!-- History Header -->
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-title text-2xl font-bold text-brown dark:text-gold leading-tight">
+                Riwayat Naskah
+              </h2>
+              <p class="text-xs text-[#7A624E] dark:text-[#A89482] mt-0.5">
+                Koleksi naskah yang pernah dipindai
+              </p>
+            </div>
+            <button
+              id="btn-clear-history"
+              type="button"
+              class="text-xs font-semibold text-[#8C3A3A] dark:text-[#E07A5F] hover:underline cursor-pointer"
+            >
+              Hapus Semua
+            </button>
+          </div>
+
+          <!-- Search or Filter Bar -->
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-[#8E7560]">🔍</span>
+            <input
+              id="history-search"
+              type="text"
+              placeholder="Cari naskah atau terjemahan..."
+              class="w-full pl-10 pr-4 py-2.5 rounded-[14px] bg-white dark:bg-darkcard border border-[#E0D4C3] dark:border-[#382B20] text-xs text-brown dark:text-cream placeholder-[#A08976] focus:outline-none focus:border-gold transition-colors"
+            />
+          </div>
+
+          <!-- HISTORY LIST CONTAINER -->
+          <div id="history-list-container" class="flex flex-col gap-3.5">
+            <!-- Dynamic cards will be rendered here by JavaScript -->
+          </div>
+
+          <!-- EMPTY STATE DESIGN (Shown if history is empty) -->
+          <div
+            id="history-empty-state"
+            class="hidden flex-col items-center justify-center p-8 text-center rounded-[16px] bg-white/70 dark:bg-darkcard/70 border border-dashed border-gold/40 shadow-soft gap-4 my-4"
+          >
+            <div class="w-16 h-16 rounded-full bg-gold/15 flex items-center justify-center text-3xl">
+              📜
+            </div>
+            <div>
+              <h3 class="font-title text-lg font-bold text-brown dark:text-gold">
+                Belum Ada Riwayat Naskah
+              </h3>
+              <p class="text-xs text-[#7A624E] dark:text-[#9E8B7A] max-w-xs mt-1 leading-relaxed">
+                Pindai manuskrip lontar pertamamu untuk mulai melestarikan warisan leluhur nusantara.
+              </p>
+            </div>
+            <button
+              id="btn-empty-scan"
+              type="button"
+              class="py-2.5 px-5 rounded-[12px] bg-gold hover:bg-gold-light text-brown-deep font-bold text-xs shadow-md transition-all cursor-pointer"
+            >
+              Pindai Naskah Sekarang
+            </button>
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- BOTTOM NAVIGATION (Fixed at bottom of mobile frame) -->
+      <nav id="bottom-nav" class="sticky bottom-0 w-full z-40 bg-cream/95 dark:bg-darkbg/95 backdrop-blur-md border-t border-[#E8DDCE] dark:border-[#2C231B] px-6 py-2 flex items-center justify-around shadow-lg transition-colors duration-300">
+        
+        <!-- Tab 1: Home -->
+        <button
+          id="nav-home"
+          type="button"
+          class="flex flex-col items-center justify-center gap-1 text-[#7A624E] dark:text-[#A89482] transition-colors py-1 px-3 cursor-pointer group"
+        >
+          <span class="text-xl group-hover:scale-110 transition-transform">🏠</span>
+          <span class="nav-label text-[10px] font-semibold tracking-tight">Beranda</span>
+          <span class="nav-dot w-1.5 h-1.5 rounded-full bg-gold opacity-100 transition-opacity"></span>
+        </button>
+
+        <!-- Tab 2: Scan -->
+        <button
+          id="nav-scan"
+          type="button"
+          class="flex flex-col items-center justify-center gap-1 text-[#7A624E] dark:text-[#A89482] transition-colors py-1 px-3 cursor-pointer group"
+        >
+          <span class="text-xl group-hover:scale-110 transition-transform">📷</span>
+          <span class="nav-label text-[10px] font-semibold tracking-tight">Pindai</span>
+          <span class="nav-dot w-1.5 h-1.5 rounded-full bg-gold opacity-0 transition-opacity"></span>
+        </button>
+
+        <!-- Tab 3: History -->
+        <button
+          id="nav-history"
+          type="button"
+          class="flex flex-col items-center justify-center gap-1 text-[#7A624E] dark:text-[#A89482] transition-colors py-1 px-3 cursor-pointer group"
+        >
+          <span class="text-xl group-hover:scale-110 transition-transform">📚</span>
+          <span class="nav-label text-[10px] font-semibold tracking-tight">Riwayat</span>
+          <span class="nav-dot w-1.5 h-1.5 rounded-full bg-gold opacity-0 transition-opacity"></span>
+        </button>
+
+      </nav>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- VANILLA JAVASCRIPT APPLICATION LOGIC                           -->
+    <!-- ============================================================== -->
+    <script>
+      (function () {
+        'use strict';
+
+        // --- Mock Presets for Ancient Lontar Translations ---
+        const SAMPLE_MANUSCRIPTS = [
+          {
+            title: 'Lontar Surya Kencana - Lempeng I',
+            ancientText: 'ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ',
+            transliteration: 'Sinuhun surya bumi',
+            translation: 'Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk.',
+            philosophical: 'Simbol kebajikan penguasa yang mengayomi seluruh rakyat tanpa diskriminasi.',
+            language: 'Aksara Jawa',
+            icon: '📜',
+          },
+          {
+            title: 'Kakawin Sutasoma - Pupuh 139',
+            ancientText: 'ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ',
+            transliteration: 'Bhinneka Tunggal Ika tan hana dharma mangrwa',
+            translation: 'Berbeda-beda tetapi tetap satu jiwa, tiada kebenaran yang mendua di alam semesta.',
+            philosophical: 'Prinsip toleransi dan persatuan adiluhung bagi keberagaman nusantara.',
+            language: 'Kawi / Jawa Kuno',
+            icon: '📜',
+          },
+          {
+            title: 'Prasasti Sukamerta - Lempeng III',
+            ancientText: 'ꦱꦶꦢ꧀ꦣꦶ ꦫꦱ꧀ꦠꦸ',
+            transliteration: 'Siddhi rastu tatastu astu',
+            translation: 'Semoga berhasil dan diberkahi keselamatan bagi segenap warga desa serta generasi penerus.',
+            philosophical: 'Doa pembuka untuk keberkahan tanah air dan ketenteraman masyarakat.',
+            language: 'Jawa Kuno',
+            icon: '🪨',
+          },
+        ];
+
+        let currentSampleIndex = 0;
+        let activeScreenId = 'screen-home';
+        let isSpeaking = false;
+        let speechUtterance = null;
+
+        // Initial default 3 mock saved scans for History
+        const DEFAULT_HISTORY = [
+          {
+            id: 'lontar-init-1',
+            title: 'Kakawin Sutasoma - Pupuh 139',
+            date: '18 Okt 2026 • 14:20',
+            ancientText: 'ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ',
+            transliteration: 'Bhinneka Tunggal Ika',
+            translation: 'Bhinneka Tunggal Ika tan hana dharma mangrwa (Berbeda-beda tetapi tetap satu jiwa).',
+            language: 'Kawi / Jawa Kuno',
+            icon: '📜',
+          },
+          {
+            id: 'lontar-init-2',
+            title: 'Prasasti Sukamerta - Lempeng III',
+            date: '15 Okt 2026 • 09:45',
+            ancientText: 'ꦱꦶꦢ꧀ꦣꦶ ꦫꦱ꧀ꦠꦸ',
+            transliteration: 'Siddhi rastu',
+            translation: 'Semoga berhasil dan diberkahi keselamatan bagi segenap warga desa serta generasi penerus.',
+            language: 'Jawa Kuno',
+            icon: '🪨',
+          },
+          {
+            id: 'lontar-init-3',
+            title: 'Babad Tanah Jawi - Pupuh Sinom',
+            date: '12 Okt 2026 • 16:10',
+            ancientText: 'ꦤꦸꦭꦢ ꦭꦏꦸ ꦲꦸꦠꦩ',
+            transliteration: 'Nulada laku utama',
+            translation: 'Meneladani perbuatan utama yang luhur budi pekerti demi kedamaian negeri.',
+            language: 'Aksara Jawa',
+            icon: '📖',
+          },
+        ];
+
+        // --- LocalStorage History Management ---
+        function getSavedHistory() {
+          try {
+            const data = localStorage.getItem('lontar_history');
+            if (!data) {
+              localStorage.setItem('lontar_history', JSON.stringify(DEFAULT_HISTORY));
+              return DEFAULT_HISTORY;
+            }
+            return JSON.parse(data);
+          } catch (e) {
+            console.error('Error reading localStorage:', e);
+            return DEFAULT_HISTORY;
+          }
+        }
+
+        function saveHistoryToStorage(items) {
+          try {
+            localStorage.setItem('lontar_history', JSON.stringify(items));
+            updateScansCountBadge();
+          } catch (e) {
+            console.error('Error writing localStorage:', e);
+          }
+        }
+
+        function updateScansCountBadge() {
+          const items = getSavedHistory();
+          const countElem = document.getElementById('stat-scans-count');
+          if (countElem) {
+            // Requirement specifies: "12 Naskah Dipindai" initially, incrementing when new scans are added
+            const totalCount = 12 + Math.max(0, items.length - 3);
+            countElem.textContent = totalCount;
+          }
+        }
+
+        // --- Screen Navigation ---
+        const screens = {
+          'screen-home': document.getElementById('screen-home'),
+          'screen-scan': document.getElementById('screen-scan'),
+          'screen-result': document.getElementById('screen-result'),
+          'screen-history': document.getElementById('screen-history'),
+        };
+
+        const navButtons = {
+          'screen-home': document.getElementById('nav-home'),
+          'screen-scan': document.getElementById('nav-scan'),
+          'screen-history': document.getElementById('nav-history'),
+        };
+
+        function switchScreen(targetScreenId) {
+          if (!screens[targetScreenId]) return;
+
+          // Stop audio if navigating away from Result
+          if (isSpeaking && targetScreenId !== 'screen-result') {
+            stopAudio();
+          }
+
+          // Hide all screens with smooth fade transition
+          Object.keys(screens).forEach(id => {
+            const screen = screens[id];
+            if (id === targetScreenId) {
+              screen.classList.remove('screen-hidden');
+              screen.classList.add('screen-visible');
+            } else {
+              screen.classList.remove('screen-visible');
+              screen.classList.add('screen-hidden');
+            }
+          });
+
+          activeScreenId = targetScreenId;
+
+          // Update bottom navigation active styling
+          updateBottomNavState(targetScreenId);
+
+          // Scroll main frame to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          // If history screen opened, refresh list
+          if (targetScreenId === 'screen-history') {
+            renderHistoryList();
+          }
+        }
+
+        function updateBottomNavState(currentScreen) {
+          const tabMapping = {
+            'screen-home': 'screen-home',
+            'screen-scan': 'screen-scan',
+            'screen-result': 'screen-scan', // result is tied to scan flow
+            'screen-history': 'screen-history',
+          };
+
+          const activeTabKey = tabMapping[currentScreen] || 'screen-home';
+
+          Object.keys(navButtons).forEach(id => {
+            const btn = navButtons[id];
+            if (!btn) return;
+            const label = btn.querySelector('.nav-label');
+            const dot = btn.querySelector('.nav-dot');
+
+            if (id === activeTabKey) {
+              btn.classList.add('text-gold');
+              btn.classList.remove('text-[#7A624E]', 'dark:text-[#A89482]');
+              if (label) {
+                label.classList.add('text-gold', 'font-bold');
+                label.classList.remove('text-[#7A624E]', 'dark:text-[#A89482]');
+              }
+              if (dot) {
+                dot.classList.remove('opacity-0');
+                dot.classList.add('opacity-100');
+              }
+            } else {
+              btn.classList.remove('text-gold');
+              btn.classList.add('text-[#7A624E]', 'dark:text-[#A89482]');
+              if (label) {
+                label.classList.remove('text-gold', 'font-bold');
+                label.classList.add('text-[#7A624E]', 'dark:text-[#A89482]');
+              }
+              if (dot) {
+                dot.classList.remove('opacity-100');
+                dot.classList.add('opacity-0');
+              }
+            }
+          });
+        }
+
+        // --- Dark Mode Toggle ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const htmlElement = document.documentElement;
+
+        function applyTheme(isDark) {
+          if (isDark) {
+            htmlElement.classList.add('dark');
+            htmlElement.classList.remove('light');
+            themeIcon.textContent = '☀️';
+            try { localStorage.setItem('lontar_theme', 'dark'); } catch(e){}
+          } else {
+            htmlElement.classList.remove('dark');
+            htmlElement.classList.add('light');
+            themeIcon.textContent = '🌙';
+            try { localStorage.setItem('lontar_theme', 'light'); } catch(e){}
+          }
+        }
+
+        // Initialize theme preference
+        const savedTheme = localStorage.getItem('lontar_theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          applyTheme(true);
+        } else {
+          applyTheme(false);
+        }
+
+        themeToggleBtn.addEventListener('click', function () {
+          const isCurrentlyDark = htmlElement.classList.contains('dark');
+          applyTheme(!isCurrentlyDark);
+        });
+
+        // --- Navigation Event Listeners ---
+        document.getElementById('nav-home').addEventListener('click', () => switchScreen('screen-home'));
+        document.getElementById('nav-scan').addEventListener('click', () => switchScreen('screen-scan'));
+        document.getElementById('nav-history').addEventListener('click', () => switchScreen('screen-history'));
+
+        document.getElementById('btn-hero-scan').addEventListener('click', () => switchScreen('screen-scan'));
+        document.getElementById('btn-scan-back').addEventListener('click', () => switchScreen('screen-home'));
+        document.getElementById('btn-result-back').addEventListener('click', () => switchScreen('screen-scan'));
+        document.getElementById('btn-scan-to-history').addEventListener('click', () => switchScreen('screen-history'));
+        document.getElementById('btn-empty-scan').addEventListener('click', () => switchScreen('screen-scan'));
+
+        // --- Camera Flash Toggle ---
+        const btnFlash = document.getElementById('btn-flash-toggle');
+        let isFlashOn = false;
+        btnFlash.addEventListener('click', () => {
+          isFlashOn = !isFlashOn;
+          btnFlash.classList.toggle('text-gold', isFlashOn);
+          btnFlash.classList.toggle('bg-gold/20', isFlashOn);
+        });
+
+        // --- Sample Manuscript Switcher ---
+        const btnSampleSwitch = document.getElementById('btn-sample-switch');
+        btnSampleSwitch.addEventListener('click', () => {
+          currentSampleIndex = (currentSampleIndex + 1) % SAMPLE_MANUSCRIPTS.length;
+          const current = SAMPLE_MANUSCRIPTS[currentSampleIndex];
+          showToast(`Contoh diubah: ${current.title}`);
+        });
+
+        // --- Scan & Capture Interaction with 2s Loading ---
+        const btnCapture = document.getElementById('btn-capture');
+        const loadingOverlay = document.getElementById('scan-loading-overlay');
+        const progressBar = document.getElementById('scan-progress-bar');
+        const stepText = document.getElementById('scan-step-text');
+
+        btnCapture.addEventListener('click', function () {
+          // Show analyzing spinner
+          loadingOverlay.classList.remove('hidden');
+          loadingOverlay.classList.add('flex');
+          progressBar.style.width = '0%';
+          stepText.textContent = 'Mendeteksi guratan aksara...';
+
+          setTimeout(() => {
+            progressBar.style.width = '60%';
+            stepText.textContent = 'Mengekstrak karakter Ron Tal Abad ke-16...';
+          }, 600);
+
+          setTimeout(() => {
+            progressBar.style.width = '100%';
+            stepText.textContent = 'Menerjemahkan ke Bahasa Indonesia...';
+          }, 1400);
+
+          // After 2.0s auto-navigate to Result
+          setTimeout(() => {
+            loadingOverlay.classList.remove('flex');
+            loadingOverlay.classList.add('hidden');
+            progressBar.style.width = '0%';
+
+            // Populate current manuscript into Result screen
+            populateResultScreen(SAMPLE_MANUSCRIPTS[currentSampleIndex]);
+            switchScreen('screen-result');
+          }, 2000);
+        });
+
+        function populateResultScreen(data) {
+          document.getElementById('result-ancient-text').textContent = data.ancientText;
+          document.getElementById('result-transliteration').textContent = `"${data.transliteration}"`;
+          document.getElementById('result-translated-text').textContent = data.translation;
+          
+          // Reset save button state
+          const saveLabel = document.getElementById('save-btn-label');
+          saveLabel.textContent = 'Simpan ke Riwayat';
+          document.getElementById('save-btn-icon').textContent = '💾';
+          document.getElementById('btn-save-history').disabled = false;
+        }
+
+        // --- Web Speech API for Audio Reading ---
+        const btnPlayAudio = document.getElementById('btn-play-audio');
+        const audioBtnLabel = document.getElementById('audio-btn-label');
+        const audioBtnIcon = document.getElementById('audio-btn-icon');
+        const audioWaveContainer = document.getElementById('audio-wave-container');
+
+        function stopAudio() {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+          }
+          isSpeaking = false;
+          audioBtnLabel.textContent = 'Putar Audio (Bahasa Indonesia)';
+          audioBtnIcon.textContent = '🔊';
+          audioWaveContainer.classList.remove('flex');
+          audioWaveContainer.classList.add('hidden');
+        }
+
+        function playAudio(textToSpeak) {
+          if (!('speechSynthesis' in window)) {
+            showToast('Browser Anda tidak mendukung Web Speech API');
+            return;
+          }
+
+          window.speechSynthesis.cancel();
+
+          speechUtterance = new SpeechSynthesisUtterance(textToSpeak);
+          speechUtterance.lang = 'id-ID';
+          speechUtterance.rate = 0.95;
+          speechUtterance.pitch = 1.0;
+
+          speechUtterance.onstart = function () {
+            isSpeaking = true;
+            audioBtnLabel.textContent = 'Sedang Membaca...';
+            audioBtnIcon.textContent = '⏹️';
+            audioWaveContainer.classList.remove('hidden');
+            audioWaveContainer.classList.add('flex');
+          };
+
+          speechUtterance.onend = function () {
+            stopAudio();
+          };
+
+          speechUtterance.onerror = function () {
+            stopAudio();
+          };
+
+          window.speechSynthesis.speak(speechUtterance);
+        }
+
+        btnPlayAudio.addEventListener('click', function () {
+          if (isSpeaking) {
+            stopAudio();
+          } else {
+            const text = document.getElementById('result-translated-text').textContent.trim();
+            playAudio(text);
+          }
+        });
+
+        // --- "Simpan ke Riwayat" Interaction ---
+        const btnSaveHistory = document.getElementById('btn-save-history');
+        const saveLabel = document.getElementById('save-btn-label');
+        const saveIcon = document.getElementById('save-btn-icon');
+
+        btnSaveHistory.addEventListener('click', function () {
+          const ancientText = document.getElementById('result-ancient-text').textContent.trim();
+          const translation = document.getElementById('result-translated-text').textContent.trim();
+          const transliteration = document.getElementById('result-transliteration').textContent.replace(/"/g, '').trim();
+
+          const now = new Date();
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+          const dateString = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} • ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+          const newItem = {
+            id: 'lontar-' + Date.now(),
+            title: SAMPLE_MANUSCRIPTS[currentSampleIndex]?.title || 'Lontar Ron Tal Kuno',
+            date: dateString,
+            ancientText: ancientText,
+            transliteration: transliteration,
+            translation: translation,
+            language: SAMPLE_MANUSCRIPTS[currentSampleIndex]?.language || 'Aksara Jawa',
+            icon: SAMPLE_MANUSCRIPTS[currentSampleIndex]?.icon || '📜',
+          };
+
+          const items = getSavedHistory();
+          // Add to front of history
+          items.unshift(newItem);
+          saveHistoryToStorage(items);
+
+          // Update UI
+          saveLabel.textContent = 'Tersimpan ke Riwayat ✓';
+          saveIcon.textContent = '✓';
+          btnSaveHistory.disabled = true;
+
+          showToast('Naskah berhasil disimpan ke Riwayat! ✓');
+        });
+
+        // Toast helper
+        function showToast(msg) {
+          const toast = document.getElementById('result-toast');
+          if (!toast) return;
+          toast.textContent = msg;
+          toast.classList.remove('hidden');
+          setTimeout(() => {
+            toast.classList.add('hidden');
+          }, 3000);
+        }
+
+        // --- Render History Screen ---
+        const historyContainer = document.getElementById('history-list-container');
+        const emptyState = document.getElementById('history-empty-state');
+        const searchInput = document.getElementById('history-search');
+
+        function renderHistoryList(filterQuery = '') {
+          const items = getSavedHistory();
+          const query = filterQuery.toLowerCase().trim();
+          
+          const filtered = query
+            ? items.filter(it => 
+                it.title.toLowerCase().includes(query) ||
+                it.translation.toLowerCase().includes(query) ||
+                (it.transliteration && it.transliteration.toLowerCase().includes(query))
+              )
+            : items;
+
+          historyContainer.innerHTML = '';
+
+          if (filtered.length === 0) {
+            historyContainer.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            emptyState.classList.add('flex');
+            return;
+          }
+
+          historyContainer.classList.remove('hidden');
+          emptyState.classList.remove('flex');
+          emptyState.classList.add('hidden');
+
+          filtered.forEach((item) => {
+            const card = document.createElement('div');
+            card.className =
+              'rounded-[16px] bg-white/90 dark:bg-darkcard border border-[#E5DACB] dark:border-[#382B20] p-4 shadow-soft hover:shadow-md transition-all flex flex-col gap-2.5 cursor-pointer hover:border-gold/50 group';
+
+            card.innerHTML = `
+              <div class="flex items-start justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-xl bg-gold/15 dark:bg-gold/10 text-brown dark:text-gold flex items-center justify-center text-sm shadow-sm select-none">
+                    ${item.icon || '📜'}
+                  </span>
+                  <div>
+                    <h4 class="font-title text-sm font-bold text-brown dark:text-[#F3E7D5] group-hover:text-gold transition-colors leading-tight">
+                      ${escapeHtml(item.title)}
+                    </h4>
+                    <p class="text-[10px] text-[#8C7461] dark:text-[#A08E7F] mt-0.5">
+                      ${escapeHtml(item.date)}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  data-delete-id="${item.id}"
+                  title="Hapus naskah ini"
+                  class="btn-delete-card text-[#A08B7A] hover:text-[#C53030] p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  🗑️
+                </button>
+              </div>
+
+              <!-- Ancient Aksara Snippet -->
+              <div class="bg-brown/5 dark:bg-black/20 rounded-xl px-3 py-2 border border-brown/10 dark:border-white/5 flex items-center justify-between">
+                <span class="font-javanese text-base font-semibold text-brown dark:text-gold truncate max-w-[210px]">
+                  ${escapeHtml(item.ancientText)}
+                </span>
+                <span class="text-[9px] font-semibold uppercase px-2 py-0.5 rounded-full bg-forest/10 dark:bg-forest/30 text-forest dark:text-[#64B687]">
+                  ${escapeHtml(item.language || 'Jawa Kuno')}
+                </span>
+              </div>
+
+              <!-- Snippet of Translation -->
+              <p class="text-xs text-[#523E2F] dark:text-[#CBBBB0] line-clamp-2 leading-relaxed">
+                ${escapeHtml(item.translation)}
+              </p>
+
+              <div class="flex items-center justify-between pt-1 text-[10px] text-gold font-semibold">
+                <span>Buka Hasil Lengkap →</span>
+                <span class="text-[#8C7562] dark:text-[#9F8C7D] font-normal">Tersimpan lokal</span>
+              </div>
+            `;
+
+            // Card click opens Result view
+            card.addEventListener('click', (e) => {
+              if (e.target.closest('.btn-delete-card')) return;
+              populateResultScreen({
+                title: item.title,
+                ancientText: item.ancientText,
+                transliteration: item.transliteration || '',
+                translation: item.translation,
+                philosophical: 'Naskah warisan nusantara dari catatan koleksi pribadi.',
+                language: item.language,
+                icon: item.icon,
+              });
+              switchScreen('screen-result');
+            });
+
+            // Delete single item button
+            const deleteBtn = card.querySelector(`[data-delete-id="${item.id}"]`);
+            if (deleteBtn) {
+              deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteHistoryItem(item.id);
+              });
+            }
+
+            historyContainer.appendChild(card);
+          });
+        }
+
+        function deleteHistoryItem(id) {
+          const items = getSavedHistory().filter(item => item.id !== id);
+          saveHistoryToStorage(items);
+          renderHistoryList(searchInput.value);
+        }
+
+        document.getElementById('btn-clear-history').addEventListener('click', function () {
+          if (confirm('Hapus seluruh riwayat naskah tersimpan?')) {
+            saveHistoryToStorage([]);
+            renderHistoryList();
+          }
+        });
+
+        searchInput.addEventListener('input', function (e) {
+          renderHistoryList(e.target.value);
+        });
+
+        function escapeHtml(str) {
+          if (!str) return '';
+          return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        }
+
+        // Initialize state
+        updateScansCountBadge();
+        renderHistoryList();
+
+      })();
+    </script>
+  </body>
+</html>
