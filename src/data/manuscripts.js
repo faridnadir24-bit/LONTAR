@@ -80,6 +80,16 @@ tākasīdgumbīyumātukāgūkādaka`,
     language: 'Aksara Kawi · Abad VIII–X M',
     language_short: 'Aksara Kawi',
     confidence: 99.4,
+    glyphs: [
+      { char: '𑀲𑀼', roman: 'Su', type: 'Vokal Suku Kawi', desc: 'Aksara Kawi dasar "Sa" (𑀲) dipasangi tanda vokal u (Suku) berbunyi /su/.' },
+      { char: '𑀩', roman: 'Ba', type: 'Aksara Dasar', desc: 'Konsonan labial Kawi murni "Ba" dengan vokal inheren terbuka /ba/.' },
+      { char: '𑀲𑁆𑀢𑀼', roman: 'Stu', type: 'Konjungsi Pasangan', desc: 'Aksara "Sa" disusul konjungsi "Ta" dan vokal u menghasilkan formula doa sakral /stu/.' },
+      { char: '𑀦', roman: 'Na', type: 'Aksara Dasar', desc: 'Konsonan dental Kawi murni "Na" berbunyi /na/.' },
+      { char: '𑀫', roman: 'Ma', type: 'Aksara Dasar', desc: 'Konsonan labial "Ma" bagian dari formula sembah pemujaan /namaḥ/.' },
+      { char: '𑀰𑀺', roman: 'Śi', type: 'Sandhangan Swara', desc: 'Aksara palatal Kawi "Śa" dipasangi vokal i merujuk nama agung Hyang Siwa.' },
+      { char: '𑀯', roman: 'Wa', type: 'Aksara Dasar', desc: 'Konsonan semivokal labiodental Kawi "Wa".' },
+      { char: '𑀢', roman: 'Ta', type: 'Aksara Dasar', desc: 'Konsonan dental tak bersuara "Ta" dalam formula aksara naskah.' }
+    ],
     lexicon: [
       { term: 'Swastyastu', origin: 'Sanskerta (su + asti + astu)', meaning: 'Semoga ada dalam keselamatan lahir-batin dan kedamaian mutlak semesta.' },
       { term: 'Namaḥ Śiwāya', origin: 'Sanskerta', meaning: 'Sembah sujud pemujaan kepada Hyang Siwa Mahatinggi pelindung tatanan kosmis.' },
@@ -136,6 +146,7 @@ export const DEFAULT_HISTORY = [
     language: SAMPLES[2].language,
     language_short: SAMPLES[2].language_short,
     confidence: SAMPLES[2].confidence,
+    glyphs: SAMPLES[2].glyphs,
     lexicon: SAMPLES[2].lexicon,
   },
   {

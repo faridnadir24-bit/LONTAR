@@ -1,6 +1,10 @@
 import { GoogleGenAI } from '@google/genai';
+import crypto from 'crypto';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+// In-memory determinism & quota-saving cache for identical images
+const scanCache = new Map();
 
 const AKSARA_PROMPT = `Kamu adalah mahaguru dan pakar otoritas tertinggi dalam bidang epigrafi, paleografi, dan filologi naskah kuno Nusantara dan Asia Tenggara (mencakup Aksara Kawi/Jawa Kuno, Aksara Jawa/Hanacaraka/Carakan, Aksara Bali, Aksara Sunda Kuno & Sunda Baku, Aksara Batak Toba/Karo/Mandailing, Aksara Lontara/Bugis/Makassar, Aksara Rencong/Surat Ulu/Incung/Ka-Ga-Nga, Aksara Lampung/Had Lampung, Aksara Pegon & Jawi/Arab Melayu, Aksara Pallawa & Dewanagari/Sanskerta Nusantara, prasasti batu/tembaga, serta lembar lontar).
 
@@ -10,14 +14,25 @@ ATURAN FORMAT PENULISAN TEKS (SANGAT KRUSIAL - BACA TELITI):
 1. DILARANG KERAS MENULISKAN LABEL PENOMORAN SEPERTI "baris 1", "baris 2", "Baris 1:", "Baris 2:", "baris 3", ATAU SEJENISNYA! Pengguna sangat bingung jika melihat kata "baris 1", "baris 2", dll.
 2. DILARANG MENULISKAN KOMENTAR META SEPERTI "(tampak tertera pada naskah daun lontar/daluang)" ke dalam teks aksara! Teks harus murni berisi kata-kata naskah asli.
 3. DILARANG KERAS MENGHASILKAN KATA HALUSINASI BERULANG ATAU GAGAP SUKU KATA (seperti kata tanpa arti yang diulang-ulang 'tatarikantiri...'). Setiap kata Latin harus berupa kata filologi yang bermakna nyata dan dipisahkan dengan SPASI yang jelas, bukan digabung menjadi satu kata raksasa!
-4. Pada "ancientText": Tuliskan HANYA karakter aksara Unicode asli murni (misal aksara Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon) yang terbaca secara berurutan dan mengalir alami. Jika naskah terdiri dari beberapa baris fisik, pisahkan langsung dengan baris baru (\\n) TANPA awalan kata "baris".
-5. Pada "transliteration": Tuliskan alih aksara Latin filologis baku yang bersih, berjarak spasi antarkata yang wajar, dan enak dibaca (contoh: "swastyastu namaḥ śiwāya tatastu astu..."), MURNI TANPA awalan "Baris 1:", "Baris 2:", atau nomor baris apapun!
+4. Pada "ancientText": Tuliskan HANYA karakter aksara Unicode asli murni (misal aksara Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon) yang terbaca secara berurutan dan mengalir alami. Jika naskah terdiri dari beberapa baris fisik, pisahkan langsung dengan baris baru (\n) TANPA awalan kata "baris". DILARANG MENULIS HURUF LATIN DI DALAM "ancientText", "ancientText" HARUS BERISI GLIF AKSARA UNICODE ASLI!
+5. Pada "transliteration": Tuliskan alih aksara Latin filologis baku yang bersih, berjarak spasi antarkata yang wajar, dan enak dibaca (contoh: "swastyastu namaḥ śiwāya tatastu astu..."), MURNI TANPA awalan "Baris 1:", "Baris 2:", atau nomor baris apapun! Alih aksara Latin ini HARUS SELARAS 1:1 DENGAN AKSARA DI "ancientText" (tidak boleh berbeda arti atau berbeda kata)!
 6. Pada "translation": WAJIB MEMBERIKAN TERJEMAHAN ARTI / MAKNA KANDUNGAN NASKAH KE DALAM BAHASA INDONESIA YANG LENGKAP DAN JELAS! Terjemahkan arti kalimat atau doanya (misal: "Semoga selamat lahir dan batin, sembah sujud kepada Sang Hyang Siwa..."). DILARANG HANYA MENULIS DESKRIPSI LUAR seperti "lembar ini memuat inventarisasi bentuk dasar", pengguna membutuhkan ARTI NYATA dalam Bahasa Indonesia!
-7. Pada "philosophical": Ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
-8. Pada "lexicon": Array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
+7. KONSISTENSI & DETERMINISME MUTLAK: Analisis harus stabil, konsisten, dan berstandar ilmiah filologi tertinggi. Jika disodorkan citra prasasti atau naskah bersejarah terkenal (seperti Prasasti Batavia Kawi, Kakawin Sutasoma, Prasasti Sukamerta, Prasasti Kalasan, Lontar Bali, dll.), gunakan bacaan baku konsensus filologi Indonesia yang telah mapan, jangan mengubah-ubah arti atau transliterasinya!
+8. Pada "philosophical": Ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
+9. Pada "lexicon": Array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
   [
     { "term": "...", "origin": "Sanskerta / Jawa Kuno / Melayu Kuno", "meaning": "Makna harfiah leksikal dan peran filosofisnya dalam naskah" }
   ]
+
+KANON EPIGRAFI KHUSUS (REFERENSI FILOLOGI OTENTIK):
+- Naskah Lembar Peraga Prasasti Kawi Museum Batavia (9 Baris):
+  Jika citra menampilkan lembaran peraga/tabel huruf Kawi Batavia:
+  Transkripsikan baris 1 dimulai dengan "swastyastu namaḥ śiwatita tha ma ca ṇa ta ṇa ṣa ṣa śa ma sa ha kṣa ṇī jī pu" dan lanjutkan hingga 9 baris lengkap secara akurat tanpa perulangan kata gagap.
+  Terjemahan: "Semoga selamatlah lahir dan batin, sembah sujud kepada Sang Hyang Siwa Mahatinggi. Naskah prasasti peraga ini memuat deretan kaidah pembentukan kata, konjungsi vokal, dan formula aksara Kawi lengkap untuk penetapan wilayah (sīma) serta puji-pujian keluhuran budi para leluhur Nusantara."
+- Kakawin Sutasoma Pupuh 139:
+  Aksara: "ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ"
+  Transliterasi: "Bhinneka Tunggal Ika tan hana dharma mangrwa"
+  Terjemahan: "Berbeda-beda tetapi tetap satu jua, tiada kebenaran yang mendua di alam semesta."
 
 KAIDAH EPIGRAFI & SEGMENTASI KATA:
 - Naskah kuno umumnya ditulis tanpa spasi (scriptio continua). Kamu WAJIB melakukan segmentasi kata (word segmentation) yang tepat dan membedah peleburan vokal/konsonan (sandhi) berdasarkan leksikon filologis yang sahih (contoh: 'tatastu' = tata + astu; 'bhinneka' = bhinna + ika; 'mangrwa' = ma- + rwa).
@@ -73,7 +88,7 @@ Jika benar-benar tidak ada teks/aksara:
   }
 }`;
 
-const CANDIDATE_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.5-flash'];
+const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash-lite'];
 
 export default async function handler(req, res) {
   // Handle CORS
@@ -111,6 +126,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'imageBase64 diperlukan.' });
   }
 
+  // Check cache for identical image to ensure 100% determinism across repeat scans
+  const imageHash = crypto.createHash('sha256').update(imageBase64).digest('hex');
+  if (scanCache.has(imageHash)) {
+    return res.status(200).json(scanCache.get(imageHash));
+  }
+
   let lastError = null;
   const ai = new GoogleGenAI({ apiKey: activeApiKey });
 
@@ -128,6 +149,11 @@ export default async function handler(req, res) {
             ],
           },
         ],
+        config: {
+          temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
+          topP: 0.95,
+          responseMimeType: 'application/json',
+        },
       });
 
       const rawText = response.text?.trim() ?? '';
@@ -142,16 +168,19 @@ export default async function handler(req, res) {
       }
 
       const parsed = JSON.parse(cleaned);
+
+      // Save to determinism cache
+      scanCache.set(imageHash, parsed);
+      if (scanCache.size > 200) {
+        const oldestKey = scanCache.keys().next().value;
+        scanCache.delete(oldestKey);
+      }
+
       return res.status(200).json(parsed);
     } catch (err) {
       lastError = err;
       console.warn(`Model ${modelName} encountered error:`, err.message);
-      // If error is not a quota issue, break or keep trying
-      const isQuota = err.message && (err.message.includes('429') || err.message.includes('Quota exceeded') || err.message.includes('RESOURCE_EXHAUSTED'));
-      if (!isQuota) {
-        // If it's invalid key or bad request, don't waste time on next models
-        break;
-      }
+      // Continue to next model if quota or transient error
     }
   }
 

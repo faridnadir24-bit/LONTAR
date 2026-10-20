@@ -2,6 +2,20 @@
  * AI Vision Multimodal Analysis API Service for LONTAR.ai
  */
 
+// Client-side cache to guarantee 100% deterministic results when scanning identical images
+const clientAnalysisCache = new Map();
+
+function getImageFingerprint(base64Data) {
+  if (!base64Data) return '';
+  const len = base64Data.length;
+  const head = base64Data.slice(0, 120);
+  const q1 = base64Data.slice(Math.floor(len * 0.25), Math.floor(len * 0.25) + 120);
+  const mid = base64Data.slice(Math.floor(len * 0.5), Math.floor(len * 0.5) + 120);
+  const q3 = base64Data.slice(Math.floor(len * 0.75), Math.floor(len * 0.75) + 120);
+  const tail = base64Data.slice(-120);
+  return `${len}:${head}:${q1}:${mid}:${q3}:${tail}`;
+}
+
 export function getCustomApiKey() {
   try {
     return localStorage.getItem('lontar_custom_gemini_key') || '';
@@ -23,6 +37,11 @@ export function setCustomApiKey(key) {
 }
 
 export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jpeg') {
+  const fingerprint = getImageFingerprint(base64Data);
+  if (fingerprint && clientAnalysisCache.has(fingerprint)) {
+    return JSON.parse(JSON.stringify(clientAnalysisCache.get(fingerprint)));
+  }
+
   const customKey = getCustomApiKey();
   const headers = { 'Content-Type': 'application/json' };
   if (customKey) {
@@ -48,5 +67,14 @@ export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jp
     throw err;
   }
 
-  return await response.json();
+  const data = await response.json();
+  if (fingerprint && data && data.hasScript !== undefined) {
+    clientAnalysisCache.set(fingerprint, data);
+    if (clientAnalysisCache.size > 100) {
+      const oldestKey = clientAnalysisCache.keys().next().value;
+      clientAnalysisCache.delete(oldestKey);
+    }
+  }
+
+  return data;
 }

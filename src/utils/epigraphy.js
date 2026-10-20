@@ -126,8 +126,8 @@ export function extractGlyphs(ancientText, translit) {
   const result = [];
   const seenChars = new Set();
 
-  // Pattern covering all ancient Nusantara scripts (Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon)
-  const scriptRegex = /[\uA980-\uA9DF\u1B00-\u1B7F\u1B80-\u1BBF\u1BC0-\u1BFF\u1A00-\u1A1F\u0600-\u06FF\u{11F00}-\u{11F5F}]+/gu;
+  // Pattern covering all ancient Nusantara scripts (Kawi, Pallawa, Jawa, Bali, Sunda, Batak, Lontara, Pegon)
+  const scriptRegex = /[\uA980-\uA9DF\u1B00-\u1B7F\u1B80-\u1BBF\u1BC0-\u1BFF\u1A00-\u1A1F\u0600-\u06FF\u{11000}-\u{1107F}\u{11F00}-\u{11F5F}]+/gu;
 
   let wordPtr = 0;
   for (let wIdx = 0; wIdx < rawTokens.length && result.length < 12; wIdx++) {
@@ -157,9 +157,9 @@ export function extractGlyphs(ancientText, translit) {
       } else if (tok.includes('ꦁ') || tok.includes('ꦂ') || tok.includes('ᬂ') || tok.includes('ᬃ')) {
         type = 'Panyigeg Nasal / Getar';
         desc = 'Diakritik konsonan penutup suku kata (/ng/ atau /r/).';
-      } else if (/[\u{11F00}-\u{11F5F}]/u.test(tok)) {
-        type = 'Aksara Kawi Kuno';
-        desc = 'Karakter aksara Kawi dari periode Jawa Kuno abad VIII–XV Masehi.';
+      } else if (/[\u{11000}-\u{1107F}\u{11F00}-\u{11F5F}]/u.test(tok)) {
+        type = 'Aksara Kawi / Pallawa Kuno';
+        desc = 'Karakter aksara Kawi/Pallawa dari periode Nusantara Kuno abad VIII–XV Masehi.';
       } else if (/[\u1B00-\u1B7F]/u.test(tok)) {
         type = 'Aksara Bali';
         desc = 'Karakter Carakan Bali yang berakar dari aksara Kawi tradisi lontar.';
