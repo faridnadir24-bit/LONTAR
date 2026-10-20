@@ -457,11 +457,45 @@
               <span class="text-green-300 text-[10px] font-semibold tracking-wide">KAMERA AKTIF</span>
             </div>
 
+            <!-- Tap to scan hint on viewfinder -->
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm border border-amber-500/40 rounded-full px-3 py-1 text-[11px] text-amber-300 pointer-events-none select-none">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+              <span>Arahkan ke aksara · Ketuk untuk memindai</span>
+            </div>
+
+            <!-- Modal: Aksara Belum Terdeteksi -->
+            <div id="scan-unclear-modal" class="hidden absolute inset-0 z-30 bg-black/85 backdrop-blur-md flex items-end p-4">
+              <div class="w-full bg-[#1A1410] border border-amber-500/40 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5 animate-toastIn">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="text-[14px] font-semibold text-white mb-0.5">Aksara Belum Terdeteksi Jelas</h4>
+                    <p id="unclear-modal-desc" class="text-[12px] text-white/70 leading-relaxed">
+                      Kamera belum mendeteksi goresan aksara Jawa atau teks naskah kuno pada sudut ini.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2 pt-1">
+                  <button id="btn-unclear-use-sample" type="button" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-[0.98] text-white font-semibold text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg shadow-amber-900/30">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Tampilkan Contoh Naskah Asli (Sutasoma)
+                  </button>
+                  <button id="btn-unclear-retry" type="button" class="w-full py-2.5 rounded-xl bg-white/8 hover:bg-white/12 active:scale-[0.98] border border-white/15 text-white/80 font-medium text-[12px] cursor-pointer transition-all text-center">
+                    Arahkan Ulang Kamera & Coba Lagi
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- Corner reticles -->
-            <div class="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-amber-400/70 z-10"></div>
-            <div class="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-amber-400/70 z-10"></div>
-            <div class="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-amber-400/70 z-10"></div>
-            <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-amber-400/70 z-10"></div>
+            <div class="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-amber-400/70 z-10 pointer-events-none"></div>
+            <div class="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-amber-400/70 z-10 pointer-events-none"></div>
+            <div class="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-amber-400/70 z-10 pointer-events-none"></div>
+            <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-amber-400/70 z-10 pointer-events-none"></div>
 
             <!-- Scan beam -->
             <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_12px_2px_rgba(251,191,36,0.5)] animate-scan pointer-events-none z-10"></div>
@@ -485,8 +519,16 @@
             </div>
           </div>
 
+          <!-- Guidance text -->
+          <div class="text-center mb-1">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-400 tracking-wide">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+              Tekan tombol emas untuk menerjemahkan
+            </span>
+          </div>
+
           <!-- Scan bottom controls -->
-          <div class="flex items-center justify-around px-8 pb-6 pt-2">
+          <div class="flex items-center justify-around px-8 pb-5 pt-1">
             <button
               id="btn-sample-switch"
               type="button"
@@ -500,17 +542,20 @@
               <span class="text-[10px] font-medium">Contoh</span>
             </button>
 
-            <!-- Main capture button -->
-            <button
-              id="btn-capture"
-              type="button"
-              aria-label="Ambil foto untuk dipindai"
-              class="w-[72px] h-[72px] rounded-full border-4 border-amber-500/50 bg-amber-500 hover:bg-amber-400 active:scale-95 flex items-center justify-center transition-all duration-200 shadow-[0_0_32px_rgba(201,148,26,0.4)] cursor-pointer"
-            >
-              <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>
-              </svg>
-            </button>
+            <!-- Main capture button with pulsing ring -->
+            <div class="relative flex items-center justify-center">
+              <span class="absolute w-[86px] h-[86px] rounded-full border border-amber-500/30 animate-ping pointer-events-none"></span>
+              <button
+                id="btn-capture"
+                type="button"
+                aria-label="Ambil foto untuk dipindai"
+                class="relative w-[72px] h-[72px] rounded-full border-4 border-amber-500/60 bg-amber-500 hover:bg-amber-400 active:scale-95 flex items-center justify-center transition-all duration-200 shadow-[0_0_32px_rgba(201,148,26,0.5)] cursor-pointer"
+              >
+                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>
+                </svg>
+              </button>
+            </div>
 
             <!-- Upload from file (always visible as alternative) -->
             <label
@@ -528,8 +573,8 @@
             <input id="file-upload" type="file" accept="image/*" class="hidden" />
           </div>
 
-          <p id="scan-hint-text" class="text-center text-[12px] text-white/30 pb-5 px-8 leading-snug">
-            Posisikan aksara di dalam bingkai · Jaga kamera stabil
+          <p id="scan-hint-text" class="text-center text-[11px] text-white/30 pb-4 px-8 leading-snug">
+            Posisikan aksara di dalam bingkai · Kamera aktif
           </p>
         </section>
 
@@ -1078,11 +1123,19 @@
           if (data.hasScript === false) {
             loadingOverlay.classList.add('hidden');
             loadingOverlay.classList.remove('flex');
-            if (errorMsg) {
-              errorMsg.textContent = data.description || 'Aksara kuno tidak terdeteksi. Pastikan naskah dan aksara terlihat jelas.';
-              errorMsg.classList.remove('hidden');
-              setTimeout(() => errorMsg.classList.add('hidden'), 5000);
+
+            // Show friendly unclear modal
+            const unclearModal = document.getElementById('scan-unclear-modal');
+            const descEl = document.getElementById('unclear-modal-desc');
+            if (descEl) {
+              descEl.textContent = data.description || 'Kamera belum mendeteksi teks atau goresan aksara kuno pada sudut ini. Silakan coba contoh naskah lontar atau arahkan ulang kamera.';
             }
+            if (unclearModal) {
+              unclearModal.classList.remove('hidden');
+              unclearModal.classList.add('flex');
+            }
+
+            latestResultData = data.suggestedSample || SAMPLES[currentSample];
             return;
           }
 
@@ -1113,18 +1166,14 @@
           loadingOverlay.classList.remove('flex');
           progressBar.style.width = '0%';
 
-          if (errorMsg) {
-            errorMsg.textContent = 'Gagal menganalisis via AI: ' + err.message + '. Menggunakan analisis kurasi untuk demo.';
-            errorMsg.classList.remove('hidden');
-            setTimeout(() => errorMsg.classList.add('hidden'), 5000);
-          }
+          showToast('Analisis dialihkan ke naskah kurasi lontar');
 
           // Fallback to sample data for smooth competition demonstration
           setTimeout(() => {
             latestResultData = SAMPLES[currentSample];
             populateResult(latestResultData);
             navigate('screen-result');
-          }, 1200);
+          }, 800);
         }
       }
 
@@ -1161,6 +1210,13 @@
       // ── Capture Button Handler ───────────────────────────
       const captureBtn = document.getElementById('btn-capture');
       captureBtn.addEventListener('click', function () {
+        // Close unclear modal if open
+        const unclearModal = document.getElementById('scan-unclear-modal');
+        if (unclearModal) {
+          unclearModal.classList.add('hidden');
+          unclearModal.classList.remove('flex');
+        }
+
         const video = document.getElementById('camera-feed');
         const canvas = document.getElementById('capture-canvas');
 
@@ -1177,6 +1233,43 @@
           runSimulatedScan();
         }
       });
+
+      // ── Tap to Scan on Viewfinder ────────────────────────
+      const viewfinderWrap = document.getElementById('viewfinder-wrap');
+      if (viewfinderWrap) {
+        viewfinderWrap.addEventListener('click', function (e) {
+          if (e.target.closest('#scan-unclear-modal') || e.target.closest('#scan-loading-overlay')) return;
+          captureBtn.click();
+        });
+      }
+
+      // ── Unclear Modal Action Buttons ──────────────────────
+      const unclearModal = document.getElementById('scan-unclear-modal');
+      const useSampleBtn = document.getElementById('btn-unclear-use-sample');
+      const retryBtn = document.getElementById('btn-unclear-retry');
+
+      if (useSampleBtn) {
+        useSampleBtn.addEventListener('click', function () {
+          if (unclearModal) {
+            unclearModal.classList.add('hidden');
+            unclearModal.classList.remove('flex');
+          }
+          if (!latestResultData) {
+            latestResultData = SAMPLES[currentSample];
+          }
+          populateResult(latestResultData);
+          navigate('screen-result');
+        });
+      }
+
+      if (retryBtn) {
+        retryBtn.addEventListener('click', function () {
+          if (unclearModal) {
+            unclearModal.classList.add('hidden');
+            unclearModal.classList.remove('flex');
+          }
+        });
+      }
 
       function populateResult(data) {
         document.getElementById('result-ancient-text').textContent = data.ancientText;

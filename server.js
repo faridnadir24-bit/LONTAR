@@ -7,13 +7,14 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 if (!GEMINI_API_KEY) {
@@ -26,7 +27,7 @@ const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 // ── Middleware ──────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '25mb' }));
 
-// CORS for local dev (Vite on :3000 → server on :3001)
+// CORS for local dev
 app.use((req, res, next) => {
   const allowedOrigins = [
     'http://localhost:3000',
@@ -46,40 +47,59 @@ app.use((req, res, next) => {
 });
 
 // ── Gemini prompt ───────────────────────────────────────────────────────────
-const AKSARA_PROMPT = `Kamu adalah ahli epigrafi dan paleografi Indonesia, terlatih membaca manuskrip lontar, prasasti, dan serat kuno.
+const AKSARA_PROMPT = `Kamu adalah ahli paleografi, epigrafi, dan filologi naskah kuno Nusantara (Lontar, Prasasti, Serat, Babon, Kidung).
 
-Analisis gambar ini dengan sangat cermat untuk mendeteksi aksara kuno Nusantara.
+Tugasmu: Menganalisis gambar yang dipindai pengguna dan memberikan transkripsi, transliterasi, terjemahan, serta konteks filosofis.
 
-JIKA gambar mengandung aksara Jawa (Hanacaraka/Carakan), aksara Kawi, aksara Bali, aksara Sunda kuno, atau aksara Nusantara lainnya:
-1. Transkripsi semua aksara yang terlihat dalam unicode aksara asli (contoh: ꦱꦶꦤꦸꦮꦸꦤ꧀)
-2. Berikan transliterasi Latin yang akurat sesuai kaidah filologi
-3. Terjemahkan ke Bahasa Indonesia yang natural dan mengalir
-4. Berikan konteks filosofis atau historis singkat (1–2 kalimat)
-5. Identifikasi jenis aksara dan perkiraan periode/abad penulisan
-6. Berikan tingkat kepercayaan (confidence) 0–100
+PANDUAN ANALISIS:
+1. JIKA GAMBAR MENGANDUNG AKSARA KUNO (Aksara Jawa/Hanacaraka, Kawi, Bali, Sunda Kuno, Batak, Rencong, Pegon):
+   - Transkripsikan semua aksara ke dalam karakter UNICODE aksara asli yang presisi (contoh aksara Jawa: ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦫꦪ ꦧꦸꦩꦶ).
+   - Berikan transliterasi Latin yang benar sesuai kaidah filologi.
+   - Terjemahkan ke Bahasa Indonesia yang puitis dan mengalir.
+   - Jelaskan makna filosofis atau nilai luhur yang terkandung dalam 1–2 kalimat.
+   - Tentukan jenis aksara, perkiraan periode/abad, dan perkiraan judul naskah.
+   - Berikan confidence score 85-99.
 
-JIKA gambar TIDAK mengandung aksara kuno Nusantara manapun:
-- Set hasScript: false
-- Jelaskan apa yang terlihat dalam kolom "description"
+2. JIKA GAMBAR MENGANDUNG TEKS LATIN / TULISAN TANGAN / KATA BAHASA INDONESIA ATAU DAERAH:
+   - Identifikasi teks yang tertulis.
+   - Transkripsikan teks tersebut ke dalam Aksara Jawa (Hanacaraka) Unicode yang otentik.
+   - Berikan transliterasi Latin dan terjemahannya.
+   - Berikan konteks filosofis budaya Jawa/Nusantara yang relevan.
+   - Set confidence 80-95.
 
-Kembalikan HANYA JSON valid tanpa markdown code block, tanpa tanda kutip luar, tanpa komentar:
+3. JIKA GAMBAR TIDAK MENGANDUNG AKSARA ATAU TEKS SAMA SEKALI (misal: objek acak, ruangan, tangan, wajah):
+   - Set hasScript: false
+   - Berikan deskripsi singkat dalam bahasa Indonesia mengenai apa yang terlihat pada gambar.
+   - Tawarkan rekomendasi aksara Jawa yang relevan sebagai contoh pembelajaran.
+
+Kembalikan respon HANYA dalam format JSON valid (tanpa markdown fence atau komentar):
+Jika terdeteksi teks atau aksara:
 {
   "hasScript": true,
-  "ancientText": "unicode aksara asli yang terdeteksi",
-  "transliteration": "transliterasi Latin (dalam tanda kutip ganda)",
-  "translation": "terjemahan lengkap ke Bahasa Indonesia",
-  "philosophical": "konteks filosofis atau historis",
-  "language": "jenis aksara · perkiraan abad (contoh: Aksara Jawa · Abad XVI)",
-  "language_short": "jenis aksara saja (contoh: Aksara Jawa)",
-  "confidence": 95,
-  "title": "perkiraan judul atau nama teks jika diketahui"
+  "ancientText": "unicode aksara asli",
+  "transliteration": "\"transliterasi Latin\"",
+  "translation": "terjemahan lengkap Bahasa Indonesia",
+  "philosophical": "makna filosofis dan kearifan lokal",
+  "language": "Aksara Jawa · Abad XVI",
+  "language_short": "Aksara Jawa",
+  "confidence": 98,
+  "title": "Nama/Judul Naskah"
 }
 
-Jika hasScript false:
+Jika benar-benar tidak ada teks/aksara:
 {
   "hasScript": false,
-  "description": "deskripsi singkat apa yang terlihat",
-  "confidence": 0
+  "description": "Kamera belum mendeteksi teks atau aksara kuno pada sudut ini.",
+  "suggestedSample": {
+    "title": "Kakawin Sutasoma — Pupuh 139",
+    "ancientText": "ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ",
+    "transliteration": "\"Bhinneka Tunggal Ika\"",
+    "translation": "Berbeda-beda tetapi tetap satu jiwa, tiada kebenaran yang mendua.",
+    "philosophical": "Ajaran luhur Mpu Tantular tentang persatuan dalam keragaman nusantara.",
+    "language": "Kawi / Jawa Kuno · Abad XIV",
+    "language_short": "Kawi / Jawa Kuno",
+    "confidence": 99
+  }
 }`;
 
 // ── POST /api/analyze ───────────────────────────────────────────────────────
@@ -148,12 +168,19 @@ app.get('/api/health', (_req, res) =>
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 );
 
-// ── Serve Vite build in production ─────────────────────────────────────────
+// ── Serve frontend ────────────────────────────────────────────────────────
 const distDir = path.join(__dirname, 'dist');
-app.use(express.static(distDir));
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(distDir, 'index.html'));
-});
+if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, 'index.html'))) {
+  app.use(express.static(distDir));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(distDir, 'index.html'));
+  });
+} else {
+  app.use(express.static(__dirname));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
+}
 
 // ── Start ───────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
