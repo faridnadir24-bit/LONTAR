@@ -118,7 +118,12 @@ export const config = {
   maxDuration: 30,
 };
 
-const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash'];
+const CANDIDATE_MODELS = [
+  'gemini-3-flash-preview',
+  'gemini-3.5-flash',
+  'gemini-3.1-flash-lite-preview',
+  'gemini-3.8-flash',
+];
 
 export default async function handler(req, res) {
   // Handle CORS
@@ -169,18 +174,30 @@ export default async function handler(req, res) {
   }
 
   let lastError = null;
+  let hadQuotaError = false;
   const ai = new GoogleGenAI({ apiKey: activeApiKey });
 
-  // Try candidate models in order with a strict per-model timeout
+  // Try candidate models in order with a resilient per-model timeout
   for (const modelName of CANDIDATE_MODELS) {
     const modelController = new AbortController();
     const modelTimeout = setTimeout(() => {
       try {
         modelController.abort();
       } catch (_) {}
-    }, 8500);
+    }, 13000);
 
     try {
+      const configObj = {
+        temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
+        topP: 0.95,
+        responseMimeType: 'application/json',
+        abortSignal: modelController.signal,
+      };
+
+      if (modelName.includes('3.8')) {
+        configObj.thinkingConfig = { thinkingBudget: 0 };
+      }
+
       const response = await ai.models.generateContent({
         model: modelName,
         contents: [
@@ -192,12 +209,7 @@ export default async function handler(req, res) {
             ],
           },
         ],
-        config: {
-          temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
-          topP: 0.95,
-          responseMimeType: 'application/json',
-          abortSignal: modelController.signal,
-        },
+        config: configObj,
       });
 
       clearTimeout(modelTimeout);
@@ -226,6 +238,10 @@ export default async function handler(req, res) {
     } catch (err) {
       clearTimeout(modelTimeout);
       lastError = err;
+      const msg = err.message || '';
+      if (msg.includes('429') || msg.includes('Quota exceeded') || msg.includes('RESOURCE_EXHAUSTED')) {
+        hadQuotaError = true;
+      }
       console.warn(`Model ${modelName} encountered error:`, err.message);
       // Continue to next model if quota or transient error or timeout
     }
@@ -234,20 +250,22 @@ export default async function handler(req, res) {
   // If all models failed, parse and return human-friendly error
   const errMsg = lastError?.message || '';
   const isTimeout = lastError?.name === 'AbortError' || errMsg.includes('timeout') || errMsg.includes('abort');
-  const isQuota = errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('exhausted');
+  const isQuota = hadQuotaError || errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('exhausted');
   const isInvalidKey = errMsg.includes('API_KEY_INVALID') || errMsg.includes('API key not valid') || errMsg.includes('403');
+
+  if (isQuota) {
+    return res.status(429).json({
+      errorType: 'QUOTA_EXCEEDED',
+      error: 'Batas kuota harian Gemini API (Free Tier) telah tercapai pada akun Google ini. Anda dapat memasukkan Kunci API Gemini milik sendiri di pengaturan.',
+      details: errMsg,
+    });
+  }
 
   if (isTimeout) {
     return res.status(504).json({
       errorType: 'TIMEOUT',
       error: 'Waktu respons layanan AI melebihi batas (server Google sedang sibuk). Silakan coba lagi atau gunakan naskah peraga.',
-    });
-  }
-
-  if (isQuota) {
-    return res.status(429).json({
-      errorType: 'QUOTA_EXCEEDED',
-      error: 'Batas kuota harian Gemini API (Free Tier) telah tercapai pada akun Google ini. Kuota akan direset otomatis oleh Google, atau Anda dapat memasukkan API Key pribadi dari Google AI Studio.',
+      details: errMsg,
     });
   }
 
@@ -255,11 +273,13 @@ export default async function handler(req, res) {
     return res.status(401).json({
       errorType: 'INVALID_API_KEY',
       error: 'Kunci API Gemini tidak valid atau izin akses ditolak oleh Google AI Studio.',
+      details: errMsg,
     });
   }
 
   return res.status(500).json({
     errorType: 'UNKNOWN_ERROR',
-    error: 'Terjadi kendala saat menganalisis citra dengan layanan AI. Silakan periksa koneksi atau coba naskah peraga.',
+    error: 'Terjadi kendala saat menganalisis citra dengan layanan AI Google. Anda dapat memasukkan API Key pribadi atau mencoba naskah peraga.',
+    details: errMsg,
   });
 }

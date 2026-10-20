@@ -37,7 +37,7 @@ export function setCustomApiKey(key) {
 }
 
 export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jpeg', options = {}) {
-  const { signal, timeoutMs = 15000 } = options;
+  const { signal, timeoutMs = 26000 } = options;
 
   const fingerprint = getImageFingerprint(base64Data);
   if (fingerprint && clientAnalysisCache.has(fingerprint)) {

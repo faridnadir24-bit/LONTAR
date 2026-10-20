@@ -212,12 +212,12 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     if (stepText) stepText.textContent = 'Menerjemahkan & menafsirkan filosofi…';
   }, 1800);
 
-  // Hard safety watchdog at 15s to guarantee overlay NEVER remains stuck
+  // Resilient safety watchdog at 28s to guarantee overlay NEVER remains stuck
   const watchdog = setTimeout(() => {
     if (activeScanAbortController === currentScanController) {
       currentScanController.abort(new Error('TIMEOUT'));
     }
-  }, 15000);
+  }, 28000);
 
   // Hook up cancel button on the loading overlay
   if (btnCancelScan) {
@@ -238,7 +238,7 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
   try {
     const data = await requestManuscriptAnalysis(base64Data, mimeType, {
       signal: currentScanController.signal,
-      timeoutMs: 14000,
+      timeoutMs: 26000,
     });
 
     clearTimeout(watchdog);
@@ -354,15 +354,10 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     const retryBtnLabel = document.getElementById('btn-unclear-retry-label');
     const enterKeyBtn = document.getElementById('btn-unclear-enter-key');
 
-    // Show custom API key button if it's a quota or key issue
+    // Always show custom API key button so users can easily bypass server limits or input their personal Gemini key
     if (enterKeyBtn) {
-      if (isQuotaIssue || isMissingKeyIssue || isInvalidKeyIssue) {
-        enterKeyBtn.classList.remove('hidden');
-        enterKeyBtn.classList.add('flex');
-      } else {
-        enterKeyBtn.classList.add('hidden');
-        enterKeyBtn.classList.remove('flex');
-      }
+      enterKeyBtn.classList.remove('hidden');
+      enterKeyBtn.classList.add('flex');
     }
 
     if (isTimeoutIssue) {

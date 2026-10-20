@@ -191,8 +191,14 @@ app.post('/api/analyze', async (req, res) => {
     return res.json(scanCache.get(imageHash));
   }
 
-  const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash'];
+  const CANDIDATE_MODELS = [
+    'gemini-3-flash-preview',
+    'gemini-3.5-flash',
+    'gemini-3.1-flash-lite-preview',
+    'gemini-3.8-flash',
+  ];
   let lastError = null;
+  let hadQuotaError = false;
   const activeAi = new GoogleGenAI({ apiKey: activeApiKey });
 
   for (const modelName of CANDIDATE_MODELS) {
@@ -201,9 +207,20 @@ app.post('/api/analyze', async (req, res) => {
       try {
         modelController.abort();
       } catch (_) {}
-    }, 8500);
+    }, 13000);
 
     try {
+      const configObj = {
+        temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
+        topP: 0.95,
+        responseMimeType: 'application/json',
+        abortSignal: modelController.signal,
+      };
+
+      if (modelName.includes('3.8')) {
+        configObj.thinkingConfig = { thinkingBudget: 0 };
+      }
+
       const response = await activeAi.models.generateContent({
         model: modelName,
         contents: [
@@ -215,12 +232,7 @@ app.post('/api/analyze', async (req, res) => {
             ],
           },
         ],
-        config: {
-          temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
-          topP: 0.95,
-          responseMimeType: 'application/json',
-          abortSignal: modelController.signal,
-        },
+        config: configObj,
       });
 
       clearTimeout(modelTimeout);
@@ -261,23 +273,33 @@ app.post('/api/analyze', async (req, res) => {
     } catch (err) {
       clearTimeout(modelTimeout);
       lastError = err;
+      const msg = err.message || '';
+      if (msg.includes('429') || msg.includes('Quota exceeded') || msg.includes('RESOURCE_EXHAUSTED')) {
+        hadQuotaError = true;
+      }
       console.warn(`Local model ${modelName} encountered error:`, err.message);
     }
   }
 
   const errMsg = lastError?.message || '';
   const isTimeout = lastError?.name === 'AbortError' || errMsg.includes('timeout') || errMsg.includes('abort');
-  const isQuota = errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED');
+  const isQuota = hadQuotaError || errMsg.includes('429') || errMsg.includes('Quota exceeded') || errMsg.includes('RESOURCE_EXHAUSTED');
 
   if (isTimeout) {
     return res.status(504).json({
       errorType: 'TIMEOUT',
       error: 'Waktu respons layanan AI melebihi batas (server Google sedang sibuk). Silakan coba lagi atau gunakan naskah peraga.',
+      details: errMsg,
     });
   }
 
   if (isQuota) {
     return res.status(429).json({
+      errorType: 'QUOTA_EXCEEDED',
+      error: 'Batas kuota harian Gemini API (Free Tier) telah tercapai pada akun Google ini. Anda dapat memasukkan API Key pribadi dari Google AI Studio.',
+      details: errMsg,
+    });
+  }
       errorType: 'QUOTA_EXCEEDED',
       error: 'Batas kuota harian Gemini API (Free Tier) telah tercapai pada akun Google ini. Kuota akan direset otomatis oleh Google.',
     });
