@@ -302,9 +302,34 @@ if (fs.existsSync(distDir) && fs.existsSync(path.join(distDir, 'index.html'))) {
     res.sendFile(path.join(distDir, 'index.html'));
   });
 } else {
+  // Fallback: assemble HTML partials dynamically when serving raw source
+  function getAssembledIndexHtml() {
+    const indexPath = path.join(__dirname, 'index.html');
+    let html = fs.readFileSync(indexPath, 'utf-8');
+    const includeRegex = /<!--\s*@include\s+['"]([^'"]+)['"]\s*-->|<include\s+src=['"]([^'"]+)['"]\s*\/?>/g;
+    let depth = 0;
+    while (includeRegex.test(html) && depth < 10) {
+      depth++;
+      html = html.replace(includeRegex, (_match, p1, p2) => {
+        const relPath = p1 || p2;
+        const fullPath = path.resolve(__dirname, relPath);
+        if (fs.existsSync(fullPath)) {
+          return fs.readFileSync(fullPath, 'utf-8');
+        }
+        return `<!-- Partial not found: ${relPath} -->`;
+      });
+    }
+    return html;
+  }
+
+  app.get(['/', '/index.html'], (_req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(getAssembledIndexHtml());
+  });
   app.use(express.static(__dirname));
   app.get('*', (_req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(getAssembledIndexHtml());
   });
 }
 

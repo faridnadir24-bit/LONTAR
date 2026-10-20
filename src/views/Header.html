@@ -1,0 +1,73 @@
+<!-- ── Clean App Header ──────────────────────────────────────── -->
+<header class="
+  relative z-40 shrink-0
+  bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md
+  border-b border-slate-200/80 dark:border-zinc-800
+  px-5 py-3.5 flex items-center justify-between
+  transition-colors duration-200
+">
+  <div class="flex items-center gap-3">
+    <!-- Clean Logo Icon -->
+    <div class="w-9 h-9 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center shrink-0 shadow-sm">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="flex items-center gap-1.5 leading-none">
+        <span class="font-sans text-[17px] font-extrabold tracking-tight text-slate-900 dark:text-white">
+          LONTAR<span class="text-blue-600 dark:text-blue-400 font-semibold text-sm">.ai</span>
+        </span>
+        <span class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          v2.4
+        </span>
+      </div>
+      <p class="text-[10px] text-slate-500 dark:text-zinc-400 mt-1 font-medium tracking-normal">
+        Epigrafi Nusantara · Gemini Vision
+      </p>
+    </div>
+  </div>
+
+  <!-- Controls: Theme switch (Hitam / Putih) & API Key Settings -->
+  <div class="flex items-center gap-2">
+    <button
+      id="btn-open-api-key"
+      type="button"
+      title="Pengaturan Kunci API Gemini (Opsional)"
+      class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 flex items-center gap-1.5 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors cursor-pointer"
+    >
+      <svg class="w-3.5 h-3.5 text-slate-700 dark:text-zinc-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 2l-2 2m-1.5 1.5L14 9l-3 3-4-4 3-3 3.5-3.5L21 2z"/>
+        <path d="M15.5 5.5l3 3"/>
+        <circle cx="7.5" cy="16.5" r="4.5"/>
+      </svg>
+      <span class="hidden sm:inline">API</span>
+    </button>
+    <button
+      id="theme-toggle"
+      type="button"
+      title="Beralih Mode Bersih / Hitam-Putih"
+      class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 flex items-center gap-1.5 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors cursor-pointer"
+    >
+      <!-- Moon icon (visible in light mode to switch to dark) -->
+      <svg id="icon-moon" class="w-4 h-4 block dark:hidden text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <!-- Sun icon (visible in dark mode to switch to light) -->
+      <svg id="icon-sun" class="w-4 h-4 hidden dark:block text-zinc-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <span id="theme-label" class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 hidden sm:inline">Gelap</span>
+    </button>
+  </div>
+</header>

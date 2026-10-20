@@ -1,0 +1,252 @@
+<!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+<!-- SCREEN 2 — PINDAI (HIGH-PRECISION CAMERA HUD)     -->
+<!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+<section id="screen-scan" class="screen-view screen-hidden flex-col flex-1 bg-zinc-950">
+
+  <!-- Scan Screen Top HUD Bar -->
+  <div class="flex items-center justify-between px-5 pt-4 pb-3 z-30">
+    <button
+      id="btn-scan-back"
+      type="button"
+      aria-label="Kembali ke beranda"
+      class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center hover:bg-zinc-800 hover:text-white active:scale-95 transition-all cursor-pointer"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <!-- Mode Title -->
+    <div class="text-center">
+      <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-white">Pindai Aksara</span>
+      <p id="scan-mode-label" class="text-[10px] text-zinc-400 mt-0.5">Kamera Optik Real-Time</p>
+    </div>
+
+    <!-- Controls: Flash & Camera Flip -->
+    <div class="flex items-center gap-1.5">
+      <button
+        id="btn-flash-toggle"
+        type="button"
+        aria-label="Lampu sorot"
+        class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center hover:bg-zinc-800 hover:text-white active:scale-95 transition-all cursor-pointer"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </button>
+      <button
+        id="btn-camera-switch"
+        type="button"
+        aria-label="Ganti kamera depan/belakang"
+        class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center hover:bg-zinc-800 hover:text-white active:scale-95 transition-all cursor-pointer"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Viewfinder Frame -->
+  <div
+    id="viewfinder-wrap"
+    class="flex-1 relative mx-4 mb-3 rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 cursor-pointer shadow-inner"
+    title="Arahkan kamera lalu ketuk untuk memindai"
+  >
+    <!-- ── Live Camera Feed ── -->
+    <video
+      id="camera-feed"
+      class="hidden absolute inset-0 w-full h-full object-cover"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+    <!-- Hidden Capture Canvas -->
+    <canvas id="capture-canvas" class="hidden"></canvas>
+
+    <!-- ── Optical Rule-of-Thirds Grid Overlay ── -->
+    <div class="absolute inset-0 pointer-events-none opacity-20">
+      <div class="w-full h-full grid grid-cols-3 grid-rows-3">
+        <div class="border-r border-b border-white"></div>
+        <div class="border-r border-b border-white"></div>
+        <div class="border-b border-white"></div>
+        <div class="border-r border-b border-white"></div>
+        <div class="border-r border-b border-white flex items-center justify-center">
+          <div class="w-2.5 h-2.5 rounded-full border border-white opacity-60"></div>
+        </div>
+        <div class="border-b border-white"></div>
+        <div class="border-r border-white"></div>
+        <div class="border-r border-white"></div>
+        <div></div>
+      </div>
+    </div>
+
+    <!-- ── Fallback Lontar Leaf ── -->
+    <div id="camera-fallback" class="absolute inset-0 flex items-center justify-center p-6">
+      <div class="w-full max-w-[290px] bg-zinc-900 rounded-2xl border border-zinc-800 shadow-xl relative px-6 py-6 flex flex-col gap-3">
+        <span class="text-[10px] text-center text-zinc-400 font-bold tracking-widest uppercase">Naskah Uji Coba Lontar</span>
+        <div class="font-javanese text-center text-[24px] text-white">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ</div>
+        <div class="font-javanese text-center text-[15px] text-zinc-300">ꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ</div>
+        <div class="font-javanese text-center text-[13px] text-zinc-400">ꦲꦩꦺꦩꦚ꧀ꦕꦔꦶ ꦗꦒꦢ꧀ ꦫꦪ</div>
+      </div>
+
+      <!-- Permission denied callout -->
+      <div id="camera-denied-notice" class="hidden absolute bottom-14 left-4 right-4 bg-red-950/90 backdrop-blur-md border border-red-500/40 rounded-2xl p-3.5 text-center shadow-xl">
+        <p class="text-white text-[12px] font-bold mb-0.5">Akses Kamera Dibatasi</p>
+        <p class="text-red-200/80 text-[11px] leading-snug">Izinkan peramban mengakses kamera, atau ketuk shutter untuk menganalisis naskah contoh kurasi.</p>
+      </div>
+    </div>
+
+    <!-- Real-time Camera Live Badge -->
+    <div id="camera-live-badge" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-20 items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 backdrop-blur-md border border-emerald-500/40 text-[10px] font-semibold text-emerald-300">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>KAMERA OPTIK AKTIF</span>
+    </div>
+
+    <!-- Clean Corner Brackets -->
+    <div class="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-white/80 z-20 pointer-events-none"></div>
+    <div class="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-white/80 z-20 pointer-events-none"></div>
+    <div class="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-white/80 z-20 pointer-events-none"></div>
+    <div class="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-white/80 z-20 pointer-events-none"></div>
+
+    <!-- Optical Center Reticle Cross -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <div class="absolute w-4 h-0.5 bg-white"></div>
+        <div class="absolute h-4 w-0.5 bg-white"></div>
+      </div>
+    </div>
+
+    <!-- Scan Beam Laser -->
+    <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_2px_rgba(34,211,238,0.6)] animate-scan-line pointer-events-none z-20"></div>
+
+    <!-- Interactive Viewfinder Tap Pill Hint -->
+    <div class="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-zinc-900/90 backdrop-blur-md border border-zinc-700/80 rounded-full px-3.5 py-1 text-[11px] text-zinc-300 pointer-events-none select-none">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+      <span>Ketuk layar atau tombol shutter</span>
+    </div>
+
+    <!-- Error Banner -->
+    <div id="scan-error-msg" class="hidden absolute bottom-4 left-4 right-4 bg-red-950/90 backdrop-blur-md border border-red-500/50 text-white text-[12px] text-center py-2.5 px-4 rounded-2xl z-30 leading-snug"></div>
+
+    <!-- Shutter Flash Effect -->
+    <div id="camera-shutter-flash" class="hidden absolute inset-0 bg-white z-50 pointer-events-none opacity-0 transition-opacity duration-150"></div>
+
+    <!-- ── Loading Overlay with 3-Phase Epigraphic Progress ── -->
+    <div
+      id="scan-loading-overlay"
+      class="hidden absolute inset-0 z-40 bg-zinc-950/90 backdrop-blur-md flex-col items-center justify-center gap-4 px-6"
+    >
+      <div class="relative flex items-center justify-center">
+        <div class="w-14 h-14 rounded-full border-2 border-zinc-700 border-t-white animate-spin"></div>
+        <div class="absolute font-javanese text-white text-lg font-bold">ꦭ</div>
+      </div>
+      <div class="text-center">
+        <p class="font-sans text-[15px] font-bold text-white">Menganalisis Naskah Kuno…</p>
+        <p id="scan-step-text" class="text-[12px] text-zinc-400 mt-1">Mengambil citra & memindai glif…</p>
+      </div>
+      <!-- Progress bar -->
+      <div class="w-48 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+        <div id="scan-progress-bar" class="h-full bg-white rounded-full w-0 transition-all duration-500 ease-out"></div>
+      </div>
+      <!-- Cancel / Dismiss button -->
+      <button
+        id="btn-cancel-scan"
+        type="button"
+        class="mt-2 px-4 py-1.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-white text-[12px] font-medium transition-colors cursor-pointer border border-zinc-800 flex items-center gap-1.5"
+      >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>Batalkan</span>
+      </button>
+    </div>
+
+    <!-- ── Unclear Aksara Bottom Sheet Dialog ── -->
+    <div id="scan-unclear-modal" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-end p-3.5">
+      <div class="w-full bg-zinc-900 border border-zinc-700/80 rounded-3xl p-5 shadow-2xl flex flex-col gap-3.5">
+        <div class="flex items-start gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 shrink-0 mt-0.5">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h4 id="unclear-modal-title" class="font-sans text-[14px] font-bold text-white">Aksara Belum Terdeteksi Jelas</h4>
+            <p id="unclear-modal-desc" class="text-[12px] text-zinc-300 leading-relaxed mt-0.5">
+              Kamera menangkap objek yang belum menampilkan aksara kuno. Anda dapat mencoba sampel naskah asli atau memfoto ulang.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 pt-1">
+          <button id="btn-unclear-enter-key" type="button" class="hidden w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 2l-2 2m-1.5 1.5L14 9l-3 3-4-4 3-3 3.5-3.5L21 2z"/><path d="M15.5 5.5l3 3"/><circle cx="7.5" cy="16.5" r="4.5"/></svg>
+            <span>Masukkan Kunci API Pribadi (Bypass Kuota)</span>
+          </button>
+          <button id="btn-unclear-use-sample" type="button" class="w-full py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span id="btn-unclear-sample-label">Tampilkan Naskah Asli (Sutasoma)</span>
+          </button>
+          <button id="btn-unclear-retry" type="button" class="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-750 text-zinc-200 border border-zinc-700 font-medium text-[12px] cursor-pointer transition-colors">
+            <span id="btn-unclear-retry-label">Arahkan Ulang Kamera & Coba Lagi</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Scan Controls Bar ──────────────────────────────────────── -->
+  <div class="relative z-30 px-7 pb-5 pt-1 flex items-center justify-between">
+
+    <!-- Switch Sample Button -->
+    <button
+      id="btn-sample-switch"
+      type="button"
+      class="flex flex-col items-center gap-1.5 text-zinc-400 hover:text-white transition-colors cursor-pointer group"
+      title="Ganti contoh naskah"
+    >
+      <div class="w-11 h-11 rounded-2xl bg-zinc-900 border border-zinc-800 group-hover:border-zinc-700 flex items-center justify-center text-zinc-300 group-hover:text-white transition-colors">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+      </div>
+      <span class="text-[11px] font-medium">Contoh</span>
+    </button>
+
+    <!-- Clean Modern Camera Shutter Button -->
+    <div class="relative flex items-center justify-center">
+      <button
+        id="btn-capture"
+        type="button"
+        aria-label="Ambil foto naskah"
+        class="relative w-[72px] h-[72px] rounded-full p-1 border-4 border-white/80 hover:border-white active:scale-95 transition-all cursor-pointer flex items-center justify-center select-none"
+      >
+        <div class="w-full h-full rounded-full bg-white text-zinc-950 flex items-center justify-center shadow-md active:bg-zinc-200 transition-colors pointer-events-none">
+          <svg class="w-6 h-6 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+      </button>
+    </div>
+
+    <!-- Gallery Upload Button -->
+    <label
+      for="file-upload"
+      class="flex flex-col items-center gap-1.5 text-zinc-400 hover:text-white transition-colors cursor-pointer group"
+      title="Unggah dari galeri"
+    >
+      <div class="w-11 h-11 rounded-2xl bg-zinc-900 border border-zinc-800 group-hover:border-zinc-700 flex items-center justify-center text-zinc-300 group-hover:text-white transition-colors">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+      </div>
+      <span class="text-[11px] font-medium">Galeri</span>
+    </label>
+    <input id="file-upload" type="file" accept="image/*" class="hidden" />
+
+  </div>
+</section>

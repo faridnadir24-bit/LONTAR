@@ -1,0 +1,123 @@
+<!-- Universal Toast Notification (Available Across All Screens) -->
+<div
+  id="result-toast"
+  class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-50 py-2.5 px-4 rounded-2xl bg-slate-900/95 dark:bg-zinc-800/95 text-white border border-slate-700 dark:border-zinc-700 text-[12px] font-semibold text-center shadow-xl backdrop-blur-md transition-all duration-300 pointer-events-none"
+></div>
+
+<!-- ── Modal Piagam Paleografi Digital (Clean Modern Certificate) ── -->
+<div id="modal-piagam" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4">
+  <div class="relative w-full max-w-[390px] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-3xl p-6 shadow-2xl overflow-hidden flex flex-col gap-3.5">
+    <!-- Certificate Header -->
+    <div class="text-center pt-1 pb-1 border-b border-slate-200 dark:border-zinc-700/80">
+      <span class="text-[10px] font-bold tracking-[0.2em] text-blue-600 dark:text-blue-400 uppercase block">KONSORSIUM DIGITALISASI EPIGRAFI</span>
+      <h3 class="font-sans text-[18px] font-extrabold text-slate-900 dark:text-white tracking-tight mt-0.5">Piagam Filologi Nusantara</h3>
+      <p id="piagam-reg-num" class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono mt-0.5">REG: LONTAR-AI/EPIG-2026/098</p>
+    </div>
+
+    <!-- Certificate Body -->
+    <div class="flex flex-col gap-2.5 text-center px-1">
+      <span id="piagam-title" class="font-sans text-[15px] font-bold text-slate-900 dark:text-white">Lontar Surya Kencana</span>
+
+      <div class="py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 max-h-48 overflow-y-auto">
+        <p id="piagam-ancient-text" class="font-ancient-script text-[18px] sm:text-[20px] leading-[1.85] text-slate-900 dark:text-white whitespace-pre-line">ꦱꦶꦤꦸꦮꦸꦤ꧀ ꦱꦸꦂꦪ ꦧꦸꦩꦶ</p>
+        <p id="piagam-transliteration" class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 mt-1 whitespace-pre-line">"Sinuhun surya bumi"</p>
+      </div>
+
+      <div class="text-left px-1">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 block mb-0.5">Alih Bahasa Resmi:</span>
+        <p id="piagam-translation" class="font-serif-literary text-[12px] sm:text-[13px] text-slate-800 dark:text-zinc-200 leading-relaxed italic whitespace-pre-line">
+          "Sinar matahari menyinari bumi dengan hangat, memberi kehidupan pada semua makhluk."
+        </p>
+      </div>
+
+      <!-- Epigrapher verification stamp -->
+      <div class="flex items-center justify-between pt-2.5 border-t border-slate-200 dark:border-zinc-700/80 text-[11px]">
+        <div class="text-left">
+          <span class="text-slate-400 dark:text-zinc-500 block text-[9px]">Model Epigrafi:</span>
+          <span class="font-semibold text-slate-800 dark:text-zinc-200">Gemini 3.5 Multimodal</span>
+        </div>
+        <!-- Verification Seal -->
+        <div class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          TERVERIFIKASI
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Actions -->
+    <div class="flex gap-2 pt-1">
+      <button id="btn-piagam-copy" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Salin Piagam
+      </button>
+      <button id="btn-piagam-close" type="button" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-[12px] cursor-pointer transition-colors">
+        Tutup
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal Pengaturan Kunci API Gemini (Bypass Kuota Server) ── -->
+<div id="modal-api-key" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4">
+  <div class="relative w-full max-w-[390px] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-3xl p-6 shadow-2xl overflow-hidden flex flex-col gap-4">
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-zinc-800">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-1.5 1.5L14 9l-3 3-4-4 3-3 3.5-3.5L21 2z"/><circle cx="7.5" cy="16.5" r="4.5"/></svg>
+        </div>
+        <div>
+          <h3 class="font-sans text-[15px] font-bold text-slate-900 dark:text-white leading-none">Kunci API Gemini</h3>
+          <span class="text-[10px] text-slate-500 dark:text-zinc-400">Google AI Studio (Opsional)</span>
+        </div>
+      </div>
+      <button id="btn-close-api-key-x" type="button" class="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-400 dark:text-zinc-400 flex items-center justify-center transition-colors cursor-pointer">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Description -->
+    <div class="text-[12px] text-slate-600 dark:text-zinc-350 leading-relaxed space-y-2">
+      <p>
+        Secara bawaan aplikasi menggunakan server API. Jika kuota gratis server harian tercapai (Rate Limit 429), Anda dapat memasukkan kunci API Google Gemini milik sendiri.
+      </p>
+      <div class="flex items-start gap-2 p-2.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-900/60 text-[11px] text-slate-700 dark:text-zinc-300">
+        <svg class="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span><strong>Akses Bebas Kuota:</strong> Buat kunci API gratis di <a href="https://aistudio.google.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 underline font-semibold">aistudio.google.com</a> tanpa kartu kredit. Kunci disimpan lokal di perangkat ini.</span>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="space-y-1.5">
+      <label for="input-custom-api-key" class="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 block">
+        Google Gemini API Key:
+      </label>
+      <input
+        id="input-custom-api-key"
+        type="password"
+        placeholder="AIzaSy..."
+        autocomplete="off"
+        spellcheck="false"
+        class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+      />
+      <p id="api-key-status-text" class="text-[10px] text-slate-500 dark:text-zinc-400 italic">
+        Status: Menggunakan kuota default server
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col gap-2 pt-1">
+      <div class="flex gap-2">
+        <button id="btn-save-api-key" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
+          Simpan Kunci
+        </button>
+        <button id="btn-clear-api-key" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-[12px] cursor-pointer transition-colors" title="Hapus kunci tersimpan">
+          Hapus
+        </button>
+      </div>
+      <button id="btn-close-api-key" type="button" class="w-full py-2 rounded-xl text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-white font-medium text-[11px] cursor-pointer transition-colors text-center">
+        Tutup
+      </button>
+    </div>
+  </div>
+</div>
