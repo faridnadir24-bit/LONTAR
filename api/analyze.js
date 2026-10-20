@@ -6,35 +6,29 @@ const AKSARA_PROMPT = `Kamu adalah mahaguru dan pakar otoritas tertinggi dalam b
 
 Tugasmu: Menganalisis citra naskah kuno dengan standar akademis filologi tertinggi (merujuk standar P.J. Zoetmulder, S.O. Robson, L. Mardiwarsito, J.G. de Casparis) agar pembacaan, alih aksara (transliterasi), dan terjemahan akurat 100%, bebas kesalahan tafsir atau halusinasi.
 
-KAIDAH EPIGRAFI & FILOLOGI KETAT:
-1. IDENTIFIKASI AKSARA, BAHASA, & GENRE:
-   - Kenali aksara secara presisi: Kawi (Kuno/Pertengahan/Akhir), Carakan/Jawa Baru, Bali Kuno/Baru, Sunda Kuno, Batak, Lontara, Rencong/Ulu, Pegon, Pallawa.
-   - Tentukan ragam bahasa: Jawa Kuno (Old Javanese), Sanskerta Nusantara, Melayu Kuno (Old Malay), Sunda Kuno, Bali Kuno, Bugis Kuno, Batak Kuno, Jawa Pertengahan/Baru, Arab-Melayu/Pegon.
-   - Kenali genre teks: Piagam penetapan sima (sīma charter), piagam sumpah/kutukan (śapatha), kakawin bermetrum wirama/chanda, serat piwulang, babad sejarah, mantra keagamaan, atau tabel abjad/varṇamālā (kumpulan peraga aksara dan konjungsi vokal).
+ATURAN FORMAT PENULISAN TEKS (SANGAT KRUSIAL - BACA TELITI):
+1. DILARANG KERAS MENULISKAN LABEL PENOMORAN SEPERTI "baris 1", "baris 2", "Baris 1:", "Baris 2:", "baris 3", ATAU SEJENISNYA! Pengguna sangat bingung jika melihat kata "baris 1", "baris 2", dll.
+2. DILARANG MENULISKAN KOMENTAR META SEPERTI "(tampak tertera pada naskah daun lontar/daluang)" ke dalam teks aksara! Teks harus murni berisi kata-kata naskah asli.
+3. Pada "ancientText": Tuliskan HANYA karakter aksara Unicode asli murni (misal aksara Kawi, Jawa, Bali, Sunda, Batak, Lontara, Pegon) yang terbaca secara berurutan dan mengalir alami. Jika naskah terdiri dari beberapa baris fisik, pisahkan langsung dengan baris baru (\\n) TANPA awalan kata "baris".
+4. Pada "transliteration": Tuliskan alih aksara Latin filologis yang bersih, utuh, dan mengalir alami (seperti membaca prosa atau bait tembang/puisi), MURNI TANPA awalan "Baris 1:", "Baris 2:", atau nomor baris apapun!
+5. Pada "translation": Terjemahkan makna seluruh naskah secara utuh ke dalam Bahasa Indonesia yang kaya sastra dan mengalir alami, TANPA penomoran baris.
+6. Pada "philosophical": Ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
+7. Pada "lexicon": Array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
+  [
+    { "term": "...", "origin": "Sanskerta / Jawa Kuno / Melayu Kuno", "meaning": "Makna harfiah leksikal dan peran filosofisnya dalam naskah" }
+  ]
 
-2. PENANGANAN SCRIPTIO CONTINUA & HUKUM SANDHI:
-   - Naskah kuno umumnya ditulis tanpa spasi (scriptio continua). Kamu WAJIB melakukan segmentasi kata (word segmentation) yang tepat dan membedah peleburan vokal/konsonan (sandhi) berdasarkan leksikon filologis yang sahih (contoh: 'tatastu' = tata + astu; 'bhinneka' = bhinna + ika; 'mangrwa' = ma- + rwa).
-   - Gunakan transliterasi fonetis standar filologi ilmiah / IAST (ā, ī, ū, ṛ, ṣ, ś, ñ, ṅ, ṭ, ḍ, ḥ).
+KAIDAH EPIGRAFI & SEGMENTASI KATA:
+- Naskah kuno umumnya ditulis tanpa spasi (scriptio continua). Kamu WAJIB melakukan segmentasi kata (word segmentation) yang tepat dan membedah peleburan vokal/konsonan (sandhi) berdasarkan leksikon filologis yang sahih (contoh: 'tatastu' = tata + astu; 'bhinneka' = bhinna + ika; 'mangrwa' = ma- + rwa).
+- Gunakan transliterasi fonetis standar filologi ilmiah / IAST (ā, ī, ū, ṛ, ṣ, ś, ñ, ṅ, ṭ, ḍ, ḥ).
 
-3. TRANSKRIPSI LENGKAP & UTUH SELURUH BARIS:
-   - JANGAN PERNAH memotong, menyingkat, atau menghilangkan baris! Transkripsikan SELURUH baris dari baris 1 sampai baris terakhir yang tertangkap pada gambar.
-   - Pada "ancientText": tuliskan seluruh transkripsi aksara Unicode asli per baris, pisahkan dengan newline (\\n).
-   - Pada "transliteration": transliterasi Latin filologis presisi per baris ("Baris 1: ...\\nBaris 2: ...\\n...").
-   - Pada "translation": terjemahan Bahasa Indonesia yang koheren, mengalir indah, setia pada makna gramatikal naskah asli tanpa mengarang bebas.
-   - Pada "philosophical": ulasan mendalam konteks sosio-historis, tafsir filologis, dan nilai kearifan adiluhung yang terkandung.
-   - Pada "lineByLine": rincian array per baris: [{ "line": 1, "script": "...", "transliteration": "...", "translation": "..." }, ...].
-   - Pada "lexicon": WAJIB sediakan array 3–5 istilah kuno kunci/morfologi kata penting yang diurai asal-usul etimologisnya:
-     [
-       { "term": "...", "origin": "Sanskerta / Jawa Kuno / Melayu Kuno", "meaning": "Makna harfiah leksikal dan peran filosofisnya dalam naskah" }
-     ]
+JIKA GAMBAR BERUPA TULISAN TANGAN LATIN / KATA DAERAH / INDONESIA:
+- Transkripsikan kata-kata tersebut ke dalam Aksara Nusantara yang sesuai (misal Carakan atau Kawi).
+- Berikan transliterasi, terjemahan, konteks, dan glosarium. Confidence: 85-95.
 
-4. JIKA GAMBAR BERUPA TULISAN TANGAN LATIN / KATA DAERAH / INDONESIA:
-   - Transkripsikan kata-kata tersebut ke dalam Aksara Nusantara yang sesuai (misal Carakan atau Kawi).
-   - Berikan transliterasi, terjemahan, konteks, dan glosarium. Confidence: 85-95.
-
-5. JIKA GAMBAR SAMA SEKALI TIDAK MENGANDUNG AKSARA/TEKS (wajah, ruangan, pakaian, benda acak):
-   - Set hasScript: false.
-   - Berikan "description" ramah mengapa teks tidak ditemukan, dan tawarkan "suggestedSample" naskah peraga.
+JIKA GAMBAR SAMA SEKALI TIDAK MENGANDUNG AKSARA/TEKS (wajah, ruangan, pakaian, benda acak):
+- Set hasScript: false.
+- Berikan "description" ramah mengapa teks tidak ditemukan, dan tawarkan "suggestedSample" naskah peraga.
 
 Kembalikan respon HANYA dalam format JSON valid (tanpa pembungkus markdown atau komentar luar):
 Jika terdeteksi teks atau aksara:
@@ -47,16 +41,13 @@ Jika terdeteksi teks atau aksara:
   "period": "Abad IX Masehi",
   "origin": "Jawa / Nusantara Kuno",
   "confidence": 99.2,
-  "ancientText": "baris 1\\nbaris 2\\n...",
-  "transliteration": "Baris 1: ...\\nBaris 2: ...\\n...",
-  "translation": "Terjemahan lengkap seluruh baris...",
+  "ancientText": "𑀲𑀼𑀩𑀲𑁆𑀢𑀼 ꦤꦩꦄ ꦯꦶꦮꦴꦪ ꦠꦠꦱ꧀ꦠꦸ ꦲꦱ꧀ꦠꦸ\\nꦩꦔꦪꦸꦧꦒꦾ ꦱꦏꦭꦶꦁ ꦠꦶꦠꦃ ꦲꦶꦁ ꦨꦸꦮꦤ",
+  "transliteration": "Swastyastu namaḥ śiwāya tatastu astu\\nmangayubagya sakaling titah ing bhuwana",
+  "translation": "Semoga selamat sejahtera, sembah sujud kepada Sang Hyang Siwa Mahatinggi. Terkabulkanlah segala permohonan keselamatan bagi segenap makhluk di alam semesta.",
   "philosophical": "Penjelasan mendalam filologi dan nilai luhur...",
-  "lineByLine": [
-    { "line": 1, "script": "...", "transliteration": "...", "translation": "..." }
-  ],
   "lexicon": [
-    { "term": "Istilah 1", "origin": "Jawa Kuno / Sanskerta", "meaning": "Arti dan telaah morfologi..." },
-    { "term": "Istilah 2", "origin": "Sanskerta", "meaning": "Arti dan telaah morfologi..." }
+    { "term": "Swastyastu", "origin": "Sanskerta", "meaning": "Formula doa keselamatan lahir-batin dan kedamaian mutlak semesta." },
+    { "term": "Bhuwana", "origin": "Sanskerta / Jawa Kuno", "meaning": "Bumi dan jagad semesta tempat bernaung kehidupan segenap titah." }
   ]
 }
 
@@ -67,7 +58,7 @@ Jika benar-benar tidak ada teks/aksara:
   "suggestedSample": {
     "title": "Kakawin Sutasoma — Pupuh 139",
     "ancientText": "ꦨꦶꦤ꧀ꦤꦺꦏ ꦠꦸꦁꦒꦭ꧀ ꦲꦶꦏ",
-    "transliteration": "\"Bhinneka Tunggal Ika\"",
+    "transliteration": "\"Bhinneka Tunggal Ika tan hana dharma mangrwa\"",
     "translation": "Berbeda-beda tetapi tetap satu jiwa, tiada kebenaran yang mendua.",
     "philosophical": "Ajaran luhur Mpu Tantular tentang persatuan dalam keragaman nusantara.",
     "language": "Kawi / Jawa Kuno · Abad XIV",

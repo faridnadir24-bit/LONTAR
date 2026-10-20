@@ -50,12 +50,45 @@ export function formatScanDate(dateInput) {
   return `${day} ${month} ${year} • ${hours}:${minutes}`;
 }
 
-export function extractGlyphs(ancientText, translit) {
-  if (!ancientText) return [];
+export function cleanManuscriptText(text) {
+  if (!text) return '';
+  return text
+    .split('\n')
+    .map(line => {
+      let trimmed = line.trim();
+      if (!trimmed) return '';
 
-  // Remove excessive whitespace & split into tokens
-  const cleanStr = ancientText.trim();
-  const words = cleanStr.split(/\s+/);
+      // 1. Remove full placeholder lines like "baris 1", "baris 2", "baris 1 (tampak tertera...)"
+      if (/^(?:baris|line)\s*\d+\s*(?:\([^)]*\))?$/i.test(trimmed)) {
+        return '';
+      }
+
+      // 2. Remove meta commentary lines like "(tampak tertera pada naskah daun lontar/daluang)"
+      if (/^\(.*\)$/.test(trimmed) && /(?:tampak|tertera|naskah|lontar|daluang|prasasti|aksara|baris)/i.test(trimmed)) {
+        return '';
+      }
+
+      // 3. Strip prefix labels like "Baris 1: ", "Baris 02 - ", "Line 3: ", "baris 4: "
+      let cleaned = trimmed.replace(/^(?:baris|line)\s*\d+[\s:.-]+/i, '').trim();
+
+      // 4. If what remains is just dots "..." or empty, drop it
+      if (!cleaned || /^\.{2,}$/.test(cleaned) || /^…+$/.test(cleaned)) {
+        return '';
+      }
+
+      return cleaned;
+    })
+    .filter(Boolean)
+    .join('\n');
+}
+
+export function extractGlyphs(ancientText, translit) {
+  const cleanedText = cleanManuscriptText(ancientText);
+  if (!cleanedText) return [];
+
+  // Remove excessive whitespace & split into tokens, skip numbers or dummy words
+  const cleanStr = cleanedText.trim();
+  const words = cleanStr.split(/\s+/).filter(w => !/^(?:baris|line|\d+)$/i.test(w));
   const result = [];
   const seenChars = new Set();
 

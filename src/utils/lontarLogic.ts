@@ -111,6 +111,38 @@ export function prepareSpeechPayload(text: string): { text: string; lang: string
   };
 }
 
+export function cleanManuscriptText(text: string): string {
+  if (!text) return '';
+  return text
+    .split('\n')
+    .map((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) return '';
+
+      // 1. Remove full placeholder lines like "baris 1", "baris 2", "baris 1 (tampak tertera...)"
+      if (/^(?:baris|line)\s*\d+\s*(?:\([^)]*\))?$/i.test(trimmed)) {
+        return '';
+      }
+
+      // 2. Remove meta commentary lines like "(tampak tertera pada naskah daun lontar/daluang)"
+      if (/^\(.*\)$/.test(trimmed) && /(?:tampak|tertera|naskah|lontar|daluang|prasasti|aksara|baris)/i.test(trimmed)) {
+        return '';
+      }
+
+      // 3. Strip prefix labels like "Baris 1: ", "Baris 02 - ", "Line 3: ", "baris 4: "
+      const cleaned = trimmed.replace(/^(?:baris|line)\s*\d+[\s:.-]+/i, '').trim();
+
+      // 4. If what remains is just dots "..." or empty, drop it
+      if (!cleaned || /^\.{2,}$/.test(cleaned) || /^…+$/.test(cleaned)) {
+        return '';
+      }
+
+      return cleaned;
+    })
+    .filter(Boolean)
+    .join('\n');
+}
+
 export function validateScanInput(data: Partial<LontarScanItem>): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
   if (!data.aksaraText || !data.aksaraText.trim()) {

@@ -66,31 +66,20 @@ export const SAMPLES = [
 ꦱꦷꦩꦏꦷꦭꦱꦸꦥꦶꦠꦏꦮꦴꦫꦴꦟꦠꦸꦪ꧀ꦟ꧀ꦩꦴꦪꦸꦩꦴꦪꦪꦮꦸꦢ꧀ꦪꦸꦢ꧀ꦥꦸ
 ꦪꦩꦴꦭꦷꦠꦏꦩꦸꦲ꧀ꦤꦷꦠꦴꦱꦶꦪꦴꦩꦴꦠꦱꦷꦢ꧀ꦒꦠꦩꦱꦷꦩꦷꦢꦶꦏꦩꦴꦯꦸ
 ꦠꦴꦏꦱꦷꦢ꧀ꦒꦸꦩ꧀ꦧꦷꦪꦸꦩꦴꦠꦸꦏꦴꦒꦹꦏꦢꦏ`,
-    transliteration: `Baris 1: swastyastu namaḥ śiwatita tha ma ca ṇa ta ṇa ṣa ṣa śa ma sa ha kṣa ṇī jī pu
-Baris 2: miktupusyāhārāmācārāmādhūtīdhāyubhāyubhuyusārā
-Baris 3: rāhimitakṇīśrīputabadisacadarāmamacarablarulāsu
-Baris 4: viccibvāmātasālyumubdvamāyamadilāmāsā
-Baris 5: kacyādikādimātināyasitmaruvālidvātapuditakṇubasa
-Baris 6: śriyudākzkadamahimanasavatāṇīvadikātaksālāmāsāmātīli
-Baris 7: sīmakīlasupitakavārāṇatuyṇmāyumāyabhavudbhudpu
-Baris 8: yamālītakamuhnītāsiyāmātasīdgatamasīmīdikamāśu
-Baris 9: tākasīdgumbīyumātukāgūkādaka`,
+    transliteration: `swastyastu namaḥ śiwatita tha ma ca ṇa ta ṇa ṣa ṣa śa ma sa ha kṣa ṇī jī pu
+miktupusyāhārāmācārāmādhūtīdhāyubhāyubhuyusārā
+rāhimitakṇīśrīputabadisacadarāmamacarablarulāsu
+viccibvāmātasālyumubdvamāyamadilāmāsā
+kacyādikādimātināyasitmaruvālidvātapuditakṇubasa
+śriyudākzkadamahimanasavatāṇīvadikātaksālāmāsāmātīli
+sīmakīlasupitakavārāṇatuyṇmāyumāyabhavudbhudpu
+yamālītakamuhnītāsiyāmātasīdgatamasīmīdikamāśu
+tākasīdgumbīyumātukāgūkādaka`,
     translation: `Semoga selamatlah, sembah sujud kepada Sang Hyang Siwa Mahatinggi. Naskah prasasti peraga ini memuat deretan kaidah pembentukan kata, konjungsi vokal, dan formula aksara Kawi lengkap untuk penetapan wilayah (sīma) serta puji-pujian keluhuran budi para leluhur Nusantara.`,
     philosophical: `Lembar peraga epigrafi Kawi dari salah satu prasasti kuno Batavia, melambangkan kekayaan tradisi literasi aksara Nusantara abad VIII–X Masehi.`,
     language: 'Aksara Kawi · Abad VIII–X M',
     language_short: 'Aksara Kawi',
     confidence: 99.4,
-    lineByLine: [
-      { line: 1, script: '𑀲𑀼𑀩𑀲𑁆𑀢𑀼𑀦ꦫꦄꦰꦶꦯꦠꦶꦠ...', transliteration: 'swastyastu namaḥ śiwatita tha ma ca...', translation: 'Semoga selamatlah, hormat kepada Siwa-Tita...' },
-      { line: 2, script: '𑀫𑀺𑀓𑁆𑀢𑀼𑀧𑀼𑀲𑁆𑀬ꦴꦲꦴꦫꦴ...', transliteration: 'miktupusyāhārāmācārāmādhūtī...', translation: 'Kaidah variasi vokal panjang dan pendek Kawi.' },
-      { line: 3, script: 'ꦫꦴꦲꦶꦩꦶꦠꦏ꧀ꦟꦷꦰ꧀ꦭꦷꦥꦸ...', transliteration: 'rāhimitakṇīśrīputabadisacadarāma...', translation: 'Kombinasi sandhangan konsonan rangkap.' },
-      { line: 4, script: 'ꦯꦶꦕ꧀ꦕꦶꦧ꧀ꦮꦴꦩꦴꦠꦱꦴ...', transliteration: 'viccibvāmātasālyumubdvamāyamadi...', translation: 'Gugus konsonan majemuk epigrafi Jawa Kuno.' },
-      { line: 5, script: 'ꦏꦕ꧀ꦪꦴꦢꦶꦏꦴꦢꦶꦩꦴ...', transliteration: 'kacyādikādimātināyasitmaruvāli...', translation: 'Rangkaian silabis epigrafi klasik.' },
-      { line: 6, script: 'ꦰ꧀ꦭꦻꦪꦸꦢꦴꦏ꧀ꦏꦢꦴ...', transliteration: 'śriyudākzkadamahimanasavatāṇī...', translation: 'Formula gelar kehormatan Sri Maha Mulia.' },
-      { line: 7, script: 'ꦱꦷꦩꦏꦷꦭꦱꦸꦥꦶꦠ...', transliteration: 'sīmakīlasupitakavārāṇatuyṇmāyu...', translation: 'Istilah sima pertanahan dan batas suci.' },
-      { line: 8, script: 'ꦪꦩꦴꦭꦷꦠꦏꦩꦸꦲ꧀...', transliteration: 'yamālītakamuhnītāsiyāmātasīdga...', translation: 'Penegasan kaidah hukum prasasti leluhur.' },
-      { line: 9, script: 'ꦠꦴꦏꦱꦷꦢ꧀ꦒꦸꦩ꧀ꦧꦷ...', transliteration: 'tākasīdgumbīyumātukāgūkādaka', translation: 'Penutup tabel abjad dan glif peraga Kawi.' }
-    ],
     lexicon: [
       { term: 'Swastyastu', origin: 'Sanskerta (su + asti + astu)', meaning: 'Semoga ada dalam keselamatan lahir-batin dan kedamaian mutlak semesta.' },
       { term: 'Namaḥ Śiwāya', origin: 'Sanskerta', meaning: 'Sembah sujud pemujaan kepada Hyang Siwa Mahatinggi pelindung tatanan kosmis.' },
@@ -147,7 +136,6 @@ export const DEFAULT_HISTORY = [
     language: SAMPLES[2].language,
     language_short: SAMPLES[2].language_short,
     confidence: SAMPLES[2].confidence,
-    lineByLine: SAMPLES[2].lineByLine,
     lexicon: SAMPLES[2].lexicon,
   },
   {

@@ -115,7 +115,6 @@ export function renderHistory(query = '', onSelectManuscript) {
         language_short: item.language_short || 'Aksara Kuno',
         confidence: item.confidence || 98.8,
         glyphs: item.glyphs || extractGlyphs(item.ancientText, item.transliteration),
-        lineByLine: item.lineByLine || [],
         lexicon: item.lexicon || [],
       };
       if (typeof onSelectManuscript === 'function') {

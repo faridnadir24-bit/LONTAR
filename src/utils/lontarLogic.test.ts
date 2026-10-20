@@ -6,6 +6,7 @@ import {
   filterHistory,
   prepareSpeechPayload,
   validateScanInput,
+  cleanManuscriptText,
   INITIAL_MOCK_HISTORY,
 } from './lontarLogic.ts';
 
@@ -66,4 +67,25 @@ test('validateScanInput validates required fields', () => {
   });
   assert.equal(valid.valid, true);
   assert.equal(valid.errors.length, 0);
+});
+
+test('cleanManuscriptText strips dummy baris numbers, prefixes, and metadata comments', () => {
+  const dummyInput = `baris 1 (tampak tertera pada naskah daun lontar/daluang)
+baris 2
+baris 3
+baris 4
+baris 5
+baris 6`;
+  assert.equal(cleanManuscriptText(dummyInput), '');
+
+  const translitWithPrefixes = `Baris 1: tatastu binnas
+Baris 2: ...
+Baris 3: mangrwa tan hana
+Baris 4: ...`;
+  const cleaned = cleanManuscriptText(translitWithPrefixes);
+  assert.equal(cleaned, 'tatastu binnas\nmangrwa tan hana');
+
+  const cleanVerses = `Swastyastu namaḥ śiwāya
+tatastu astu mangayubagya`;
+  assert.equal(cleanManuscriptText(cleanVerses), cleanVerses);
 });

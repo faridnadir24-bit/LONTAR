@@ -4,7 +4,7 @@
  */
 
 import { SAMPLES } from './data/manuscripts.js';
-import { esc, showToast, showElement, hideElement, extractGlyphs } from './utils/epigraphy.js';
+import { esc, showToast, showElement, hideElement, extractGlyphs, cleanManuscriptText } from './utils/epigraphy.js';
 import {
   startCamera,
   stopCamera,
@@ -223,16 +223,26 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
       hideElement(loadingOverlay);
       if (progressBar) progressBar.style.width = '0%';
 
+      const rawAncient = data.ancientText || '';
+      const rawTranslit = data.transliteration || '';
+      let cleanAncient = cleanManuscriptText(rawAncient);
+      let cleanTranslit = cleanManuscriptText(rawTranslit);
+      let cleanTranslation = cleanManuscriptText(data.translation || '');
+
+      if (!cleanAncient && cleanTranslit) cleanAncient = cleanTranslit;
+      else if (!cleanAncient) cleanAncient = rawAncient || 'ꦲꦤꦕꦫꦏ';
+      if (!cleanTranslit) cleanTranslit = rawTranslit;
+      if (!cleanTranslation) cleanTranslation = data.translation || 'Terjemahan tidak tersedia.';
+
       latestResultData = {
         title: data.title || 'Naskah Pindaian Kamera',
-        ancientText: data.ancientText || 'ꦲꦤꦕꦫꦏ',
-        transliteration: data.transliteration || '',
-        translation: data.translation || 'Terjemahan tidak tersedia.',
+        ancientText: cleanAncient,
+        transliteration: cleanTranslit,
+        translation: cleanTranslation,
         philosophical: data.philosophical || 'Konteks kearifan luhur Nusantara.',
         language: data.language || 'Aksara Kuno Nusantara',
         language_short: data.language_short || data.script_type || 'Aksara Nusantara',
         confidence: data.confidence || 98.8,
-        lineByLine: data.lineByLine || [],
         lexicon: data.lexicon || [],
       };
 
@@ -416,24 +426,41 @@ export function populateResult(data) {
   const langBadge = document.getElementById('result-language-badge');
   const confEl = document.getElementById('result-confidence');
 
+  const rawAncient = data.ancientText || '';
+  const rawTranslit = data.transliteration || '';
+  const rawTranslation = data.translation || '';
+
+  let cleanAncient = cleanManuscriptText(rawAncient);
+  let cleanTranslit = cleanManuscriptText(rawTranslit);
+  let cleanTranslation = cleanManuscriptText(rawTranslation);
+
+  // If ancient text was empty or had only dummy "baris 1, 2" strings, fall back gracefully
+  if (!cleanAncient && cleanTranslit) {
+    cleanAncient = cleanTranslit;
+  } else if (!cleanAncient) {
+    cleanAncient = rawAncient;
+  }
+  if (!cleanTranslit) cleanTranslit = rawTranslit;
+  if (!cleanTranslation) cleanTranslation = rawTranslation;
+
   if (titleEl) titleEl.textContent = data.title;
-  if (translatedTextEl) translatedTextEl.textContent = data.translation;
+  if (translatedTextEl) translatedTextEl.textContent = cleanTranslation;
   if (philEl) philEl.textContent = data.philosophical;
   if (langBadge) langBadge.textContent = data.language;
   if (confEl) confEl.textContent = (data.confidence || 98.8) + '%';
 
   // Dynamic typography sizing based on length / multi-line
-  const lines = (data.ancientText || '').split('\n').filter(Boolean);
-  const isMultiLine = lines.length > 2 || (data.ancientText && data.ancientText.length > 70);
+  const lines = cleanAncient.split('\n').filter(Boolean);
+  const isMultiLine = lines.length > 2 || cleanAncient.length > 70;
 
   if (ancientTextEl) {
-    ancientTextEl.textContent = data.ancientText;
+    ancientTextEl.textContent = cleanAncient;
     ancientTextEl.classList.remove('ancient-text-short', 'ancient-text-long');
     ancientTextEl.classList.add(isMultiLine ? 'ancient-text-long' : 'ancient-text-short');
   }
 
   if (translitEl) {
-    translitEl.textContent = data.transliteration;
+    translitEl.textContent = cleanTranslit;
     if (isMultiLine) {
       translitEl.classList.remove('text-center');
       translitEl.classList.add('text-left');
@@ -443,39 +470,9 @@ export function populateResult(data) {
     }
   }
 
-  // Render Line-by-Line breakdown if present
+  // Ensure line-by-line section is hidden to avoid user confusion
   const sectionLineByLine = document.getElementById('section-line-by-line');
-  const lineListEl = document.getElementById('line-by-line-list');
-  const lineCountBadge = document.getElementById('line-count-badge');
-
-  if (data.lineByLine && data.lineByLine.length > 1) {
-    if (lineCountBadge) lineCountBadge.textContent = `${data.lineByLine.length} Baris`;
-    if (lineListEl) {
-      lineListEl.innerHTML = data.lineByLine.map(item => `
-        <div class="p-3.5 rounded-xl bg-slate-50/70 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800 transition-colors hover:border-blue-500/30">
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-900/60 px-2 py-0.5 rounded-md">
-              Baris ${String(item.line).padStart(2, '0')}
-            </span>
-          </div>
-          <p class="font-ancient-script text-[17px] sm:text-[19px] leading-[1.85] text-slate-900 dark:text-white select-all mb-1.5">
-            ${esc(item.script)}
-          </p>
-          <p class="font-serif-literary italic text-[12px] sm:text-[13px] text-slate-600 dark:text-zinc-400 leading-snug mb-1.5">
-            "${esc(item.transliteration)}"
-          </p>
-          <div class="border-l-2 border-slate-300 dark:border-zinc-700 pl-2.5 py-0.5">
-            <p class="text-[12px] text-slate-800 dark:text-zinc-200 leading-relaxed">
-              ${esc(item.translation)}
-            </p>
-          </div>
-        </div>
-      `).join('');
-    }
-    if (sectionLineByLine) showElement(sectionLineByLine);
-  } else {
-    if (sectionLineByLine) hideElement(sectionLineByLine);
-  }
+  if (sectionLineByLine) hideElement(sectionLineByLine);
 
   // Render Lexicon & Morphology breakdown if present
   const sectionLexicon = document.getElementById('section-lexicon');
@@ -714,7 +711,6 @@ document.addEventListener('DOMContentLoaded', () => {
         language_short: s.language_short || 'Aksara Jawa',
         confidence: s.confidence || 98.8,
         glyphs: s.glyphs || extractGlyphs(s.ancientText, s.transliteration),
-        lineByLine: s.lineByLine || [],
         lexicon: s.lexicon || [],
       };
 
