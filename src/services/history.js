@@ -30,7 +30,10 @@ export function saveHistory(items) {
 export function updateScanCount() {
   const items = getHistory();
   const el = document.getElementById('stat-scans-count');
-  if (el) el.textContent = (14 + Math.max(0, items.length - 2)) + '+';
+  if (el) {
+    const total = 9 + Math.max(0, items.length - 3);
+    el.textContent = `${total}+`;
+  }
 }
 
 export function setHistoryFilterTag(tag) {

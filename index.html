@@ -195,7 +195,7 @@
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
         <!-- SCREEN 1 — BERANDA (HERITAGE ARCHIVE HOME)        -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-home" class="screen-view screen-visible flex-col flex-1 pb-6">
+        <section id="screen-home" class="screen-view screen-visible flex-col flex-1 pb-14">
 
           <!-- Hero Section -->
           <div class="px-5 pt-6 pb-6 bg-white dark:bg-zinc-900 border-b border-slate-200/80 dark:border-zinc-800 relative overflow-hidden">
@@ -448,6 +448,30 @@
                   </span>
                 </div>
 
+                <!-- Sample 3: Prasasti Sukamerta Majapahit -->
+                <div
+                  data-sample-idx="3"
+                  class="sample-preset-card p-3.5 rounded-2xl bg-white dark:bg-zinc-800/80 border border-slate-200/80 dark:border-zinc-700/80 hover:border-slate-300 dark:hover:border-zinc-600 cursor-pointer transition-all flex items-center justify-between group shadow-xs"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-700/60 border border-slate-200 dark:border-zinc-600 flex items-center justify-center text-slate-800 dark:text-zinc-200 shrink-0 font-ancient-script text-xl font-bold">
+                      ꦱꦶ
+                    </div>
+                    <div>
+                      <h4 class="text-[13px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        Prasasti Sukamerta (Lempeng Tembaga)
+                      </h4>
+                      <p class="text-[11px] text-slate-500 dark:text-zinc-400 font-serif-literary italic">
+                        Raden Wijaya · Kawi / Jawa Kuno Abad XIII M
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1">
+                    Buka
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </span>
+                </div>
+
                 <!-- Sample 8: Kitab Pegon Melayu-Jawa -->
                 <div
                   data-sample-idx="8"
@@ -471,8 +495,6 @@
                     <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                   </span>
                 </div>
-              </div>
-            </div>
               </div>
             </div>
 
@@ -767,7 +789,7 @@
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
         <!-- SCREEN 3 — HASIL (PHILOLOGY STUDY & TRANSLATE)    -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-result" class="screen-view screen-hidden flex-col flex-1 bg-white dark:bg-zinc-900 pb-8">
+        <section id="screen-result" class="screen-view screen-hidden flex-col flex-1 bg-white dark:bg-zinc-900 pb-14">
 
           <!-- Result Header -->
           <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-200/80 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm shrink-0">
@@ -1055,19 +1077,13 @@
             </div>
 
           </div>
-
-          <!-- Toast Notification -->
-          <div
-            id="result-toast"
-            class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 py-3 px-5 rounded-2xl bg-slate-900/95 dark:bg-zinc-800/95 text-white border border-slate-700 dark:border-zinc-700 text-[12px] font-semibold text-center shadow-xl backdrop-blur-md transition-all duration-300"
-          ></div>
         </section>
 
 
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
         <!-- SCREEN 4 — ARSIP (DIGITAL HERITAGE COLLECTION)    -->
         <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
-        <section id="screen-history" class="screen-view screen-hidden flex-col flex-1 bg-white dark:bg-zinc-900 pb-8">
+        <section id="screen-history" class="screen-view screen-hidden flex-col flex-1 bg-white dark:bg-zinc-900 pb-14">
 
           <!-- Archive Header -->
           <div class="px-5 pt-5 pb-3 shrink-0">
@@ -1180,6 +1196,12 @@
           <span class="nav-label text-[11px] font-semibold text-slate-500 dark:text-zinc-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Arsip</span>
         </button>
       </nav>
+
+      <!-- Universal Toast Notification (Available Across All Screens) -->
+      <div
+        id="result-toast"
+        class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-50 py-2.5 px-4 rounded-2xl bg-slate-900/95 dark:bg-zinc-800/95 text-white border border-slate-700 dark:border-zinc-700 text-[12px] font-semibold text-center shadow-xl backdrop-blur-md transition-all duration-300 pointer-events-none"
+      ></div>
 
       <!-- ── Modal Piagam Paleografi Digital (Clean Modern Certificate) ── -->
       <div id="modal-piagam" class="hidden absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-md items-center justify-center p-4">

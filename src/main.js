@@ -76,6 +76,10 @@ export function navigate(targetId) {
 
   activeScreen = targetId;
 
+  // Reset scroll position to top on screen navigation
+  const mainEl = document.querySelector('main');
+  if (mainEl) mainEl.scrollTop = 0;
+
   // Hide bottom navigation on Camera HUD screen to prevent layout overlap
   const bottomNav = document.getElementById('bottom-nav');
   if (bottomNav) {
