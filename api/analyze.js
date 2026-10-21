@@ -109,8 +109,6 @@ export const config = {
 
 const CANDIDATE_MODELS = [
   'gemini-3-flash-preview',
-  'gemini-3.1-flash-lite-preview',
-  'gemini-3.8-flash',
   'gemini-3.5-flash',
 ];
 
@@ -145,6 +143,8 @@ export default async function handler(req, res) {
     process.env.GEMINI_API_KEY,
     process.env.GEMINI_KEY_2,
     process.env.GEMINI_KEY_3,
+    process.env.GEMINI_KEY_4,
+    process.env.GEMINI_KEY_5,
   ].filter(Boolean).join(',');
 
   const serverKeyPool = Array.from(new Set(
@@ -154,7 +154,39 @@ export default async function handler(req, res) {
       .filter(k => k.length > 10)
   ));
 
-  const keyCandidates = userKey ? [userKey] : serverKeyPool;
+  // If user provides personal key, prioritize it first, then fallback to server pool
+  const keyCandidates = userKey
+    ? [userKey, ...serverKeyPool.filter(k => k !== userKey)]
+    : serverKeyPool;
+
+  // Lightweight API key test probe
+  if (req.body?.testKeyOnly) {
+    const probeKey = userKey || keyCandidates[0];
+    if (!probeKey) {
+      return res.status(400).json({ valid: false, error: 'Kunci API kosong.' });
+    }
+    try {
+      const probeAi = new GoogleGenAI({ apiKey: probeKey });
+      await probeAi.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: [{ role: 'user', parts: [{ text: 'p' }] }],
+        config: { maxOutputTokens: 2, thinkingConfig: { thinkingBudget: 0 } },
+      });
+      return res.status(200).json({ valid: true, message: 'Kunci API aktif dan terverifikasi!' });
+    } catch (testErr) {
+      const msg = testErr.message || '';
+      const isQuota = msg.includes('429') || msg.includes('Quota') || msg.includes('RESOURCE_EXHAUSTED');
+      const isInvalid = msg.includes('API_KEY_INVALID') || msg.includes('API key not valid') || msg.includes('403');
+      return res.status(200).json({
+        valid: false,
+        error: isQuota
+          ? 'Kunci valid tetapi kuota habis (429).'
+          : isInvalid
+          ? 'Kunci tidak valid / ditolak oleh Google AI Studio.'
+          : `Gagal verifikasi: ${msg.slice(0, 120)}`,
+      });
+    }
+  }
 
   if (keyCandidates.length === 0) {
     return res.status(500).json({
@@ -195,7 +227,7 @@ export default async function handler(req, res) {
         try {
           modelController.abort();
         } catch (_) {}
-      }, 7000);
+      }, 5500);
 
       try {
         const configObj = {

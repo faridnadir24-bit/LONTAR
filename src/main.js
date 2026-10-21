@@ -39,6 +39,7 @@ import {
   requestManuscriptAnalysis,
   getCustomApiKey,
   setCustomApiKey,
+  verifyApiKey,
 } from './services/api.js';
 import { optimizeImageFile } from './services/imageUtils.js';
 
@@ -963,12 +964,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const apiKeyStatusText = document.getElementById('api-key-status-text');
   const btnUnclearEnterKey = document.getElementById('btn-unclear-enter-key');
 
+  const btnToggleKeyVisibility = document.getElementById('btn-toggle-key-visibility');
+  const btnSaveKeyText = document.getElementById('btn-save-key-text');
+
+  if (btnToggleKeyVisibility && inputCustomApiKey) {
+    btnToggleKeyVisibility.addEventListener('click', () => {
+      if (inputCustomApiKey.type === 'password') {
+        inputCustomApiKey.type = 'text';
+        btnToggleKeyVisibility.textContent = 'Sembunyikan';
+      } else {
+        inputCustomApiKey.type = 'password';
+        btnToggleKeyVisibility.textContent = 'Lihat Kunci';
+      }
+    });
+  }
+
   function openApiKeyModal() {
     const currentKey = getCustomApiKey();
     if (inputCustomApiKey) inputCustomApiKey.value = currentKey;
     if (apiKeyStatusText) {
       if (currentKey) {
-        apiKeyStatusText.textContent = 'Status: Menggunakan API Key pribadi tersimpan';
+        apiKeyStatusText.textContent = `Status: Menggunakan API Key pribadi tersimpan (${currentKey.slice(0, 6)}...${currentKey.slice(-4)})`;
         apiKeyStatusText.className = 'text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold';
       } else {
         apiKeyStatusText.textContent = 'Status: Menggunakan kuota default server';
@@ -991,16 +1007,50 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnCloseApiKeyX) btnCloseApiKeyX.addEventListener('click', () => hideElement(modalApiKey));
 
   if (btnSaveApiKey) {
-    btnSaveApiKey.addEventListener('click', () => {
+    btnSaveApiKey.addEventListener('click', async () => {
       const val = inputCustomApiKey ? inputCustomApiKey.value.trim() : '';
       if (!val) {
         setCustomApiKey('');
+        if (apiKeyStatusText) {
+          apiKeyStatusText.textContent = 'Status: Menggunakan kuota default server';
+          apiKeyStatusText.className = 'text-[10px] text-slate-500 dark:text-zinc-400 italic';
+        }
         showToast('Kunci dihapus. Menggunakan server default.');
-      } else {
-        setCustomApiKey(val);
-        showToast('Kunci API pribadi berhasil disimpan!');
+        hideElement(modalApiKey);
+        return;
       }
-      hideElement(modalApiKey);
+
+      // Test key probe for immediate user reassurance
+      if (btnSaveKeyText) btnSaveKeyText.textContent = 'Memverifikasi...';
+      btnSaveApiKey.disabled = true;
+
+      try {
+        const probe = await verifyApiKey(val);
+        if (probe.valid) {
+          setCustomApiKey(val);
+          if (apiKeyStatusText) {
+            apiKeyStatusText.textContent = 'Status: ✓ Kunci API pribadi aktif & terverifikasi';
+            apiKeyStatusText.className = 'text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold';
+          }
+          showToast('✓ Kunci API valid & berhasil disimpan!');
+          setTimeout(() => hideElement(modalApiKey), 400);
+        } else {
+          // Key might have a warning, but still save if user wants
+          setCustomApiKey(val);
+          if (apiKeyStatusText) {
+            apiKeyStatusText.textContent = `Status: ⚠️ ${probe.error}`;
+            apiKeyStatusText.className = 'text-[10px] text-amber-600 dark:text-amber-400 font-semibold';
+          }
+          showToast(`Kunci tersimpan (${probe.error})`);
+        }
+      } catch (err) {
+        setCustomApiKey(val);
+        showToast('Kunci API disimpan secara lokal');
+        hideElement(modalApiKey);
+      } finally {
+        if (btnSaveKeyText) btnSaveKeyText.textContent = 'Simpan & Uji Kunci';
+        btnSaveApiKey.disabled = false;
+      }
     });
   }
 

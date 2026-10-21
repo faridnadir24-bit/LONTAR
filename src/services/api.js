@@ -36,6 +36,32 @@ export function setCustomApiKey(key) {
   }
 }
 
+export async function verifyApiKey(key) {
+  const probe = key ? key.trim() : getCustomApiKey();
+  if (!probe) {
+    return { valid: false, error: 'Kunci API kosong.' };
+  }
+  try {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-gemini-api-key': probe,
+      },
+      body: JSON.stringify({
+        testKeyOnly: true,
+        customApiKey: probe,
+      }),
+    });
+    if (!res.ok) {
+      return { valid: false, error: `Server HTTP ${res.status}` };
+    }
+    return await res.json();
+  } catch (err) {
+    return { valid: false, error: err.message || 'Koneksi ke server gagal.' };
+  }
+}
+
 export async function requestManuscriptAnalysis(base64Data, mimeType = 'image/jpeg', options = {}) {
   const { signal, timeoutMs = 26000 } = options;
 

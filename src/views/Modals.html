@@ -89,17 +89,24 @@
 
     <!-- Input -->
     <div class="space-y-1.5">
-      <label for="input-custom-api-key" class="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 block">
-        Google Gemini API Key:
-      </label>
-      <input
-        id="input-custom-api-key"
-        type="password"
-        placeholder="AIzaSy..."
-        autocomplete="off"
-        spellcheck="false"
-        class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-      />
+      <div class="flex items-center justify-between">
+        <label for="input-custom-api-key" class="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 block">
+          Google Gemini API Key:
+        </label>
+        <button id="btn-toggle-key-visibility" type="button" class="text-[11px] text-blue-600 dark:text-blue-400 hover:underline cursor-pointer font-medium">
+          Lihat Kunci
+        </button>
+      </div>
+      <div class="relative">
+        <input
+          id="input-custom-api-key"
+          type="password"
+          placeholder="AQ... atau AIzaSy..."
+          autocomplete="off"
+          spellcheck="false"
+          class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+        />
+      </div>
       <p id="api-key-status-text" class="text-[10px] text-slate-500 dark:text-zinc-400 italic">
         Status: Menggunakan kuota default server
       </p>
@@ -109,7 +116,7 @@
     <div class="flex flex-col gap-2 pt-1">
       <div class="flex gap-2">
         <button id="btn-save-api-key" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-[12px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all">
-          Simpan Kunci
+          <span id="btn-save-key-text">Simpan & Uji Kunci</span>
         </button>
         <button id="btn-clear-api-key" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-[12px] cursor-pointer transition-colors" title="Hapus kunci tersimpan">
           Hapus
