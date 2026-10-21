@@ -182,7 +182,7 @@ app.post('/api/analyze', async (req, res) => {
     try {
       const probeAi = new GoogleGenAI({ apiKey: probeKey });
       await probeAi.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-3.5-flash',
         contents: [{ role: 'user', parts: [{ text: 'p' }] }],
         config: { maxOutputTokens: 2, thinkingConfig: { thinkingBudget: 0 } },
       });
@@ -231,8 +231,8 @@ app.post('/api/analyze', async (req, res) => {
   }
 
   const CANDIDATE_MODELS = [
-    'gemini-3-flash-preview',
     'gemini-3.5-flash',
+    'gemini-3-flash-preview',
   ];
   let lastError = null;
   let hadQuotaError = false;
@@ -240,7 +240,6 @@ app.post('/api/analyze', async (req, res) => {
   for (let keyIdx = 0; keyIdx < keyCandidates.length; keyIdx++) {
     const activeApiKey = keyCandidates[keyIdx];
     const activeAi = new GoogleGenAI({ apiKey: activeApiKey });
-    let keyHitQuota = false;
 
     for (const modelName of CANDIDATE_MODELS) {
       const modelController = new AbortController();
@@ -315,19 +314,11 @@ app.post('/api/analyze', async (req, res) => {
         const msg = err.message || '';
         if (msg.includes('429') || msg.includes('Quota exceeded') || msg.includes('RESOURCE_EXHAUSTED')) {
           hadQuotaError = true;
-          keyHitQuota = true;
-          console.warn(`Local Key #${keyIdx + 1} hit quota on ${modelName}, trying next option...`);
-          break; // Switch to next key immediately
+          console.warn(`Local Model ${modelName} hit quota for Key #${keyIdx + 1}, trying alternative model...`);
+          continue; // Try next candidate model before abandoning key
         }
         console.warn(`Local model ${modelName} encountered error:`, err.message);
       }
-    }
-
-    if (keyHitQuota && keyIdx < keyCandidates.length - 1) {
-      continue;
-    }
-  }
-      console.warn(`Local model ${modelName} encountered error:`, err.message);
     }
   }
 
