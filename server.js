@@ -90,6 +90,10 @@ PRINSIP 2: PENERJEMAHAN UTUH 100% (TIDAK BOLEH ADA KATA ATAU KALIMAT YANG TERLEW
 ================================================================================
 - DILARANG KERAS MELEWATKAN KATA ATAU KALIMAT:
   Terjemahkan SELURUH naskah dari baris pertama hingga baris terakhir secara lengkap, tuntas, dan mendalam. Dilarang memotong kalimat di tengah jalan, merangkum, atau melewatkan kata maupun bait apapun!
+- DILARANG KERAS MENGGUNAKAN TANDA ELIPSIS ("...") ATAU MERINGKAS DI TENGAH:
+  JANGAN PERNAH menyisipkan tanda titik-titik "..." atau melompati baris-baris naskah! Transkripsikan setiap kata yang tampak secara utuh.
+- DUKUNGAN NASKAH PANJANG & DUA HALAMAN BUKU TERBUKA:
+  Jika gambar menampilkan naskah dua halaman terbuka (halaman kanan dan kiri, misalnya hal 29 dan 30), transkripsikan KEDUA HALAMAN secara berurutan dan lengkap (untuk tradisi Arab Melayu/Pegon/Jawi, mulai dari halaman kanan dari atas ke bawah, lalu lanjut ke halaman kiri dari atas ke bawah).
 - KORESPONDENSI 1:1:
   Setiap kata pada "ancientText" dan "transliteration" WAJIB memiliki padanan makna yang jelas pada "translation" dalam Bahasa Indonesia yang alami, mengalir, dan berbobot akademis.
 - MAKNA MENDALAM (SUBSTANSIAL):
@@ -253,7 +257,7 @@ app.post('/api/analyze', async (req, res) => {
         const configObj = {
           temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
           topP: 0.95,
-          maxOutputTokens: 2048,
+          maxOutputTokens: 4096,
           responseMimeType: 'application/json',
           abortSignal: modelController.signal,
           thinkingConfig: { thinkingBudget: 0 },
