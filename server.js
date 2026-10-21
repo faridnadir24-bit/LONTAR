@@ -150,9 +150,25 @@ Kembalikan respon HANYA dalam format JSON valid (tanpa pembungkus markdown atau 
 // ── POST /api/analyze ───────────────────────────────────────────────────────
 app.post('/api/analyze', async (req, res) => {
   const { imageBase64, mimeType = 'image/jpeg', customApiKey } = req.body;
-  const activeApiKey = customApiKey?.trim() || req.headers['x-gemini-api-key']?.trim() || GEMINI_API_KEY;
+  const userKey = customApiKey?.trim() || req.headers['x-gemini-api-key']?.trim();
 
-  if (!activeApiKey) {
+  const rawServerKeys = [
+    process.env.GEMINI_API_KEYS,
+    process.env.GEMINI_API_KEY,
+    process.env.GEMINI_KEY_2,
+    process.env.GEMINI_KEY_3,
+  ].filter(Boolean).join(',');
+
+  const serverKeyPool = Array.from(new Set(
+    rawServerKeys
+      .split(/[,;\n\s]+/)
+      .map(k => k.trim())
+      .filter(k => k.length > 10)
+  ));
+
+  const keyCandidates = userKey ? [userKey] : serverKeyPool;
+
+  if (keyCandidates.length === 0) {
     return res.status(500).json({
       errorType: 'MISSING_API_KEY',
       error: 'GEMINI_API_KEY belum dikonfigurasi di server atau pengaturan aplikasi.',
@@ -188,81 +204,97 @@ app.post('/api/analyze', async (req, res) => {
   ];
   let lastError = null;
   let hadQuotaError = false;
-  const activeAi = new GoogleGenAI({ apiKey: activeApiKey });
 
-  for (const modelName of CANDIDATE_MODELS) {
-    const modelController = new AbortController();
-    const modelTimeout = setTimeout(() => {
+  for (let keyIdx = 0; keyIdx < keyCandidates.length; keyIdx++) {
+    const activeApiKey = keyCandidates[keyIdx];
+    const activeAi = new GoogleGenAI({ apiKey: activeApiKey });
+    let keyHitQuota = false;
+
+    for (const modelName of CANDIDATE_MODELS) {
+      const modelController = new AbortController();
+      const modelTimeout = setTimeout(() => {
+        try {
+          modelController.abort();
+        } catch (_) {}
+      }, 7000);
+
       try {
-        modelController.abort();
-      } catch (_) {}
-    }, 7000);
+        const configObj = {
+          temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
+          topP: 0.95,
+          maxOutputTokens: 2048,
+          responseMimeType: 'application/json',
+          abortSignal: modelController.signal,
+          thinkingConfig: { thinkingBudget: 0 },
+        };
 
-    try {
-      const configObj = {
-        temperature: 0.0, // Absolute determinism: identical photos always yield identical, accurate results
-        topP: 0.95,
-        responseMimeType: 'application/json',
-        abortSignal: modelController.signal,
-        thinkingConfig: { thinkingBudget: 0 },
-      };
-
-      const response = await activeAi.models.generateContent({
-        model: modelName,
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              { text: AKSARA_PROMPT },
-              { inlineData: { mimeType, data: cleanBase64 } },
-            ],
-          },
-        ],
-        config: configObj,
-      });
-
-      clearTimeout(modelTimeout);
-
-      const rawText = response.text?.trim() ?? '';
-
-      // Strip any accidental markdown fences
-      let cleaned = rawText
-        .replace(/^```(?:json)?\s*/i, '')
-        .replace(/\s*```$/i, '')
-        .trim();
-
-      // If still surrounded by text, extract the first JSON object
-      if (!cleaned.startsWith('{')) {
-        const match = cleaned.match(/\{[\s\S]*\}/);
-        if (match) cleaned = match[0];
-      }
-
-      let parsed;
-      try {
-        parsed = JSON.parse(cleaned);
-      } catch (parseErr) {
-        console.error('JSON parse error. Raw text:', rawText);
-        return res.status(500).json({
-          error: 'Respons AI tidak valid. Coba lagi.',
-          raw: rawText,
+        const response = await activeAi.models.generateContent({
+          model: modelName,
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                { text: AKSARA_PROMPT },
+                { inlineData: { mimeType, data: cleanBase64 } },
+              ],
+            },
+          ],
+          config: configObj,
         });
-      }
 
-      // Save to determinism cache
-      scanCache.set(imageHash, parsed);
-      if (scanCache.size > 200) {
-        const oldestKey = scanCache.keys().next().value;
-        scanCache.delete(oldestKey);
-      }
+        clearTimeout(modelTimeout);
 
-      return res.json(parsed);
-    } catch (err) {
-      clearTimeout(modelTimeout);
-      lastError = err;
-      const msg = err.message || '';
-      if (msg.includes('429') || msg.includes('Quota exceeded') || msg.includes('RESOURCE_EXHAUSTED')) {
-        hadQuotaError = true;
+        const rawText = response.text?.trim() ?? '';
+
+        // Strip any accidental markdown fences
+        let cleaned = rawText
+          .replace(/^```(?:json)?\s*/i, '')
+          .replace(/\s*```$/i, '')
+          .trim();
+
+        // If still surrounded by text, extract the first JSON object
+        if (!cleaned.startsWith('{')) {
+          const match = cleaned.match(/\{[\s\S]*\}/);
+          if (match) cleaned = match[0];
+        }
+
+        let parsed;
+        try {
+          parsed = JSON.parse(cleaned);
+        } catch (parseErr) {
+          console.error('JSON parse error. Raw text:', rawText);
+          return res.status(500).json({
+            error: 'Respons AI tidak valid. Coba lagi.',
+            raw: rawText,
+          });
+        }
+
+        // Save to determinism cache
+        scanCache.set(imageHash, parsed);
+        if (scanCache.size > 200) {
+          const oldestKey = scanCache.keys().next().value;
+          scanCache.delete(oldestKey);
+        }
+
+        return res.json(parsed);
+      } catch (err) {
+        clearTimeout(modelTimeout);
+        lastError = err;
+        const msg = err.message || '';
+        if (msg.includes('429') || msg.includes('Quota exceeded') || msg.includes('RESOURCE_EXHAUSTED')) {
+          hadQuotaError = true;
+          keyHitQuota = true;
+          console.warn(`Local Key #${keyIdx + 1} hit quota on ${modelName}, trying next option...`);
+          break; // Switch to next key immediately
+        }
+        console.warn(`Local model ${modelName} encountered error:`, err.message);
       }
+    }
+
+    if (keyHitQuota && keyIdx < keyCandidates.length - 1) {
+      continue;
+    }
+  }
       console.warn(`Local model ${modelName} encountered error:`, err.message);
     }
   }
