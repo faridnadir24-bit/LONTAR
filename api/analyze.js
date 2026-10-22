@@ -126,21 +126,6 @@ export default async function handler(req, res) {
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, x-gemini-api-key'
   );
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method === 'GET') {
-    return res.status(200).json({ status: 'ok', service: 'LONTAR-AI Vision' });
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { imageBase64, mimeType = 'image/jpeg', customApiKey } = req.body || {};
-  const userKey = customApiKey?.trim() || req.headers['x-gemini-api-key']?.trim();
-
   // Support multiple server API keys separated by commas or multiple envs for automatic failover/rotation
   const rawServerKeys = [
     process.env.GEMINI_API_KEYS,
@@ -157,6 +142,25 @@ export default async function handler(req, res) {
       .map(k => k.trim())
       .filter(k => k.length > 10)
   ));
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      status: 'ok',
+      service: 'LONTAR-AI Vision',
+      keysInPool: serverKeyPool.length,
+    });
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { imageBase64, mimeType = 'image/jpeg', customApiKey } = req.body || {};
+  const userKey = customApiKey?.trim() || req.headers['x-gemini-api-key']?.trim();
 
   // If user provides personal key, prioritize it first, then fallback to server pool
   const keyCandidates = userKey
@@ -292,11 +296,6 @@ export default async function handler(req, res) {
         }
         console.warn(`Model ${modelName} encountered error:`, err.message);
       }
-    }
-
-    // If key hit quota and more keys are available, continue to next key
-    if (keyHitQuota && keyIdx < keyCandidates.length - 1) {
-      continue;
     }
   }
 
