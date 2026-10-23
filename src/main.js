@@ -204,21 +204,26 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
   if (stepText) stepText.textContent = 'Mengunggah citra ke Gemini Vision…';
 
   const t1 = setTimeout(() => {
-    if (progressBar) progressBar.style.width = '55%';
-    if (stepText) stepText.textContent = 'Mendeteksi karakter & glif Ron Tal…';
-  }, 900);
+    if (progressBar) progressBar.style.width = '40%';
+    if (stepText) stepText.textContent = 'Mendeteksi karakter & glif naskah…';
+  }, 1000);
 
   const t2 = setTimeout(() => {
-    if (progressBar) progressBar.style.width = '85%';
-    if (stepText) stepText.textContent = 'Menerjemahkan & menafsirkan filosofi…';
-  }, 1800);
+    if (progressBar) progressBar.style.width = '70%';
+    if (stepText) stepText.textContent = 'Mengekstrak teks & alih aksara…';
+  }, 3500);
 
-  // Resilient safety watchdog at 28s to guarantee overlay NEVER remains stuck
+  const t3 = setTimeout(() => {
+    if (progressBar) progressBar.style.width = '88%';
+    if (stepText) stepText.textContent = 'Menerjemahkan & menafsirkan filologi…';
+  }, 7500);
+
+  // Resilient safety watchdog at 35s to guarantee overlay NEVER remains stuck
   const watchdog = setTimeout(() => {
     if (activeScanAbortController === currentScanController) {
       currentScanController.abort(new Error('TIMEOUT'));
     }
-  }, 28000);
+  }, 35000);
 
   // Hook up cancel button on the loading overlay
   if (btnCancelScan) {
@@ -230,6 +235,7 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
       clearTimeout(watchdog);
       clearTimeout(t1);
       clearTimeout(t2);
+      clearTimeout(t3);
       hideElement(loadingOverlay);
       if (progressBar) progressBar.style.width = '0%';
       showToast('Pemindaian dibatalkan');
@@ -239,12 +245,13 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
   try {
     const data = await requestManuscriptAnalysis(base64Data, mimeType, {
       signal: currentScanController.signal,
-      timeoutMs: 26000,
+      timeoutMs: 32000,
     });
 
     clearTimeout(watchdog);
     clearTimeout(t1);
     clearTimeout(t2);
+    clearTimeout(t3);
 
     if (progressBar) progressBar.style.width = '100%';
 
@@ -308,6 +315,7 @@ async function analyzeCapturedImage(base64Data, mimeType = 'image/jpeg') {
     clearTimeout(watchdog);
     clearTimeout(t1);
     clearTimeout(t2);
+    clearTimeout(t3);
 
     hideElement(loadingOverlay);
     if (progressBar) progressBar.style.width = '0%';

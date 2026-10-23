@@ -251,7 +251,7 @@ app.post('/api/analyze', async (req, res) => {
         try {
           modelController.abort();
         } catch (_) {}
-      }, 5500);
+      }, 25000);
 
       try {
         const configObj = {

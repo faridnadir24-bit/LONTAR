@@ -108,7 +108,7 @@ Kembalikan respon HANYA dalam format JSON valid (tanpa pembungkus markdown atau 
 }`;
 
 export const config = {
-  maxDuration: 30,
+  maxDuration: 60,
 };
 
 const CANDIDATE_MODELS = [
@@ -228,14 +228,14 @@ export default async function handler(req, res) {
     const ai = new GoogleGenAI({ apiKey: activeApiKey });
     let keyHitQuota = false;
 
-    // Try candidate models in order with a strict per-model timeout
+    // Try candidate models in order with a resilient timeout for multi-line dense manuscripts
     for (const modelName of CANDIDATE_MODELS) {
       const modelController = new AbortController();
       const modelTimeout = setTimeout(() => {
         try {
           modelController.abort();
         } catch (_) {}
-      }, 5500);
+      }, 25000);
 
       try {
         const configObj = {
